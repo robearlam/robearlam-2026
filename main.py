@@ -36,13 +36,14 @@ The site must include:
 1. About / Bio — who I am, my professional background, areas of expertise, 
    and what makes my perspective distinctive in the technology field.
 
-2. Blog — a section where I regularly publish articles and thoughts on 
-   technology, engineering, software architecture and the industry. 
-   Articles should be browsable and individually readable.
+2. Blog — a section where I regularly publish articles. I have a large 
+   archive of historical posts. Blog content must be organised by year 
+   and month (e.g. /blog/2024/03/post-title). Posts should be browsable 
+   by date as well as individually readable.
 
-3. Speaking Engagements — a dedicated section highlighting conference talks, 
-   panel appearances, webinars and upcoming speaking events. Each engagement 
-   should show the event name, topic, date and a brief description.
+3. Speaking Engagements — a dedicated section for conference talks, panels 
+   and webinars. Historical engagements must be organised by year and month. 
+   Each engagement should show event name, topic, date and a brief description.
 
 4. Contact — clear ways for people to get in touch, including links to 
    relevant professional social profiles (LinkedIn, GitHub etc.) and 
