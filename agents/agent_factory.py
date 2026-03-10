@@ -55,7 +55,6 @@ def create_agent_from_file(filepath):
         raise ValueError(f"Agent file '{filepath}' is missing a ## Backstory section.")
 
     return Agent(
-        name             = config["name"],
         role             = config["role"],
         goal             = goal_match.group(1).strip(),
         backstory        = backstory_match.group(1).strip(),
