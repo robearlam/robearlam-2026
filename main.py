@@ -19,13 +19,10 @@ from tasks.tasks import (
     create_security_task
 )
 
-# Load API keys from .env
+from utils import load_output
+
 load_dotenv()
 
-# ─────────────────────────────────────────────
-# YOUR BRIEF — we'll fill this in properly in
-# Phase 3, but a placeholder lives here for now
-# ─────────────────────────────────────────────
 USER_BRIEF = """
 I am an experienced technology professional working in software engineering 
 and architecture. I want to build a personal website that serves two purposes: 
@@ -59,81 +56,68 @@ The site should position me as a credible, experienced technology
 professional and thought leader in my field.
 """
 
-def build_crew(user_brief):
-    """
-    Instantiate all agents, wire up all tasks with their
-    context dependencies, and assemble the crew.
-    """
 
-    # ── Agents ──────────────────────────────
-    spec_agent        = create_spec_agent()
-    ui_designer_agent = create_ui_designer_agent()
-    architect_agent   = create_architect_agent()
-    qa_agent          = create_qa_agent()
-    developer_agent   = create_developer_agent()
-    security_agent    = create_security_agent()
-
-    # ── Tasks (order matters — context flows downstream) ──
-    spec_task         = create_spec_task(spec_agent, user_brief)
-    ui_design_task    = create_ui_design_task(ui_designer_agent, spec_task)
-    architecture_task = create_architecture_task(architect_agent, spec_task, ui_design_task)
-    tdd_task          = create_tdd_task(qa_agent, spec_task, architecture_task)
-    dev_task          = create_dev_task(developer_agent, spec_task, ui_design_task,
-                                        architecture_task, tdd_task)
-    security_task     = create_security_task(security_agent, dev_task)
-
-    # ── Crew ────────────────────────────────
+def run_agent(agent, task):
+    """Run a single agent as its own mini-crew."""
     crew = Crew(
-        agents=[
-            spec_agent,
-            ui_designer_agent,
-            architect_agent,
-            qa_agent,
-            developer_agent,
-            security_agent
-        ],
-        tasks=[
-            spec_task,
-            ui_design_task,
-            architecture_task,
-            tdd_task,
-            dev_task,
-            security_task
-        ],
-        process=Process.sequential,  # tasks run in the order listed above
-        verbose=True                 # print agent thinking to terminal
+        agents=[agent],
+        tasks=[task],
+        process=Process.sequential,
+        verbose=True
     )
-
-    return crew
+    return crew.kickoff()
 
 
 def run_pipeline(user_brief):
-    """
-    Run the full pipeline:
-    Spec → UI Design → Architecture → TDD → Development → Security
-    The test loop and file extraction are added in Phase 7.
-    """
     print("\n" + "="*60)
     print("  HARNESS ENGINEERING PIPELINE")
     print("="*60 + "\n")
 
-    crew = build_crew(user_brief)
+    # ── Step 1: Spec ─────────────────────────────────────────
+    print("[ 1 / 6 ] Running Spec Agent...\n")
+    run_agent(create_spec_agent(), create_spec_task(create_spec_agent(), user_brief))
 
-    print("Starting pipeline...\n")
-    result = crew.kickoff()
+    # ── Step 2: UI Design ─────────────────────────────────────
+    print("[ 2 / 6 ] Running UI Designer Agent...\n")
+    specification = load_output("specification.md")
+    run_agent(create_ui_designer_agent(),
+              create_ui_design_task(create_ui_designer_agent(), specification))
+
+    # ── Step 3: Architecture ──────────────────────────────────
+    print("[ 3 / 6 ] Running Architect Agent...\n")
+    ui_design = load_output("ui_design.md")
+    run_agent(create_architect_agent(),
+              create_architecture_task(create_architect_agent(), specification, ui_design))
+
+    # ── Step 4: TDD ───────────────────────────────────────────
+    print("[ 4 / 6 ] Running QA Agent (TDD)...\n")
+    architecture = load_output("architecture.md")
+    run_agent(create_qa_agent(),
+              create_tdd_task(create_qa_agent(), specification, architecture))
+
+    # ── Step 5: Development ───────────────────────────────────
+    print("[ 5 / 6 ] Running Developer Agent...\n")
+    test_suite = load_output("test_suite.md")
+    run_agent(create_developer_agent(),
+              create_dev_task(create_developer_agent(), specification,
+                              ui_design, architecture, test_suite))
+
+    # ── Step 6: Security ──────────────────────────────────────
+    print("[ 6 / 6 ] Running Security Agent...\n")
+    codebase = load_output("codebase.md")
+    run_agent(create_security_agent(),
+              create_security_task(create_security_agent(), codebase))
 
     print("\n" + "="*60)
     print("  PIPELINE COMPLETE")
-    print("  Check the outputs/ folder for all deliverables:")
-    print("    outputs/specification.md")
-    print("    outputs/ui_design.md")
-    print("    outputs/architecture.md")
-    print("    outputs/test_suite.md")
-    print("    outputs/codebase.md")
-    print("    outputs/security_report.md")
+    print("  Deliverables in outputs/:")
+    print("    specification.md")
+    print("    ui_design.md")
+    print("    architecture.md")
+    print("    test_suite.md")
+    print("    codebase.md")
+    print("    security_report.md")
     print("="*60 + "\n")
-
-    return result
 
 
 if __name__ == "__main__":
