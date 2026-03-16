@@ -70,6 +70,25 @@ However, a human reviewer remains responsible for approving completed work befor
 
 ---
 
+### Governance State Is Human-Controlled
+
+Workflow governance is controlled by the human reviewer.
+
+Governance files include:
+
+- `harness/active-task.md`
+- files under `harness/tasks/`
+- files under `harness/backlog/`
+- files under `harness/standards/`
+- files under `harness/roles/`
+- files under `harness/templates/`
+
+Agents may read these files when required by the workflow, but they must not modify them unless the human reviewer explicitly requests a harness change.
+
+Implementation agents are responsible for application code, tests, and generated artifacts — not workflow state management.
+
+---
+
 ## Workflow Stages
 
 Every task moves through the following stages:
@@ -159,10 +178,12 @@ The Build Agent implements the feature.
 
 This includes:
 
-- creating or modifying code
+- creating or modifying application code
 - adding required tests
 - following coding standards
 - documenting implementation decisions
+
+The Build Agent must not modify workflow governance files or lifecycle state unless the human reviewer explicitly requests a harness change.
 
 The implementation must follow the approved implementation plan.
 
