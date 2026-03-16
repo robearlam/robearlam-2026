@@ -2,169 +2,215 @@
 
 ## Purpose
 
-This document defines the mandatory workflow used to deliver all new features in this repository.
+This document defines the end-to-end workflow used to implement features within the harness.
 
-The goal is to ensure development is:
+The workflow ensures that features are:
 
-- incremental
-- testable
-- observable
-- repeatable
+- clearly specified
+- intentionally designed
+- technically planned
+- implemented according to standards
+- validated through QA
+- approved by a human reviewer
 
-Features must be delivered in **small vertical slices**, not large multi-feature implementations.
+This process enables reliable and repeatable development using AI agents while maintaining human oversight.
 
 ---
 
 ## Core Principles
 
-1. Features must be delivered incrementally.
-2. Every feature must have explicit acceptance criteria.
-3. Implementation must follow an approved task plan.
-4. Tests must validate critical behavior.
-5. All meaningful runs must be logged.
-6. Features must be reviewable before merge.
+### Small Feature Slices
+
+Work should be broken into small, clearly defined feature slices.
+
+Each task should represent a focused piece of work that can move through the workflow safely and independently.
+
+Large features should be decomposed into smaller tasks whenever possible.
 
 ---
 
-## Feature Lifecycle
+### Explicit Design and Planning
 
-Every feature must pass through the following stages.
+Features must pass through specification, design, and implementation planning before code is written.
 
-### Stage 1 — Feature Request
-
-A new feature begins with a short request describing the desired outcome.
-
-Example:
-
-The request should focus on **user-visible outcomes**, not implementation details.
+This prevents implementation agents from making product or architectural decisions that should have been made earlier in the workflow.
 
 ---
 
-### Stage 2 — Feature Specification
+### Human-Guided Development
 
-The request is converted into a structured feature specification.
+The harness is designed to assist human developers, not replace them.
 
-The specification defines:
+AI agents may produce:
+
+- feature specifications
+- design notes
+- implementation plans
+- code changes
+- QA reviews
+
+However, **a human reviewer remains responsible for approving completed work** before it is considered finished.
+
+---
+
+## Workflow Stages
+
+Every task moves through the following stages:
+
+### 1. Feature Specification
+
+The **PO / Spec Agent** creates a feature specification.
+
+This defines:
 
 - feature goal
 - user value
 - scope
-- out-of-scope
 - acceptance criteria
-- risks
 
-This prevents ambiguous implementations.
+The specification clarifies what must be built before design begins.
 
 ---
 
-### Stage 3 — Design Note
+### 2. Feature Design
 
-If the feature affects UI or content structure, a design note must be created.
+The **Feature Design Agent** produces a design note.
 
-The design note defines:
+This describes:
 
-- page structure
+- layout structure
 - section hierarchy
-- component choices
-- responsive considerations
-- accessibility considerations
+- component usage
+- responsive behaviour
+
+The design must follow the rules defined in the design system.
 
 ---
 
-### Stage 4 — Task Plan
+### 3. Implementation Planning
 
-The feature specification and design note are translated into a technical implementation plan.
+The **Tech Lead Agent** creates an implementation plan.
 
-The task plan defines:
+This plan defines:
 
-- files to create or modify
+- technical approach
+- files or directories affected
 - implementation steps
-- testing strategy
-- potential risks
+- required tests
+- risks and assumptions
+
+The goal is to remove architectural ambiguity before implementation begins.
 
 ---
 
-### Stage 5 — Implementation
+### 4. Implementation
 
-The build agent implements the approved task plan.
+The **Build Agent** implements the feature.
 
-Implementation must:
+This includes:
 
-- follow coding standards
-- remain within defined scope
-- include required tests
+- creating or modifying code
+- adding required tests
+- following coding standards
+- documenting implementation decisions
 
----
-
-### Stage 6 — Validation
-
-Before a feature can be considered complete:
-
-- lint must pass
-- type checking must pass
-- automated tests must pass
+The implementation must follow the approved implementation plan.
 
 ---
 
-### Stage 7 — QA Review
+### 5. QA Validation
 
-A QA review confirms:
+The **QA Agent** validates the completed implementation.
 
-- acceptance criteria are satisfied
-- tests adequately cover the feature
-- no unintended regressions are introduced
+The QA review checks:
 
----
+- acceptance criteria
+- alignment with the design note
+- adherence to implementation plan
+- presence of meaningful tests
 
-### Stage 8 — Run Logging
-
-Every meaningful feature implementation must produce:
-
-- a machine-readable run log
-- a human-readable run summary
-
-These records enable debugging and learning from previous runs.
+Any issues discovered must be documented and resolved.
 
 ---
 
-### Stage 9 — Merge
+### 6. Human Approval
 
-A feature may only be merged when:
+After QA validation passes, the task enters **Awaiting Approval**.
 
-- all acceptance criteria are satisfied
-- required tests exist and pass
-- QA review passes
-- run logs are recorded
+At this stage, a **human reviewer must review the result and decide whether the task is complete**.
 
----
+The reviewer may:
 
-## Anti-Patterns
+- approve the task
+- request revisions
+- return the task to Blocked or In Progress
 
-The following behaviors are explicitly discouraged:
-
-- implementing features directly from vague prompts
-- combining unrelated work into a single task
-- skipping tests for domain logic
-- declaring work complete without acceptance validation
-- merging code without run logs
+No task may be marked complete without human approval.
 
 ---
 
-## Definition of Completion
+## Human Approval Requirement
 
-A feature is considered complete when:
+This harness is **human-guided**.
 
-- acceptance criteria are satisfied
-- implementation matches the task plan
-- tests pass
-- QA review confirms correctness
-- run logs are stored in the repository
+AI agents assist with development, but they do not have authority to approve completion independently.
+
+Human approval is required at the following points:
+
+- after QA review, before the task is marked Complete
+- before the next Ready task is allowed to move into In Progress
+
+The harness must not continue automatically from one completed task to the next without explicit human approval.
 
 ---
 
 ## Sequential Execution Rule
 
-The harness executes work sequentially.
-Only one task may be in the **In Progress** state at any time.
-A new task may only begin once the current task has passed QA validation and been marked **Complete**.
-This prevents parallel work streams and ensures that each feature slice is completed and verified before the next begins.
+Tasks must be executed sequentially.
+
+Only one task may be active at a time.
+
+A task is considered active when its status is:
+
+- In Progress
+- QA Review
+- Awaiting Approval
+- Blocked
+
+A new task may not begin until the current task has been completed and approved.
+
+This rule prevents:
+
+- parallel work streams
+- conflicting code changes
+- context fragmentation between agents
+
+---
+
+## Expected Outputs
+
+Each task should produce the following artifacts:
+
+- feature specification
+- design note
+- implementation plan
+- implementation summary
+- QA review
+- harness run report
+
+These documents provide traceability and make the development process easier to review.
+
+---
+
+## Summary
+
+The harness workflow ensures that every feature is built through a controlled sequence of steps:
+
+Specification  
+→ Design  
+→ Implementation Plan  
+→ Build  
+→ QA Validation  
+→ Human Approval
+
+Only after human approval may the task be considered complete and the next task begin.

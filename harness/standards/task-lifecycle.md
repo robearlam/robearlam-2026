@@ -13,7 +13,7 @@ The goal is to ensure that task execution is:
 
 Only one task may be active at a time.
 
-This standard prevents parallel work streams and ensures that each task is completed and validated before the next task begins.
+This standard prevents parallel work streams and ensures that each task is completed, validated, and approved before the next task begins.
 
 ---
 
@@ -25,7 +25,7 @@ Tasks must be executed one at a time.
 
 The harness does not support parallel task execution.
 
-Only one task may be in an active execution state at any time.
+Only one task may be active within the lifecycle at any time.
 
 ---
 
@@ -39,21 +39,23 @@ Tasks may not skip required lifecycle stages.
 
 ### Completion Before Progression
 
-A task must pass validation before the next task begins.
+A task must pass validation and receive human approval before the harness proceeds to the next task.
 
-Incomplete or failed work must be resolved before the harness proceeds to the next task.
+Incomplete or failed work must be resolved before moving forward.
 
 ---
 
 ## Task States
 
-The following states are used by the harness.
+The following states define the lifecycle of a task.
+
+---
 
 ### Planned
 
 The task exists conceptually but has not yet been selected for execution.
 
-This state usually exists in the backlog rather than as an active task file.
+This state typically exists in the backlog rather than in the tasks directory.
 
 ---
 
@@ -61,57 +63,79 @@ This state usually exists in the backlog rather than as an active task file.
 
 The task has been selected for upcoming work and is ready to enter the harness workflow.
 
-A task in this state is eligible to become the next active task.
+Tasks in this state are candidates to become the next active task.
 
 ---
 
 ### In Progress
 
-The task is currently moving through the harness workflow.
+The task is currently being executed.
 
-This includes:
+This includes the following workflow stages:
 
 - feature specification
 - feature design
 - implementation planning
-- build execution
+- implementation
 
-Only one task may be in this state at any time.
+Only one task may be in this state at a time.
 
 ---
 
 ### QA Review
 
-The task has been implemented and is under validation.
+The feature implementation is complete and is undergoing validation.
 
-The QA Agent is reviewing the output against the specification, design note, and implementation plan.
+The QA Agent reviews the implementation against:
 
-Only one task may be in this state at any time.
+- the feature specification
+- the design note
+- the implementation plan
+- the acceptance criteria
 
-A task in QA Review is still considered the active task.
+A task in QA Review is still considered active.
+
+---
+
+### Awaiting Approval
+
+The task has passed QA validation and is waiting for human review.
+
+In this state, the harness must pause until a human reviewer decides whether the task should be approved.
+
+Possible outcomes:
+
+- approval → move to Complete
+- revision required → return to In Progress
+- unresolved issue → move to Blocked
+
+A task in Awaiting Approval is still considered active.
 
 ---
 
 ### Blocked
 
-The task cannot continue because of an unresolved issue.
+The task cannot proceed because an issue has been identified.
 
-Examples:
+Examples include:
 
 - missing information
-- unresolved design conflict
-- technical blocker
-- failed acceptance criteria requiring clarification
+- design conflicts
+- technical constraints
+- failed acceptance criteria
+- human rejection during review
 
-A blocked task must be resolved before any new task begins.
+Blocked tasks must be resolved before the harness can continue.
 
 ---
 
 ### Complete
 
-The task has passed QA validation and all required outputs have been recorded.
+The task has passed QA validation and received human approval.
 
-A complete task is finished and no longer active.
+The task is finished and no longer active.
+
+Only after a task reaches Complete may the harness begin the next Ready task.
 
 ---
 
@@ -122,15 +146,17 @@ Tasks must move through the following transitions:
 Planned → Ready  
 Ready → In Progress  
 In Progress → QA Review  
-QA Review → Complete
+QA Review → Awaiting Approval  
+Awaiting Approval → Complete
 
-If issues are found, the following transitions are also allowed:
+If issues are discovered, the following transitions are also allowed:
 
 In Progress → Blocked  
 QA Review → Blocked  
+Awaiting Approval → Blocked  
 Blocked → In Progress
 
-No other transitions should be used without explicitly updating this standard.
+No other transitions should occur without updating this standard.
 
 ---
 
@@ -138,19 +164,20 @@ No other transitions should be used without explicitly updating this standard.
 
 The harness supports only one active task at a time.
 
-An active task is any task in one of the following states:
+A task is considered active if it is in one of the following states:
 
 - In Progress
 - QA Review
+- Awaiting Approval
 - Blocked
 
 If any task exists in an active state, no other task may move into In Progress.
 
-This rule ensures:
+This ensures:
 
 - no parallel work streams
 - simpler debugging
-- reduced merge conflict risk
+- reduced merge conflicts
 - clearer run logs
 
 ---
@@ -159,17 +186,33 @@ This rule ensures:
 
 When no task is active, the harness should select the next task from the Ready state.
 
-Selection should follow task ID order.
+Tasks should be selected in **task ID order**.
 
-Example:
+Example ordering:
 
-- T001
-- T002
-- T003
+T001  
+T002  
+T003
 
 The lowest numbered Ready task should be selected first unless a deliberate exception is recorded.
 
-This creates predictable execution order.
+---
+
+## Human Approval Rule
+
+The harness is not fully autonomous.
+
+After QA validation passes, the task must move to **Awaiting Approval**.
+
+At this stage a human reviewer must decide whether the work is acceptable.
+
+Possible reviewer actions include:
+
+- approving the task
+- requesting revisions
+- rejecting the work and returning the task to Blocked or In Progress
+
+No task may move from Awaiting Approval to Complete without explicit human approval.
 
 ---
 
@@ -182,10 +225,11 @@ A task may only move to Complete when all of the following are true:
 - the implementation plan exists
 - implementation is complete
 - required tests exist
-- QA review has passed
+- QA validation has passed
+- human approval has been granted
 - run logs or reports have been recorded
 
-A task is not complete just because code was written.
+Code alone does not qualify a task as complete.
 
 ---
 
@@ -201,7 +245,7 @@ This prevents unresolved issues from being hidden by continued forward progress.
 
 ## Relationship to Backlog
 
-Backlog items represent candidate work.
+Backlog items represent potential future work.
 
 A backlog item becomes an active task only when it is moved into the task system and marked Ready.
 
@@ -211,41 +255,17 @@ Tasks are the execution system.
 
 ---
 
-## Relationship to QA
-
-A task is not considered complete until the QA Agent has validated that:
-
-- acceptance criteria are satisfied
-- the implementation matches the design intent
-- the implementation matches the task plan
-- required tests are present and meaningful
-
-QA is mandatory for task completion.
-
----
-
-## Anti-Patterns
-
-The following behaviours are not allowed:
-
-- running multiple tasks in parallel
-- starting a new task while another is Blocked
-- marking a task Complete before QA
-- skipping directly from Ready to Complete
-- continuing to new work when the current task is unresolved
-
----
-
 ## Summary
 
 The harness executes work as a sequence of validated task slices.
 
-The rule is:
+The lifecycle for each task is:
 
-1. Select one Ready task
-2. Move it to In Progress
-3. Complete implementation
-4. Move it to QA Review
-5. Resolve any issues
-6. Mark it Complete
-7. Only then begin the next task
+Planned  
+→ Ready  
+→ In Progress  
+→ QA Review  
+→ Awaiting Approval  
+→ Complete
+
+Only after a task is approved and completed may the next Ready task begin.
