@@ -29,6 +29,23 @@ Large features should be decomposed into smaller tasks whenever possible.
 
 ---
 
+### Implementation Slice Planning
+
+Within a task, implementation planning must prefer small, reviewable slices over large monolithic build plans.
+
+Implementation plans should break work into bounded increments that:
+
+- can be understood easily
+- reduce implementation risk
+- support incremental validation
+- make debugging easier if problems arise
+
+A task may remain a single harness task while still being implemented through multiple internal slices.
+
+Implementation slices should avoid bundling unrelated changes together.
+
+---
+
 ### Explicit Design and Planning
 
 Features must pass through specification, design, and implementation planning before code is written.
@@ -49,7 +66,7 @@ AI agents may produce:
 - code changes
 - QA reviews
 
-However, **a human reviewer remains responsible for approving completed work** before it is considered finished.
+However, a human reviewer remains responsible for approving completed work before it is considered finished.
 
 ---
 
@@ -59,7 +76,7 @@ Every task moves through the following stages:
 
 ### 1. Feature Specification
 
-The **PO / Spec Agent** creates a feature specification.
+The PO / Spec Agent creates a feature specification.
 
 This defines:
 
@@ -69,6 +86,8 @@ This defines:
 - acceptance criteria
 
 The specification clarifies what must be built before design begins.
+
+---
 
 ### Acceptance Criteria Standard
 
@@ -103,7 +122,7 @@ If design system compliance is required, the criterion should reference the spec
 
 ### 2. Feature Design
 
-The **Feature Design Agent** produces a design note.
+The Feature Design Agent produces a design note.
 
 This describes:
 
@@ -118,7 +137,7 @@ The design must follow the rules defined in the design system.
 
 ### 3. Implementation Planning
 
-The **Tech Lead Agent** creates an implementation plan.
+The Tech Lead Agent creates an implementation plan.
 
 This plan defines:
 
@@ -128,13 +147,15 @@ This plan defines:
 - required tests
 - risks and assumptions
 
+Implementation planning must use small implementation slices where possible.
+
 The goal is to remove architectural ambiguity before implementation begins.
 
 ---
 
 ### 4. Implementation
 
-The **Build Agent** implements the feature.
+The Build Agent implements the feature.
 
 This includes:
 
@@ -149,7 +170,7 @@ The implementation must follow the approved implementation plan.
 
 ### 5. QA Validation
 
-The **QA Agent** validates the completed implementation.
+The QA Agent validates the completed implementation.
 
 The QA review checks:
 
@@ -164,9 +185,9 @@ Any issues discovered must be documented and resolved.
 
 ### 6. Human Approval
 
-After QA validation passes, the task enters **Awaiting Approval**.
+After QA validation passes, the task enters Awaiting Approval.
 
-At this stage, a **human reviewer must review the result and decide whether the task is complete**.
+At this stage, a human reviewer must review the result and decide whether the task is complete.
 
 The reviewer may:
 
@@ -180,7 +201,7 @@ No task may be marked complete without human approval.
 
 ## Human Approval Requirement
 
-This harness is **human-guided**.
+This harness is human-guided.
 
 AI agents assist with development, but they do not have authority to approve completion independently.
 
@@ -227,14 +248,14 @@ Each task should produce the following artifacts:
 - QA review
 - harness run report
 
-These documents provide traceability and make the development process easier to review.
-
 Artifacts should be stored in the appropriate typed artifact directory under `harness/artifacts/`:
 
 - `specs/`
 - `design/`
 - `plans/`
 - `qa/`
+
+These documents provide traceability and make the development process easier to review.
 
 ---
 
