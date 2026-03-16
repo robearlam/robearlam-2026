@@ -159,3 +159,12 @@ A feature is considered complete when:
 - tests pass
 - QA review confirms correctness
 - run logs are stored in the repository
+
+---
+
+## Sequential Execution Rule
+
+The harness executes work sequentially.
+Only one task may be in the **In Progress** state at any time.
+A new task may only begin once the current task has passed QA validation and been marked **Complete**.
+This prevents parallel work streams and ensures that each feature slice is completed and verified before the next begins.
