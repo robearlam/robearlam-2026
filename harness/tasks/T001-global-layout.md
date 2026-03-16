@@ -1,6 +1,6 @@
 # Task T001 — Global Site Layout
 
-Status: Ready  
+Status: Complete 
 Backlog Item: B002  
 Created: 2026-03-16
 

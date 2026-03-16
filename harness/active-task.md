@@ -1,9 +1,11 @@
 # Active Task
 
-Task ID: T001  
-Task File: harness/tasks/T001-global-layout.md
+Task ID: None  
+Task File: None
 
-Status: In Progress  
-Stage: Specification
+Status: Idle  
+Stage: None  
+Run: None
 
-Run: RUN-2026-03-16-T001-SPEC
+Notes:
+No active task.
