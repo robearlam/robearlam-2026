@@ -22,6 +22,8 @@ This role is responsible for:
 
 The output should provide enough clarity that the implementation can follow it without inventing new design decisions.
 
+This role may recommend reusable components and structural patterns, but must not prescribe exact file paths, code structure, utility classes, or framework implementation steps. Those belong to the Tech Lead Agent.
+
 ---
 
 ## Non-Responsibilities

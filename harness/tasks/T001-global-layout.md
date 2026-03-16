@@ -21,11 +21,11 @@ This layout will be used by all pages.
 
 ## Related Artifacts
 
-Feature Specification: (to be generated)  
-Design Note: (to be generated)  
-Implementation Plan: (to be generated)  
-QA Review: (to be generated)  
-Run Report: (to be generated)
+Feature Specification: harness/artifacts/specs/T001-feature-spec.md  
+Design Note: harness/artifacts/design/T001-design-note.md  
+Implementation Plan: harness/artifacts/plans/T001-implementation-plan.md  
+QA Review: harness/artifacts/qa/T001-qa-review.md  
+Run Report:
 
 ---
 
