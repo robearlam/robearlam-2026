@@ -89,6 +89,31 @@ Implementation agents are responsible for application code, tests, and generated
 
 ---
 
+### Controlled Build Validation Loop
+
+The Build Agent may use a controlled validation loop during implementation.
+
+This loop allows the Build Agent to:
+
+- run approved validation commands
+- inspect failures
+- apply bounded implementation fixes
+- rerun validation
+
+The purpose of this loop is to resolve obvious in-scope implementation issues without requiring a separate human prompt for each failure.
+
+The validation loop must remain controlled:
+
+- only approved commands may be run
+- only failures related to the active task may be fixed
+- retries must be limited
+- workflow governance files must never be modified
+- the Build Agent must stop and escalate if validation still fails after the retry limit or if a failure implies broader scope
+
+This loop improves efficiency without turning the harness into an uncontrolled autonomous system.
+
+---
+
 ## Workflow Stages
 
 Every task moves through the following stages:
@@ -182,6 +207,7 @@ This includes:
 - adding required tests
 - following coding standards
 - documenting implementation decisions
+- using the controlled build validation loop when appropriate
 
 The Build Agent must not modify workflow governance files or lifecycle state unless the human reviewer explicitly requests a harness change.
 

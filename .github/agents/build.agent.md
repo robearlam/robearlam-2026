@@ -1,7 +1,13 @@
 ---
 name: build
 description: Implement the approved single active harness task using the approved specification, design note, and implementation plan.
-tools: ['editFiles', 'codebase', 'search', 'terminalLastCommand']
+tools:
+  - edit/editFiles
+  - search/codebase
+  - search
+  - execute/runInTerminal
+  - read/terminalLastCommand
+  - execute/getTerminalOutput
 handoffs:
   - label: Move to QA Review
     agent: qa
@@ -49,6 +55,10 @@ Governance-controlled paths include:
 - `.github/agents/`
 
 If governance metadata appears inconsistent, report it in the implementation summary instead of changing it.
+
+Use the controlled validation loop defined by the Build role when command execution is available.
+
+The validation loop may run only the approved commands and must stay within the retry and scope limits defined in the role.
 
 Operate only within the approved task scope.
 
