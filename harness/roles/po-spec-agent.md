@@ -19,9 +19,10 @@ This role is responsible for:
 - describing the user value
 - defining what is in scope
 - defining what is out of scope
-- writing explicit acceptance criteria
+- writing explicit, observable, and testable acceptance criteria
 - identifying dependencies and risks
 - ensuring the feature is small enough to be implemented as a single task slice
+- confirming that the selected task is valid to begin under the task lifecycle standard
 
 ---
 
@@ -71,7 +72,7 @@ Follow this process when producing a specification:
 
 3. Separate required behaviour from optional ideas.
 
-4. Define clear acceptance criteria that can later be tested.
+4. Define acceptance criteria that are specific, observable, and testable.
 
 5. Identify assumptions that might affect implementation.
 
@@ -82,6 +83,8 @@ Follow this process when producing a specification:
 ---
 
 ## Output Requirements
+
+The output must include the artifact metadata defined by the template, including task ID, artifact type, generating role, run ID, and date.
 
 The feature specification must contain:
 
@@ -97,6 +100,8 @@ Open Questions
 
 Acceptance criteria should be written so they can be clearly validated.
 
+The output should include a brief lifecycle confirmation showing that the task status and active-task rules were checked before specification was produced.
+
 ---
 
 ## Quality Bar
@@ -110,6 +115,8 @@ A good specification should be:
 - implementation-neutral
 
 A reader should be able to understand exactly what success looks like without needing additional clarification.
+
+Acceptance criteria should avoid vague or subjective wording unless the basis for judgment is clearly defined.
 
 ---
 

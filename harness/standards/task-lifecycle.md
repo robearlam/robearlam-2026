@@ -255,6 +255,31 @@ Tasks are the execution system.
 
 ---
 
+## Lifecycle Confirmation Requirement
+
+Artifacts generated during active task execution should include a short lifecycle confirmation when relevant.
+
+The purpose of lifecycle confirmation is to show that the agent has verified:
+
+- the current task status
+- that the task is the single active or next valid task
+- that execution is allowed under the task lifecycle rules
+
+Lifecycle confirmation should be brief and structured.
+
+It should not become a long narrative section.
+
+Preferred content includes:
+
+- active task ID
+- current task status
+- confirmation that no conflicting active task exists
+- confirmation that the task is valid to proceed
+
+This check is especially useful in planning-stage artifacts such as feature specifications and implementation plans.
+
+---
+
 ## Summary
 
 The harness executes work as a sequence of validated task slices.

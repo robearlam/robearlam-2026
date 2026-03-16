@@ -14,11 +14,11 @@ Short description of the feature.
 
 ## Related Artifacts
 
-Feature Specification:  
-Design Note:  
-Implementation Plan:  
-QA Review:  
-Run Report:  
+Feature Specification: `harness/artifacts/specs/{{TASK_ID}}-feature-spec.md`  
+Design Note: `harness/artifacts/design/{{TASK_ID}}-design-note.md`  
+Implementation Plan: `harness/artifacts/plans/{{TASK_ID}}-implementation-plan.md`  
+QA Review: `harness/artifacts/qa/{{TASK_ID}}-qa-review.md`  
+Run Report: `harness/runs/{{RUN_ID}}.md`
 
 ---
 

@@ -70,6 +70,35 @@ This defines:
 
 The specification clarifies what must be built before design begins.
 
+### Acceptance Criteria Standard
+
+Acceptance criteria must be written so they can be clearly validated by a human reviewer or QA agent.
+
+Good acceptance criteria should be:
+
+- specific
+- observable
+- bounded
+- testable
+
+Acceptance criteria should avoid vague or subjective wording unless the judgment criteria are explicitly defined.
+
+Prefer statements that describe visible or verifiable outcomes.
+
+Examples of stronger acceptance criteria:
+
+- A shared root layout wraps all pages under the main app route tree.
+- Header navigation is visible on all pages using the shared layout.
+- The layout uses the standard centered content container defined by the design system.
+
+Examples of weaker acceptance criteria:
+
+- The layout feels consistent.
+- The page looks professional.
+- Spacing is good.
+
+If design system compliance is required, the criterion should reference the specific design rule or reusable pattern being followed.
+
 ---
 
 ### 2. Feature Design
@@ -199,6 +228,13 @@ Each task should produce the following artifacts:
 - harness run report
 
 These documents provide traceability and make the development process easier to review.
+
+Artifacts should be stored in the appropriate typed artifact directory under `harness/artifacts/`:
+
+- `specs/`
+- `design/`
+- `plans/`
+- `qa/`
 
 ---
 
