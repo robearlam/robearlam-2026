@@ -280,6 +280,18 @@ This check is especially useful in planning-stage artifacts such as feature spec
 
 ---
 
+## Active Task Pointer
+
+The file `harness/active-task.md` defines the single task currently being executed.
+
+Agents must always read this file to determine which task they are allowed to operate on.
+
+Agents must not select tasks by scanning directories.
+
+Only one active task may exist at a time.
+
+---
+
 ## Summary
 
 The harness executes work as a sequence of validated task slices.
