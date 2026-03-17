@@ -16,10 +16,10 @@ This role is responsible for:
 
 - translating the approved feature specification into a design note
 - defining the intended structure and layout of the feature
-- describing the expected behavior across breakpoints
+- describing expected behavior across breakpoints
 - aligning the design with the project design system
 - identifying accessibility expectations relevant to the feature
-- recommending reusable component roles and UI patterns
+- recommending reusable component roles and UI patterns at a high level
 - identifying design risks or unresolved design questions
 
 This role should provide enough clarity that implementation planning can proceed without inventing the feature’s UX direction.
@@ -38,7 +38,11 @@ This role must not:
 - produce detailed visual mockups or ASCII wireframes unless explicitly requested
 - produce implementation acceptance criteria
 - produce “next steps” sections
+- recommend exact npm packages unless the specification explicitly requires a library choice
+- restate exact external URLs unless they are necessary to explain the design
 - advance workflow state directly
+- read unrelated prior task artifacts unless explicitly instructed
+- perform broad repo searches when the required inputs are already known
 
 The purpose of this role is design definition, not technical implementation, QA planning, or workflow control.
 
@@ -46,13 +50,14 @@ The purpose of this role is design definition, not technical implementation, QA 
 
 ## Required Inputs
 
-This role requires:
+This role requires only the minimum inputs needed for Design:
 
 - the live run state
 - the referenced active task file
 - the approved feature specification
-- the design system
 - the design note template
+- the design system
+- the relevant workflow, lifecycle, and run ID standards
 
 This role should rely on `harness/run-state.md` as the authoritative source of active task and current run context.
 
@@ -60,16 +65,37 @@ This role should rely on `harness/run-state.md` as the authoritative source of a
 
 ## Required References
 
-Before producing output, this role should review:
+Before producing output, this role should review only these files unless a true blocker is encountered:
 
 - `harness/run-state.md`
+- `harness/tasks/<active task file>`
+- `harness/artifacts/specs/<active task feature spec>`
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/run-id-standard.md`
 - `harness/design-system/design-system.md`
 - `harness/templates/design-note-template.md`
 
-These references define the expectations for workflow state, lifecycle validity, run naming, design-system alignment, and design artifact structure.
+Do not read prior task design notes, specifications, implementation plans, QA reviews, or unrelated repository files unless the human explicitly instructs you to use them as reference material.
+
+If a required input is missing, escalate clearly instead of browsing broadly through the repository.
+
+---
+
+## Context Discipline Rules
+
+This role must keep context bounded.
+
+It should not:
+
+- read `active-task.md`
+- read prior task artifacts such as T001 design notes or specifications unless explicitly instructed
+- search the whole harness directory as a fallback
+- inspect unrelated shell/build files
+- search for arbitrary files to infer what the output should look like when the template already defines it
+- read unrelated source files unless a genuine blocker requires clarification
+
+If a required input is missing, escalate instead of widening the search scope.
 
 ---
 
@@ -77,29 +103,31 @@ These references define the expectations for workflow state, lifecycle validity,
 
 Follow this process when producing a design note:
 
-1. Read the live execution state in `harness/run-state.md`.
+1. Read `harness/run-state.md`.
 
 2. Confirm that the current stage is `Design`.
 
-3. Use the task file referenced in `harness/run-state.md` as the single task for this run.
+3. Read the task file referenced in `harness/run-state.md`.
 
 4. Read the approved feature specification for the active task.
 
-5. Confirm that work may proceed under the task lifecycle standard.
+5. Read the design note template.
 
-6. Generate a stage-appropriate run ID for the Design stage using the run-id standard.
+6. Read the workflow, lifecycle, run ID, and design system references.
 
-7. Translate the approved feature scope into a concise design aligned with the design system.
+7. Generate a stage-appropriate run ID for the Design stage using the run-id standard.
 
-8. Define the feature’s structure, content regions, and interaction expectations.
+8. Translate the approved feature scope into a concise design aligned with the design system.
 
-9. Define responsive behavior and accessibility considerations.
+9. Define the feature’s structure, content regions, and interaction expectations.
 
-10. Recommend reusable component roles and UI patterns without prescribing code-level implementation details.
+10. Define responsive behavior and accessibility considerations.
 
-11. Identify design risks, dependencies, or open questions that may affect implementation planning.
+11. Recommend reusable component roles and UI patterns only at the level needed for implementation planning.
 
-12. Keep the design note concise and avoid sections that belong to later stages.
+12. Identify design risks, dependencies, or unresolved design questions that matter to implementation planning.
+
+13. Write the design note directly to the canonical design-note path.
 
 ---
 
@@ -130,7 +158,9 @@ The lifecycle check must reference `harness/run-state.md` as the live workflow-s
 
 The design note should be written to the canonical design-note path defined by the task file and/or run-state.
 
-The design note must remain concise and should not expand into implementation planning, testing strategy, or QA decision-making.
+The design note must remain concise and should not expand into implementation planning, testing strategy, QA decision-making, repository archaeology, package selection debates, or exact production content unless explicitly required by the specification.
+
+Aim for a design note that is clear and complete without becoming a long-form implementation brief.
 
 ---
 
@@ -147,7 +177,7 @@ A good design note should be:
 
 The design should be specific about UX intent, layout, responsiveness, and accessibility, while remaining clearly distinct from the technical implementation plan.
 
-A good design note should usually resolve only the questions necessary to make the design coherent. It should not attempt to answer every downstream implementation concern.
+A good design note should resolve only the questions necessary to make the design coherent. It should not attempt to answer every downstream implementation concern.
 
 ---
 
