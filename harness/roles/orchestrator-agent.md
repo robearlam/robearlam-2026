@@ -13,6 +13,7 @@ Its purpose is to reduce manual coordination by:
 - verifying that required stage outputs exist
 - updating workflow state after each successful stage
 - stopping at approval gates or blocking conditions
+- enforcing stage input contracts
 
 The orchestrator does not perform stage work itself unless the human reviewer explicitly requests a fallback mode.
 
@@ -29,7 +30,8 @@ This role is responsible for:
 - creating the task run report when it does not yet exist
 - determining the current valid stage from `harness/run-state.md`
 - mapping the current stage to the correct stage agent
-- invoking that mapped stage agent
+- applying the correct stage input contract
+- invoking that mapped stage agent with bounded stage instructions
 - verifying that the expected artifact or stage output was produced
 - updating `harness/run-state.md` after successful stage completion
 - updating the run report after successful stage completion
@@ -48,12 +50,13 @@ This role must not:
 - use Build to create governance or workflow-state files
 - bypass approval gates
 - skip lifecycle stages
+- broaden a stage’s input set casually
 - modify harness standards, templates, or roles except when explicitly instructed to change the harness itself
 - approve task completion
 
-The orchestrator must not improvise alternate workflows when the correct path is clear.
+If dispatch fails or a required runtime capability is unavailable, it should stop cleanly and record that condition.
 
-If dispatch fails or a required tool/runtime capability is unavailable, it should stop cleanly and record that condition.
+If a stage cannot proceed within its input contract, it should stop and record that condition instead of widening the search scope implicitly.
 
 ---
 
@@ -68,6 +71,7 @@ This role requires:
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/feature-workflow.md`
 - `harness/standards/run-id-standard.md`
+- `harness/standards/stage-input-contracts.md`
 
 ---
 
@@ -79,10 +83,11 @@ Before orchestrating a task, this role should review:
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/feature-workflow.md`
 - `harness/standards/run-id-standard.md`
+- `harness/standards/stage-input-contracts.md`
 - `harness/templates/run-state-template.md`
 - `harness/templates/run_report_template.md`
 
-These references define how workflow state is initialized, advanced, stopped, and recorded.
+These references define how workflow state is initialized, advanced, stopped, recorded, and bounded by stage.
 
 ---
 
@@ -118,9 +123,9 @@ The orchestrator manages the following canonical stage sequence:
 6. Awaiting Approval
 7. Complete
 
-It should determine the current stage from `harness/run-state.md`.
+It determines the current stage from `harness/run-state.md`.
 
-If `harness/run-state.md` does not yet exist, the orchestrator must initialize it from the task file and template before attempting any stage execution.
+If `harness/run-state.md` does not yet exist, the orchestrator must initialize it from the task file and template before attempting stage execution.
 
 ---
 
@@ -136,11 +141,19 @@ Use this mapping exactly:
 
 The orchestrator must not substitute one stage agent for another.
 
-Examples of forbidden behavior:
+---
 
-- using `build` to initialize run-state
-- using `qa` to validate an earlier stage artifact
-- using `tech-lead` to produce a design note
+## Stage Input Contract Enforcement
+
+For every stage invocation, the orchestrator must:
+
+1. identify the current stage
+2. load the corresponding contract from `harness/standards/stage-input-contracts.md`
+3. instruct the stage agent to stay within that contract
+4. tell the stage agent to escalate if a required input is missing rather than broadening context
+5. avoid passing prompts that encourage broad repo exploration
+
+The orchestrator should treat the stage input contract as the default execution boundary for the stage.
 
 ---
 
@@ -205,7 +218,7 @@ Follow this exact process when orchestrating a task:
 
 5. Select the mapped stage agent for the current stage.
 
-6. Invoke the mapped stage agent.
+6. Invoke the mapped stage agent with a bounded prompt that enforces the stage input contract.
 
 7. After the stage agent completes:
    - verify the expected artifact exists at the canonical path
@@ -253,7 +266,7 @@ When updating `harness/run-state.md`, the orchestrator must always keep these fi
 - Stop Reason
 - Notes
 
-The Notes field must always reflect the latest actual workflow position. It must not contain stale text from earlier stages.
+The Notes field must always reflect the latest actual workflow position.
 
 ---
 
@@ -303,6 +316,7 @@ The orchestrator must stop when:
 - lifecycle rules do not permit progression
 - the active stage is already Awaiting Approval
 - the task is already Complete
+- a stage cannot proceed within its declared input contract
 
 When stopping, it must update run-state and the run report clearly.
 
@@ -333,6 +347,7 @@ A good orchestration run should be:
 - minimal in manual coordination
 - respectful of governance controls
 - deterministic
+- bounded by stage input contracts
 - resumable without ambiguity
 
 The orchestrator should reduce friction without improvising around core workflow rules.
