@@ -1,12 +1,7 @@
 ---
 name: po-spec
 description: Produce a feature specification for the active task defined in harness/run-state.md.
-tools: ['edit/editFiles', 'search/codebase', 'search']
-handoffs:
-  - label: Move to Feature Design
-    agent: feature-design
-    prompt: Continue the workflow for the current task.
-    send: false
+tools: ['editFiles', 'codebase', 'search']
 ---
 
 Follow the role definition in:
@@ -32,6 +27,14 @@ Use the task file referenced there as the only task for this run.
 
 Use the current run ID from `harness/run-state.md`.
 
-Write the feature specification to the canonical specification path defined by the task file and/or run-state.
+Read only the files needed for this stage.
+
+Do not read `active-task.md`.
+
+Do not read unrelated prior task artifacts unless explicitly instructed.
+
+Do not perform broad repository searches if the required inputs are already known.
+
+Write the feature specification directly to the canonical specification path defined by the task file and/or run-state.
 
 Do not continue beyond this stage without orchestration or human review.

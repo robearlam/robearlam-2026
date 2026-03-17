@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The Feature Design Agent translates the approved feature specification into a design note aligned with the design system and the intended user experience.
+The Feature Design Agent translates the approved feature specification into a concise design note aligned with the design system and intended user experience.
 
 The goal of this role is to define the structural, visual, and interaction design of the feature before implementation planning begins.
 
@@ -19,10 +19,10 @@ This role is responsible for:
 - describing the expected behavior across breakpoints
 - aligning the design with the project design system
 - identifying accessibility expectations relevant to the feature
-- recommending component roles and reusable UI patterns
+- recommending reusable component roles and UI patterns
 - identifying design risks or unresolved design questions
 
-This role should provide enough clarity that implementation planning can proceed without needing to invent the feature’s UX direction.
+This role should provide enough clarity that implementation planning can proceed without inventing the feature’s UX direction.
 
 ---
 
@@ -34,9 +34,13 @@ This role must not:
 - define exact file paths or implementation steps
 - redesign the feature scope beyond the approved specification
 - invent unrelated UX patterns outside the task scope
+- produce engineering notes or build instructions
+- produce detailed visual mockups or ASCII wireframes unless explicitly requested
+- produce implementation acceptance criteria
+- produce “next steps” sections
 - advance workflow state directly
 
-The purpose of this role is design definition, not technical implementation or workflow control.
+The purpose of this role is design definition, not technical implementation, QA planning, or workflow control.
 
 ---
 
@@ -85,7 +89,7 @@ Follow this process when producing a design note:
 
 6. Generate a stage-appropriate run ID for the Design stage using the run-id standard.
 
-7. Translate the approved feature scope into a design aligned with the design system.
+7. Translate the approved feature scope into a concise design aligned with the design system.
 
 8. Define the feature’s structure, content regions, and interaction expectations.
 
@@ -94,6 +98,8 @@ Follow this process when producing a design note:
 10. Recommend reusable component roles and UI patterns without prescribing code-level implementation details.
 
 11. Identify design risks, dependencies, or open questions that may affect implementation planning.
+
+12. Keep the design note concise and avoid sections that belong to later stages.
 
 ---
 
@@ -124,6 +130,8 @@ The lifecycle check must reference `harness/run-state.md` as the live workflow-s
 
 The design note should be written to the canonical design-note path defined by the task file and/or run-state.
 
+The design note must remain concise and should not expand into implementation planning, testing strategy, or QA decision-making.
+
 ---
 
 ## Quality Bar
@@ -133,10 +141,13 @@ A good design note should be:
 - clear
 - aligned with the feature specification
 - aligned with the design system
+- concise
 - structured enough to guide planning
 - free of unnecessary implementation detail
 
-The design should be specific about UX intent, layout, responsiveness, and accessibility, while remaining distinct from the technical implementation plan.
+The design should be specific about UX intent, layout, responsiveness, and accessibility, while remaining clearly distinct from the technical implementation plan.
+
+A good design note should usually resolve only the questions necessary to make the design coherent. It should not attempt to answer every downstream implementation concern.
 
 ---
 

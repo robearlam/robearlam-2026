@@ -38,6 +38,8 @@ This role must not:
 - expand the feature scope beyond the request
 - combine unrelated ideas into a single feature
 - advance workflow state directly
+- browse unrelated prior task artifacts unless explicitly instructed
+- perform broad repo searches when the required inputs are already known
 
 The purpose of this role is clarity of intent, not implementation planning or workflow control.
 
@@ -45,12 +47,15 @@ The purpose of this role is clarity of intent, not implementation planning or wo
 
 ## Required Inputs
 
-This role requires:
+This role requires only the minimum inputs needed for Specification:
 
 - the live run state
 - the referenced active task file
-- project standards
 - the feature specification template
+- the relevant workflow and lifecycle standards
+- the run ID standard
+- the testing standard if acceptance criteria need testability guidance
+- the design system only if task wording depends on it
 
 This role should rely on `harness/run-state.md` as the authoritative source of active task and current run context.
 
@@ -58,16 +63,35 @@ This role should rely on `harness/run-state.md` as the authoritative source of a
 
 ## Required References
 
-Before producing output, this role should review:
+Before producing output, this role should review only these files unless a true blocker is encountered:
 
 - `harness/run-state.md`
+- `harness/tasks/<active task file>`
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
-- `harness/standards/testing-standard.md`
 - `harness/standards/run-id-standard.md`
+- `harness/standards/testing-standard.md`
 - `harness/templates/feature-spec-template.md`
 
-These documents define the expectations for task validity, workflow state, run naming, feature scope, and specification quality.
+Only read `harness/design-system/design-system.md` if it is needed to clarify expected design-system alignment in scope or acceptance wording.
+
+Do not read unrelated task artifacts or broad repository context unless a required input is missing.
+
+---
+
+## Context Discipline Rules
+
+This role must keep context bounded.
+
+It should not:
+
+- read `active-task.md`
+- read prior task artifacts such as T001 specifications or plans unless explicitly instructed
+- search the whole harness directory as a fallback
+- inspect shell scripts, Makefiles, or unrelated repo utilities
+- search for arbitrary files to infer what the output should look like when the template already defines it
+
+If a required input is missing, escalate clearly instead of wandering broadly through the repository.
 
 ---
 
@@ -75,29 +99,29 @@ These documents define the expectations for task validity, workflow state, run n
 
 Follow this process when producing a specification:
 
-1. Read the live execution state in `harness/run-state.md`.
+1. Read `harness/run-state.md`.
 
 2. Confirm that the current stage is `Specification`.
 
-3. Use the task file referenced in `harness/run-state.md` as the single task for this run.
+3. Read the task file referenced in `harness/run-state.md`.
 
-4. Confirm that work may proceed under the task lifecycle standard.
+4. Read the feature specification template.
 
-5. Identify the core user outcome the feature should deliver.
+5. Read the workflow, lifecycle, run ID, and testing standards.
 
-6. Determine the smallest meaningful slice of functionality that satisfies the request.
+6. Determine whether the design system file is actually needed. If not, do not read it.
 
-7. Separate required behavior from optional ideas.
+7. Identify the core user outcome the feature should deliver.
 
-8. Define acceptance criteria that are specific, observable, bounded, and testable.
+8. Determine the smallest meaningful slice of functionality that satisfies the request.
 
-9. Acceptance criteria should describe outcomes that can be validated clearly by QA or a human reviewer.
+9. Separate required behavior from optional ideas.
 
-10. Identify assumptions that might affect implementation.
+10. Define acceptance criteria that are specific, observable, bounded, and testable.
 
-11. Identify dependencies or risks that downstream roles should know about.
+11. Identify assumptions, dependencies, risks, and open questions that matter to downstream stages.
 
-12. Confirm that the feature is appropriately scoped for a single development slice.
+12. Write the specification directly to the canonical specification path.
 
 ---
 
@@ -140,7 +164,9 @@ A good specification should be:
 
 Acceptance criteria should avoid vague or subjective wording unless the basis for judgment is clearly defined.
 
-A reader should be able to understand exactly what success looks like without needing additional clarification.
+A reader should be able to understand exactly what success looks like without additional clarification.
+
+The specification should not depend on unrelated prior task artifacts for structure or quality.
 
 ---
 
