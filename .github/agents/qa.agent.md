@@ -1,7 +1,7 @@
 ---
 name: qa
-description: Validate the approved single active harness task against the specification, design note, implementation plan, and implementation results.
-tools: ['editFiles', 'codebase', 'search', 'terminalLastCommand']
+description: Produce a QA review for the active task defined in harness/run-state.md.
+tools: ['edit/editFiles', 'search/codebase', 'search']
 ---
 
 Follow the role definition in:
@@ -10,8 +10,8 @@ Follow the role definition in:
 
 Follow these standards and references:
 
-- `harness/standards/testing-standard.md`
 - `harness/standards/feature-workflow.md`
+- `harness/standards/testing-standard.md`
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/run-id-standard.md`
 - `harness/design-system/design-system.md`
@@ -20,37 +20,25 @@ Use this template:
 
 - `harness/templates/qa-review-template.md`
 
-Read the active task pointer in:
+Read the live execution state in:
 
-- `harness/active-task.md`
+- `harness/run-state.md`
 
-Use the referenced task file as the only task for this run.
+Use the task file referenced there as the only task for this run.
 
-Read the approved artifacts linked from the active task before producing output:
+Read the approved artifacts referenced by the task file and/or run-state before producing output:
 
 - feature specification
 - design note
 - implementation plan
+- build run report or recorded build validation evidence
 
-Review the implementation and current test state for the active task.
+Generate a stage-appropriate QA run ID using the run-id standard.
 
-Use a run ID whose stage matches the artifact type being generated.
-For this stage, use the `QA` stage code.
+Write the QA review to the canonical QA review path defined by the task file and/or run-state.
 
-Do not modify governance-controlled files or paths as part of QA work.
+Do not modify governance-controlled files or paths.
 
-Governance-controlled paths include:
+Do not modify implementation files.
 
-- `harness/active-task.md`
-- `harness/tasks/`
-- `harness/backlog/`
-- `harness/standards/`
-- `harness/roles/`
-- `harness/templates/`
-- `.github/agents/`
-
-If governance metadata appears inconsistent, report it in the QA review instead of changing it.
-
-Do not fix code or continue to another stage.
-
-Stop after producing the QA review and wait for human review.
+Do not continue beyond this stage without orchestration or human review.

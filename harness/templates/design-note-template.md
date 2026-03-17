@@ -41,11 +41,13 @@ Design intent should guide downstream implementation decisions without prescribi
 
 ## Lifecycle Check
 
-Task ID: {{TASK_ID}}  
-Active Task Pointer: `harness/active-task.md`  
-Proceeding Validly: {{YES_OR_NO}}
+Task ID: {{TASK_ID}}
+Run State: harness/run-state.md
+Current Stage: Design
+Proceeding Validly: {{VALIDITY}}
 
 Brief note:
+{{LIFECYCLE_NOTE}}
 
 Confirm that:
 

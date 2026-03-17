@@ -1,58 +1,51 @@
 # Harness Run Report
 
-## Feature
+## Task
 
-Name of the feature being executed.
-
----
-
-## Run ID
-
-Unique identifier for this run.
+Task ID: {{TASK_ID}}  
+Task Title: {{TASK_TITLE}}  
+Task File: {{TASK_FILE}}
 
 ---
 
-## Agents Involved
+## Run
 
-List the agents that participated in this run.
+Run Report ID: {{RUN_REPORT_ID}}  
+Current Stage: {{CURRENT_STAGE}}  
+Current Run ID: {{CURRENT_RUN_ID}}
 
-Example:
-
-- PO / Spec Agent
-- Feature Design Agent
-- Tech Lead Agent
-- Build Agent
-- QA Agent
+Overall Status: {{OVERALL_STATUS}}
 
 ---
 
-## Summary
+## Stage History
 
-High level summary of the run.
-
----
-
-## Artifacts Produced
-
-List the documents created during the run.
-
-Examples:
-
-- feature specification
-- design note
-- implementation plan
-- QA review
+{{STAGE_HISTORY}}
 
 ---
 
-## Outcome
+## Artifact Paths
 
-Describe the final result of the run.
+Feature Specification: {{FEATURE_SPEC_PATH}}  
+Design Note: {{DESIGN_NOTE_PATH}}  
+Implementation Plan: {{IMPLEMENTATION_PLAN_PATH}}  
+QA Review: {{QA_REVIEW_PATH}}
 
-Example:
+---
 
-Feature completed successfully.
+## Validation Evidence
 
-or
+{{VALIDATION_EVIDENCE}}
 
-Issues identified requiring follow-up work.
+---
+
+## Stop / Pause State
+
+Stop Reason: {{STOP_REASON}}  
+Next Expected Action: {{NEXT_EXPECTED_ACTION}}
+
+---
+
+## Notes
+
+{{NOTES}}

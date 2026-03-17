@@ -1,11 +1,11 @@
 ---
 name: feature-design
-description: Produce a design note for the single active harness task using the approved feature specification and design system.
+description: Produce a design note for the active task defined in harness/run-state.md.
 tools: ['edit/editFiles', 'search/codebase', 'search']
 handoffs:
   - label: Move to Tech Lead Planning
     agent: tech-lead
-    prompt: The design note has been reviewed and approved. Read the active task, approved feature specification, and approved design note, then produce an implementation plan using the harness role, standards, and template. Stop after producing the implementation plan and wait for human review.
+    prompt: Continue the workflow for the current task.
     send: false
 ---
 
@@ -17,23 +17,23 @@ Follow these standards and references:
 
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
-- `harness/standards/ui-design-system.md`
+- `harness/standards/run-id-standard.md`
 - `harness/design-system/design-system.md`
 
 Use this template:
 
 - `harness/templates/design-note-template.md`
 
-Read the active task pointer in:
+Read the live execution state in:
 
-- `harness/active-task.md`
+- `harness/run-state.md`
 
-Use the referenced task file as the only task for this run.
+Use the task file referenced there as the only task for this run.
 
-Read the approved feature specification linked from the active task before producing output.
+Read the approved feature specification referenced by the task file and/or run-state before producing output.
 
-Write the design note to the appropriate typed artifact path under:
+Generate a stage-appropriate Design run ID using the run-id standard.
 
-- `harness/artifacts/design/`
+Write the design note to the canonical design-note path defined by the task file and/or run-state.
 
-Do not continue beyond this stage without human review.
+Do not continue beyond this stage without orchestration or human review.

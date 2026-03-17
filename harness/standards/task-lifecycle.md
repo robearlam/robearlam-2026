@@ -2,307 +2,334 @@
 
 ## Purpose
 
-This document defines how tasks move through the harness workflow.
+This document defines the lifecycle of a task within the harness workflow.
 
-The goal is to ensure that task execution is:
+The lifecycle describes the stages a task moves through from initial definition to completion.
 
-- sequential
-- controlled
-- observable
-- repeatable
+The lifecycle exists to ensure:
 
-Only one task may be active at a time.
+- consistent execution across tasks
+- predictable artifact generation
+- controlled progression through build and QA
+- clear approval points
+- traceable task history
 
-This standard prevents parallel work streams and ensures that each task is completed, validated, and approved before the next task begins.
-
----
-
-## Core Principles
-
-### Sequential Execution
-
-Tasks must be executed one at a time.
-
-The harness does not support parallel task execution.
-
-Only one task may be active within the lifecycle at any time.
+The lifecycle rules apply to the currently executing task as defined in `harness/run-state.md`.
 
 ---
 
-### Controlled State Transitions
+# Lifecycle Model
 
-Tasks must move through a defined set of states in order.
+A task moves through the following lifecycle stages:
 
-Tasks may not skip required lifecycle stages.
+1. Specification
+2. Design
+3. Implementation Planning
+4. Build
+5. QA
+6. Awaiting Approval
+7. Complete
 
----
+These stages represent the canonical workflow of the harness.
 
-### Completion Before Progression
-
-A task must pass validation and receive human approval before the harness proceeds to the next task.
-
-Incomplete or failed work must be resolved before moving forward.
-
----
-
-## Task States
-
-The following states define the lifecycle of a task.
+Each stage is responsible for producing specific artifacts and validating specific aspects of the feature.
 
 ---
 
-### Planned
+# Lifecycle State Authority
 
-The task exists conceptually but has not yet been selected for execution.
+The authoritative record of the current lifecycle stage is:
 
-This state typically exists in the backlog rather than in the tasks directory.
+```
+harness/run-state.md
+```
 
----
+This file defines:
 
-### Ready
+- the active task
+- the current lifecycle stage
+- the current run ID
+- which stages are completed
+- whether execution is blocked or awaiting approval
 
-The task has been selected for upcoming work and is ready to enter the harness workflow.
-
-Tasks in this state are candidates to become the next active task.
-
----
-
-### In Progress
-
-The task is currently being executed.
-
-This includes the following workflow stages:
-
-- feature specification
-- feature design
-- implementation planning
-- implementation
-
-Only one task may be in this state at a time.
+Task files and artifacts may reference lifecycle stages for context, but they are not the authoritative source of lifecycle state.
 
 ---
 
-### QA Review
+# Stage Definitions
 
-The feature implementation is complete and is undergoing validation.
+## Specification
 
-The QA Agent reviews the implementation against:
+Purpose:
 
-- the feature specification
-- the design note
-- the implementation plan
-- the acceptance criteria
+Define the feature in terms of user value and clear acceptance criteria.
 
-A task in QA Review is still considered active.
+Primary artifact:
 
----
+```
+Feature Specification
+```
 
-### Awaiting Approval
+Expected output:
 
-The task has passed QA validation and is waiting for human review.
+```
+harness/artifacts/specs/TASKID-feature-spec.md
+```
 
-In this state, the harness must pause until a human reviewer decides whether the task should be approved.
+The specification must clearly describe:
 
-Possible outcomes:
+- feature goal
+- user value
+- in-scope behavior
+- out-of-scope items
+- acceptance criteria
+- dependencies
+- risks
 
-- approval → move to Complete
-- revision required → return to In Progress
-- unresolved issue → move to Blocked
-
-A task in Awaiting Approval is still considered active.
-
----
-
-### Blocked
-
-The task cannot proceed because an issue has been identified.
-
-Examples include:
-
-- missing information
-- design conflicts
-- technical constraints
-- failed acceptance criteria
-- human rejection during review
-
-Blocked tasks must be resolved before the harness can continue.
+The next lifecycle stage after successful specification is **Design**.
 
 ---
 
-### Complete
+## Design
 
-The task has passed QA validation and received human approval.
+Purpose:
 
-The task is finished and no longer active.
+Translate the feature specification into a design aligned with the design system and UX expectations.
 
-Only after a task reaches Complete may the harness begin the next Ready task.
+Primary artifact:
 
----
+```
+Design Note
+```
 
-## Allowed State Transitions
+Expected output:
 
-Tasks must move through the following transitions:
+```
+harness/artifacts/design/TASKID-design-note.md
+```
 
-Planned → Ready  
-Ready → In Progress  
-In Progress → QA Review  
-QA Review → Awaiting Approval  
-Awaiting Approval → Complete
+The design note describes:
 
-If issues are discovered, the following transitions are also allowed:
+- feature structure
+- layout and interaction behavior
+- component usage
+- responsive expectations
+- accessibility considerations
+- alignment with the design system
 
-In Progress → Blocked  
-QA Review → Blocked  
-Awaiting Approval → Blocked  
-Blocked → In Progress
-
-No other transitions should occur without updating this standard.
-
----
-
-## Single Active Task Rule
-
-The harness supports only one active task at a time.
-
-A task is considered active if it is in one of the following states:
-
-- In Progress
-- QA Review
-- Awaiting Approval
-- Blocked
-
-If any task exists in an active state, no other task may move into In Progress.
-
-This ensures:
-
-- no parallel work streams
-- simpler debugging
-- reduced merge conflicts
-- clearer run logs
+The next lifecycle stage after successful design is **Implementation Planning**.
 
 ---
 
-## Task Selection Rule
+## Implementation Planning
 
-When no task is active, the harness should select the next task from the Ready state.
+Purpose:
 
-Tasks should be selected in **task ID order**.
+Define the technical implementation approach for the feature.
 
-Example ordering:
+Primary artifact:
 
-T001  
-T002  
-T003
+```
+Implementation Plan
+```
 
-The lowest numbered Ready task should be selected first unless a deliberate exception is recorded.
+Expected output:
 
----
+```
+harness/artifacts/plans/TASKID-implementation-plan.md
+```
 
-## Human Approval Rule
+The implementation plan defines:
 
-The harness is not fully autonomous.
+- technical approach
+- implementation slices
+- affected areas of the codebase
+- test strategy
+- risks
+- assumptions
 
-After QA validation passes, the task must move to **Awaiting Approval**.
-
-At this stage a human reviewer must decide whether the work is acceptable.
-
-Possible reviewer actions include:
-
-- approving the task
-- requesting revisions
-- rejecting the work and returning the task to Blocked or In Progress
-
-No task may move from Awaiting Approval to Complete without explicit human approval.
+The next lifecycle stage after successful planning is **Build**.
 
 ---
 
-## Completion Rule
+## Build
 
-A task may only move to Complete when all of the following are true:
+Purpose:
 
-- the feature specification exists
-- the design note exists where required
-- the implementation plan exists
-- implementation is complete
-- required tests exist
-- QA validation has passed
-- human approval has been granted
-- run logs or reports have been recorded
+Implement the feature according to the specification, design note, and implementation plan.
 
-Code alone does not qualify a task as complete.
+Primary activities include:
 
----
+- implementing the feature
+- updating or creating tests
+- aligning code with the design system
+- running validation commands
 
-## Blocked Task Rule
+Expected validation commands include:
 
-If a task becomes Blocked, the harness must stop progressing to new tasks.
+- lint
+- typecheck
+- tests
+- end-to-end tests
 
-Blocked work must be resolved before the next Ready task may begin.
+The build stage must produce a **run report** documenting:
 
-This prevents unresolved issues from being hidden by continued forward progress.
+- implementation summary
+- validation results
+- assumptions made
+- any governance observations
 
----
-
-## Relationship to Backlog
-
-Backlog items represent potential future work.
-
-A backlog item becomes an active task only when it is moved into the task system and marked Ready.
-
-The backlog is not the execution system.
-
-Tasks are the execution system.
+The next lifecycle stage after a successful build is **QA**.
 
 ---
 
-## Lifecycle Confirmation Requirement
+## QA
 
-Artifacts generated during active task execution should include a short lifecycle confirmation when relevant.
+Purpose:
 
-The purpose of lifecycle confirmation is to show that the agent has verified:
+Validate that the implementation meets the specification, design, and plan.
 
-- the current task status
-- that the task is the single active or next valid task
-- that execution is allowed under the task lifecycle rules
+Primary artifact:
 
-Lifecycle confirmation should be brief and structured.
+```
+QA Review
+```
 
-It should not become a long narrative section.
+Expected output:
 
-Preferred content includes:
+```
+harness/artifacts/qa/TASKID-qa-review.md
+```
 
-- active task ID
-- current task status
-- confirmation that no conflicting active task exists
-- confirmation that the task is valid to proceed
+QA must evaluate:
 
-This check is especially useful in planning-stage artifacts such as feature specifications and implementation plans.
+- acceptance criteria satisfaction
+- design alignment
+- implementation-plan alignment
+- test coverage
+- governance compliance
+
+QA produces one of the following outcomes:
+
+- **Pass**
+- **Pass With Minor Issues**
+- **Issues Found**
+
+If blocking issues are found, the lifecycle returns to **Build** for corrective work.
+
+If QA passes, the lifecycle moves to **Awaiting Approval**.
 
 ---
 
-## Active Task Pointer
+## Awaiting Approval
 
-The file `harness/active-task.md` defines the single task currently being executed.
+Purpose:
 
-Agents must always read this file to determine which task they are allowed to operate on.
+Allow a human maintainer to review the feature before final completion.
 
-Agents must not select tasks by scanning directories.
+Approval review may consider:
 
-Only one active task may exist at a time.
+- feature correctness
+- design alignment
+- code quality
+- test coverage
+- maintainability
+- readiness for production use
+
+Approval may result in:
+
+- approval to complete the task
+- a request for corrective build work
+- a request for design or specification updates
+
+If approved, the task moves to **Complete**.
 
 ---
 
-## Summary
+## Complete
 
-The harness executes work as a sequence of validated task slices.
+Purpose:
 
-The lifecycle for each task is:
+Mark the task as successfully completed.
 
-Planned  
-→ Ready  
-→ In Progress  
-→ QA Review  
-→ Awaiting Approval  
-→ Complete
+Completion means:
 
-Only after a task is approved and completed may the next Ready task begin.
+- specification implemented
+- QA passed
+- approval granted
+- artifacts archived
+- run report recorded
+
+The run-state should record the final lifecycle stage as **Complete**.
+
+---
+
+# Stage Progression Rules
+
+Lifecycle progression should follow the canonical stage order:
+
+```
+Specification → Design → Implementation Planning → Build → QA → Awaiting Approval → Complete
+```
+
+Stages must not be skipped.
+
+If a stage fails validation, the workflow returns to the previous appropriate stage.
+
+Examples:
+
+QA failure → return to Build  
+Design issues discovered during planning → return to Design
+
+---
+
+# Run IDs
+
+Each lifecycle stage execution should have a run ID following the standard format:
+
+```
+RUN-YYYY-MM-DD-TASKID-STAGE
+```
+
+Examples:
+
+```
+RUN-2026-03-16-T002-SPEC
+RUN-2026-03-16-T002-DESIGN
+RUN-2026-03-16-T002-PLAN
+RUN-2026-03-16-T002-BUILD
+RUN-2026-03-16-T002-QA
+```
+
+The run ID should be recorded in:
+
+- the artifact generated by the stage
+- the run-state file
+- the run report
+
+---
+
+# Orchestrator Responsibility
+
+Stage agents should not directly advance lifecycle state.
+
+Instead:
+
+- stage agents perform work and generate artifacts
+- the orchestrator updates `harness/run-state.md`
+- the orchestrator determines the next stage
+- the orchestrator stops when approval gates are reached
+
+This ensures lifecycle control remains centralized and predictable.
+
+---
+
+# Summary
+
+The harness lifecycle ensures consistent feature development by guiding tasks through specification, design, planning, build, QA, and approval stages.
+
+The authoritative lifecycle state is tracked in `harness/run-state.md`.
+
+Task files define durable task information but are not the primary source of live execution state.
+
+This separation allows the harness to support automated orchestration while maintaining human governance.

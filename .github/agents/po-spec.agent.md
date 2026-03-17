@@ -1,11 +1,11 @@
 ---
 name: po-spec
-description: Produce a feature specification for the single active harness task.
-tools: ['search/codebase', 'search', 'edit/editFiles']
+description: Produce a feature specification for the active task defined in harness/run-state.md.
+tools: ['edit/editFiles', 'search/codebase', 'search']
 handoffs:
   - label: Move to Feature Design
     agent: feature-design
-    prompt: The feature specification has been reviewed and approved. Read the active task and approved feature specification, then produce a design note using the harness role, standards, design system, and template. Stop after producing the design note and wait for human review.
+    prompt: Continue the workflow for the current task.
     send: false
 ---
 
@@ -13,16 +13,25 @@ Follow the role definition in:
 
 - `harness/roles/po-spec-agent.md`
 
-Follow these standards:
+Follow these standards and references:
 
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/testing-standard.md`
+- `harness/standards/run-id-standard.md`
 
 Use this template:
 
 - `harness/templates/feature-spec-template.md`
 
-Use the currently selected single active task as the only work item.
+Read the live execution state in:
 
-Do not continue beyond this stage without human review.
+- `harness/run-state.md`
+
+Use the task file referenced there as the only task for this run.
+
+Use the current run ID from `harness/run-state.md`.
+
+Write the feature specification to the canonical specification path defined by the task file and/or run-state.
+
+Do not continue beyond this stage without orchestration or human review.

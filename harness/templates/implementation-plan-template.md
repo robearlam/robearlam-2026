@@ -28,17 +28,19 @@ Reference the approved design note artifact.
 
 ## Lifecycle Check
 
-Task ID: {{TASK_ID}}  
-Active Task Pointer: `harness/active-task.md`  
-Proceeding Validly: {{YES_OR_NO}}
+Task ID: {{TASK_ID}}
+Run State: harness/run-state.md
+Current Stage: Build
+Proceeding Validly: {{VALIDITY}}
 
 Brief note:
+{{LIFECYCLE_NOTE}}
 
 Confirm that:
 
 - the active task pointer exists
 - the active task pointer references this task
-- the task lifecycle stage allows implementation planning to proceed
+- the task lifecycle stage allows design work to proceed
 
 ---
 

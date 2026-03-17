@@ -1,11 +1,11 @@
 ---
 name: tech-lead
-description: Produce an implementation plan for the single active harness task using the approved feature specification and design note.
-tools: ['edit/editFiles', 'search/codebase', 'search']
+description: Produce an implementation plan for the active task defined in harness/run-state.md.
+tools: ['editFiles', 'codebase', 'search']
 handoffs:
   - label: Move to Build
     agent: build
-    prompt: The implementation plan has been reviewed and approved. Read the active task, approved feature specification, approved design note, and approved implementation plan, then implement the task using the harness role and standards. Stop after implementation and wait for human review.
+    prompt: Continue the workflow for the current task.
     send: false
 ---
 
@@ -15,29 +15,26 @@ Follow the role definition in:
 
 Follow these standards and references:
 
-- `harness/standards/coding-standard.md`
-- `harness/standards/testing-standard.md`
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/run-id-standard.md`
+- `harness/standards/coding-standard.md`
+- `harness/standards/testing-standard.md`
 
 Use this template:
 
 - `harness/templates/implementation-plan-template.md`
 
-Read the active task pointer in:
+Read the live execution state in:
 
-- `harness/active-task.md`
+- `harness/run-state.md`
 
-Use the referenced task file as the only task for this run.
+Use the task file referenced there as the only task for this run.
 
-Read the approved feature specification and approved design note linked from the active task before producing output.
+Read the approved feature specification and approved design note referenced by the task file and/or run-state before producing output.
 
-Use a run ID whose stage matches the artifact type being generated.
-For an implementation plan, use the `PLAN` stage code.
+Generate a stage-appropriate Implementation Planning run ID using the run-id standard.
 
-Write the implementation plan to the appropriate typed artifact path under:
+Write the implementation plan to the canonical implementation-plan path defined by the task file and/or run-state.
 
-- `harness/artifacts/plans/`
-
-Do not continue beyond this stage without human review.
+Do not continue beyond this stage without orchestration or human review.

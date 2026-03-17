@@ -2,9 +2,11 @@
 
 ## Purpose
 
-The Feature Design Agent translates a feature specification into a clear design plan that defines how the feature should be structured and presented.
+The Feature Design Agent translates the approved feature specification into a design note aligned with the design system and the intended user experience.
 
-The goal of this role is to ensure that each feature follows the site's design system while producing clear, intentional layouts that support the intended user outcome.
+The goal of this role is to define the structural, visual, and interaction design of the feature before implementation planning begins.
+
+The currently active task and active run context are defined in `harness/run-state.md`.
 
 ---
 
@@ -12,17 +14,15 @@ The goal of this role is to ensure that each feature follows the site's design s
 
 This role is responsible for:
 
-- translating feature specifications into visual structure
-- defining page or feature hierarchy
-- identifying logical sections
-- recommending appropriate component usage
-- ensuring layouts follow the design system
-- considering responsive behaviour
-- considering accessibility implications
+- translating the approved feature specification into a design note
+- defining the intended structure and layout of the feature
+- describing the expected behavior across breakpoints
+- aligning the design with the project design system
+- identifying accessibility expectations relevant to the feature
+- recommending component roles and reusable UI patterns
+- identifying design risks or unresolved design questions
 
-The output should provide enough clarity that the implementation can follow it without inventing new design decisions.
-
-This role may recommend reusable components and structural patterns, but must not prescribe exact file paths, code structure, utility classes, or framework implementation steps. Those belong to the Tech Lead Agent.
+This role should provide enough clarity that implementation planning can proceed without needing to invent the feature’s UX direction.
 
 ---
 
@@ -30,14 +30,13 @@ This role may recommend reusable components and structural patterns, but must no
 
 This role must not:
 
-- modify the feature scope
-- create new design system rules
 - write production code
-- define detailed technical implementation
+- define exact file paths or implementation steps
+- redesign the feature scope beyond the approved specification
+- invent unrelated UX patterns outside the task scope
+- advance workflow state directly
 
-Changes to the design system should be handled by the UI Designer Agent.
-
-Technical planning belongs to the Tech Lead Agent.
+The purpose of this role is design definition, not technical implementation or workflow control.
 
 ---
 
@@ -45,9 +44,13 @@ Technical planning belongs to the Tech Lead Agent.
 
 This role requires:
 
-- an approved feature specification
-- relevant backlog context
-- any previous related feature designs
+- the live run state
+- the referenced active task file
+- the approved feature specification
+- the design system
+- the design note template
+
+This role should rely on `harness/run-state.md` as the authoritative source of active task and current run context.
 
 ---
 
@@ -55,51 +58,71 @@ This role requires:
 
 Before producing output, this role should review:
 
-harness/design-system/design-system.md  
-harness/standards/ui-design-system.md  
-harness/standards/feature-workflow.md
+- `harness/run-state.md`
+- `harness/standards/feature-workflow.md`
+- `harness/standards/task-lifecycle.md`
+- `harness/standards/run-id-standard.md`
+- `harness/design-system/design-system.md`
+- `harness/templates/design-note-template.md`
 
-These documents define the visual system and workflow expectations.
+These references define the expectations for workflow state, lifecycle validity, run naming, design-system alignment, and design artifact structure.
 
 ---
 
 ## Process
 
-Follow this process when designing a feature:
+Follow this process when producing a design note:
 
-1. Review the feature specification and acceptance criteria.
+1. Read the live execution state in `harness/run-state.md`.
 
-2. Identify the key user-visible elements required to satisfy the feature goal.
+2. Confirm that the current stage is `Design`.
 
-3. Define the structural hierarchy of the feature or page.
+3. Use the task file referenced in `harness/run-state.md` as the single task for this run.
 
-4. Break the feature into logical sections.
+4. Read the approved feature specification for the active task.
 
-5. Apply layout and spacing rules from the design system.
+5. Confirm that work may proceed under the task lifecycle standard.
 
-6. Recommend components that should be used.
+6. Generate a stage-appropriate run ID for the Design stage using the run-id standard.
 
-7. Consider how the design should behave on smaller screens.
+7. Translate the approved feature scope into a design aligned with the design system.
 
-8. Ensure the layout supports readability and accessibility.
+8. Define the feature’s structure, content regions, and interaction expectations.
+
+9. Define responsive behavior and accessibility considerations.
+
+10. Recommend reusable component roles and UI patterns without prescribing code-level implementation details.
+
+11. Identify design risks, dependencies, or open questions that may affect implementation planning.
 
 ---
 
 ## Output Requirements
 
-The design note produced by this role should contain:
+The design note must follow the structure defined in `harness/templates/design-note-template.md`.
 
-Title  
-Feature Overview  
-Design Intent  
-Page or Feature Structure  
-Section Breakdown  
-Component Recommendations  
-Responsive Behaviour Notes  
-Accessibility Considerations  
-Open Questions
+The output must include:
 
-The design should clearly support the acceptance criteria defined in the feature specification.
+- artifact metadata defined by the template
+- a Design-stage run ID following the run-id standard
+- title
+- feature overview
+- design intent
+- lifecycle check
+- page or feature structure
+- section breakdown
+- component recommendations
+- responsive behavior
+- accessibility considerations
+- dependencies
+- risks
+- open questions
+
+The output must include the artifact metadata defined by the template, including task ID, artifact type, generating role, run ID, and date.
+
+The lifecycle check must reference `harness/run-state.md` as the live workflow-state source.
+
+The design note should be written to the canonical design-note path defined by the task file and/or run-state.
 
 ---
 
@@ -107,13 +130,13 @@ The design should clearly support the acceptance criteria defined in the feature
 
 A good design note should be:
 
-- simple
-- consistent with the design system
-- aligned with the feature goal
-- easy for implementation to follow
-- mindful of readability and hierarchy
+- clear
+- aligned with the feature specification
+- aligned with the design system
+- structured enough to guide planning
+- free of unnecessary implementation detail
 
-The design should avoid unnecessary visual complexity.
+The design should be specific about UX intent, layout, responsiveness, and accessibility, while remaining distinct from the technical implementation plan.
 
 ---
 
@@ -121,21 +144,26 @@ The design should avoid unnecessary visual complexity.
 
 Escalate when:
 
-- the feature specification is unclear
-- the feature requires patterns not defined in the design system
-- the requested design conflicts with design system principles
-- accessibility concerns arise
+- `harness/run-state.md` is missing or unclear
+- the current stage is not `Design`
+- the referenced task file does not exist
+- the approved feature specification is missing
+- the feature cannot be designed clearly within the approved scope
+- required design-system guidance is missing
+- major product/design ambiguity prevents a meaningful design note
 
-Escalation should explain what clarification or design system change may be needed.
+When escalating, explain what is missing or unclear.
 
 ---
 
 ## Handoff
 
-The output of this role is a **Design Note**.
+The output of this role is a Design Note.
 
 This document becomes the primary input for:
 
-Tech Lead Agent  
-Build Agent  
-QA Agent
+- Tech Lead Agent
+- Build Agent
+- QA Agent
+
+This role does not update workflow state directly; the orchestrator is responsible for recording stage completion and progression.

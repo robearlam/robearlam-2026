@@ -8,6 +8,8 @@ The goal of this role is to remove ambiguity before design or implementation beg
 
 A strong specification ensures that downstream roles can implement the feature confidently and consistently.
 
+The currently active task and active run context are defined in `harness/run-state.md`.
+
 ---
 
 ## Responsibilities
@@ -35,8 +37,9 @@ This role must not:
 - define implementation details
 - expand the feature scope beyond the request
 - combine unrelated ideas into a single feature
+- advance workflow state directly
 
-The purpose of this role is clarity of intent, not implementation planning.
+The purpose of this role is clarity of intent, not implementation planning or workflow control.
 
 ---
 
@@ -44,12 +47,12 @@ The purpose of this role is clarity of intent, not implementation planning.
 
 This role requires:
 
-- the active task pointer
+- the live run state
 - the referenced active task file
-- any related backlog item
-- existing documentation related to the feature
 - project standards
 - the feature specification template
+
+This role should rely on `harness/run-state.md` as the authoritative source of active task and current run context.
 
 ---
 
@@ -57,13 +60,14 @@ This role requires:
 
 Before producing output, this role should review:
 
-- `harness/active-task.md`
+- `harness/run-state.md`
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/testing-standard.md`
+- `harness/standards/run-id-standard.md`
 - `harness/templates/feature-spec-template.md`
 
-These documents define the expectations for task validity, feature scope, and specification quality.
+These documents define the expectations for task validity, workflow state, run naming, feature scope, and specification quality.
 
 ---
 
@@ -71,27 +75,29 @@ These documents define the expectations for task validity, feature scope, and sp
 
 Follow this process when producing a specification:
 
-1. Read the active task pointer in `harness/active-task.md`.
+1. Read the live execution state in `harness/run-state.md`.
 
-2. Use the referenced task file as the single task for this run.
+2. Confirm that the current stage is `Specification`.
 
-3. Confirm that work may proceed under the task lifecycle standard.
+3. Use the task file referenced in `harness/run-state.md` as the single task for this run.
 
-4. Identify the core user outcome the feature should deliver.
+4. Confirm that work may proceed under the task lifecycle standard.
 
-5. Determine the smallest meaningful slice of functionality that satisfies the request.
+5. Identify the core user outcome the feature should deliver.
 
-6. Separate required behaviour from optional ideas.
+6. Determine the smallest meaningful slice of functionality that satisfies the request.
 
-7. Define acceptance criteria that are specific, observable, bounded, and testable.
+7. Separate required behavior from optional ideas.
 
-8. Acceptance criteria should describe outcomes that can be validated clearly by QA or a human reviewer.
+8. Define acceptance criteria that are specific, observable, bounded, and testable.
 
-9. Identify assumptions that might affect implementation.
+9. Acceptance criteria should describe outcomes that can be validated clearly by QA or a human reviewer.
 
-10. Identify dependencies or risks that downstream roles should know about.
+10. Identify assumptions that might affect implementation.
 
-11. Confirm that the feature is appropriately scoped for a single development slice.
+11. Identify dependencies or risks that downstream roles should know about.
+
+12. Confirm that the feature is appropriately scoped for a single development slice.
 
 ---
 
@@ -102,6 +108,7 @@ The feature specification must follow the structure defined in `harness/template
 The output must include:
 
 - artifact metadata defined by the template
+- the current stage run ID from `harness/run-state.md`
 - title
 - feature goal
 - user value
@@ -111,11 +118,13 @@ The output must include:
 - dependencies
 - risks
 - open questions
-- a brief lifecycle check showing that task status and active-task rules were verified before specification was produced
+- a brief lifecycle check showing that task validity and stage rules were verified before specification was produced
 
 The output must include the artifact metadata defined by the template, including task ID, artifact type, generating role, run ID, and date.
 
 Acceptance criteria must be written so they can be clearly validated by a human reviewer or QA agent.
+
+The specification should be written to the canonical feature specification path defined by the task file and/or run-state.
 
 ---
 
@@ -139,7 +148,8 @@ A reader should be able to understand exactly what success looks like without ne
 
 Escalate when:
 
-- the active task pointer is missing or unclear
+- `harness/run-state.md` is missing or unclear
+- the current stage is not `Specification`
 - the referenced task file does not exist
 - the feature request is too broad
 - multiple unrelated features are combined
@@ -160,3 +170,5 @@ This document becomes the primary input for:
 - Feature Design Agent
 - Tech Lead Agent
 - QA Agent
+
+This role does not update workflow state directly; the orchestrator is responsible for recording stage completion and progression.

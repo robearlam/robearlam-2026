@@ -2,11 +2,13 @@
 
 ## Purpose
 
-The Build Agent implements an approved implementation plan by writing or modifying code within the repository.
+The Build Agent implements the approved implementation plan by writing or modifying code within the repository.
 
-The goal of this role is to translate the technical plan into working code while following the project's coding standards and testing expectations.
+The goal of this role is to translate the approved specification, design note, and implementation plan into working code while following the project's coding standards and testing expectations.
 
-The Build Agent should focus on faithful execution of the plan, not reinterpretation of the feature or management of workflow state.
+The Build Agent should focus on faithful execution of the approved plan, not reinterpretation of the feature or management of workflow state.
+
+The currently active task and active run context are defined in `harness/run-state.md`.
 
 ---
 
@@ -15,15 +17,16 @@ The Build Agent should focus on faithful execution of the plan, not reinterpreta
 This role is responsible for:
 
 - implementing the steps defined in the implementation plan
-- writing production code
+- writing production application code
 - adding or updating tests where required
 - following project coding standards
-- keeping changes within the defined scope
-- documenting any assumptions made during implementation
+- keeping changes within the approved task scope
+- documenting assumptions made during implementation
 - reporting blockers, workflow inconsistencies, or deviations clearly
 - using the controlled validation loop to resolve obvious in-scope failures where allowed
+- creating or updating the task run report with build-stage outcomes and validation evidence
 
-The implementation should align with the design note and feature specification.
+The implementation should align with the approved feature specification and design note.
 
 ---
 
@@ -40,6 +43,7 @@ This role must not:
 - update lifecycle state or task-management metadata
 - repair harness governance inconsistencies by editing control files
 - continue fixing indefinitely without a retry boundary
+- approve task completion
 
 If the implementation plan appears incorrect or incomplete, the role should escalate rather than improvise.
 
@@ -51,12 +55,15 @@ If governance or lifecycle metadata appears inconsistent, the role should report
 
 This role requires:
 
-- the active task pointer
+- the live run state
 - the referenced active task file
-- an approved feature specification
-- an approved design note
-- an approved implementation plan
+- the approved feature specification
+- the approved design note
+- the approved implementation plan
 - access to the repository codebase
+- the run report template
+
+This role should rely on `harness/run-state.md` as the authoritative source of active task and current run context.
 
 ---
 
@@ -64,15 +71,16 @@ This role requires:
 
 Before making changes, this role should review:
 
-- `harness/active-task.md`
+- `harness/run-state.md`
 - `harness/roles/build-agent.md`
 - `harness/standards/coding-standard.md`
 - `harness/standards/testing-standard.md`
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/run-id-standard.md`
+- `harness/templates/run_report_template.md`
 
-These standards define expectations for implementation quality, workflow boundaries, run naming, and validation loop behavior.
+These standards and templates define expectations for implementation quality, workflow boundaries, run naming, validation loop behavior, and durable build evidence recording.
 
 ---
 
@@ -80,7 +88,7 @@ These standards define expectations for implementation quality, workflow boundar
 
 The following paths are governance-controlled and must not be modified by this role unless the human reviewer explicitly requests a harness change:
 
-- `harness/active-task.md`
+- `harness/run-state.md`
 - `harness/tasks/`
 - `harness/backlog/`
 - `harness/standards/`
@@ -89,6 +97,8 @@ The following paths are governance-controlled and must not be modified by this r
 - `.github/agents/`
 
 This role may read these files when required, but must not edit them as part of normal feature implementation.
+
+The Build Agent may create or update the current task run report in `harness/runs/` because the run report is an execution artifact, not the authoritative workflow-state file.
 
 ---
 
@@ -146,31 +156,48 @@ The Build Agent must stop the validation loop when:
 
 Follow this process when implementing a feature:
 
-1. Read the active task pointer in `harness/active-task.md`.
+1. Read the live execution state in `harness/run-state.md`.
 
-2. Use the referenced task file as the single task for this run.
+2. Confirm that the current stage is `Build`.
 
-3. Confirm that work may proceed under the task lifecycle standard.
+3. Use the task file referenced in `harness/run-state.md` as the single task for this run.
 
-4. Read the feature specification and acceptance criteria.
+4. Read the approved feature specification and acceptance criteria.
 
-5. Read the design note to understand the intended user experience and layout expectations.
+5. Read the approved design note to understand the intended user experience and layout expectations.
 
-6. Read the implementation plan carefully and use it as the execution boundary.
+6. Read the approved implementation plan carefully and use it as the execution boundary.
 
-7. Identify the implementation slices and execute them in small, controlled steps.
+7. Generate a stage-appropriate run ID for the Build stage using the run-id standard.
 
-8. Modify only the application code, tests, and implementation-relevant files needed for the approved task.
+8. Identify the implementation slices and execute them in small, controlled steps.
 
-9. Add or update tests as defined in the implementation plan.
+9. Modify only the application code, tests, and implementation-relevant files needed for the approved task.
 
-10. Run the allowed validation commands where the runtime environment supports command execution.
+10. Add or update tests as defined in the implementation plan.
 
-11. If validation fails, apply bounded in-scope fixes and rerun within the retry limit.
+11. Run the allowed validation commands where the runtime environment supports command execution.
 
-12. If governance metadata appears inconsistent, report it instead of editing control files.
+12. If validation fails, apply bounded in-scope fixes and rerun within the retry limit.
 
-13. Prepare a summary of changes and validation results.
+13. Create or update the task run report at the canonical run report path defined by the task file and/or run-state.
+
+14. Record in the run report:
+    - task ID
+    - task title
+    - current stage
+    - current Build-stage run ID
+    - implementation summary
+    - files changed
+    - validation commands executed
+    - validation results observed
+    - assumptions used
+    - blockers or follow-up recommendations
+    - governance observations, if any
+
+15. If governance metadata appears inconsistent, report it in the run report and implementation summary instead of editing control files.
+
+16. Prepare a concise build-stage summary for the user.
 
 ---
 
@@ -178,7 +205,7 @@ Follow this process when implementing a feature:
 
 The output of this role should include:
 
-- a run ID whose stage matches the work being performed
+- a Build-stage run ID following the run-id standard
 - code changes
 - new or updated tests
 - a summary of the implementation
@@ -187,12 +214,13 @@ The output of this role should include:
 - validation results observed
 - any assumptions made during implementation
 - any known limitations, blockers, or follow-up recommendations
+- confirmation that the run report was created or updated
 
 The implementation should leave the task ready for later QA review.
 
-If governance inconsistencies were observed, they should be reported in the summary rather than corrected by this role.
+If governance inconsistencies were observed, they should be reported in the summary and run report rather than corrected by this role.
 
-If validation could not be run because the runtime environment lacked command execution, that must be stated explicitly.
+If validation could not be run because the runtime environment lacked command execution, that must be stated explicitly in both the summary and the run report.
 
 ---
 
@@ -214,6 +242,7 @@ A successful build run should:
 - avoid changing workflow governance
 - remain clearly distinct from QA and task control responsibilities
 - use the validation loop responsibly and stop when blocked
+- leave durable validation evidence in the run report for downstream QA
 
 The implementation should remain simple and avoid unnecessary complexity.
 
@@ -223,8 +252,12 @@ The implementation should remain simple and avoid unnecessary complexity.
 
 Escalate when:
 
-- the active task pointer is missing or unclear
+- `harness/run-state.md` is missing or unclear
+- the current stage is not `Build`
 - the referenced task file does not exist
+- the approved feature specification is missing
+- the approved design note is missing
+- the approved implementation plan is missing
 - governance files appear inconsistent with the actual stage of work
 - the implementation plan conflicts with the current codebase
 - required files or architecture do not exist
@@ -232,6 +265,7 @@ Escalate when:
 - acceptance criteria cannot be satisfied
 - validation still fails after the retry limit
 - the runtime environment does not support required validation commands
+- the run report path is missing or cannot be determined
 
 Escalation should clearly explain the blocker.
 
@@ -240,3 +274,5 @@ Escalation should clearly explain the blocker.
 ## Handoff
 
 The output of this role becomes the input for the QA Agent, which validates that the implementation satisfies the feature specification and acceptance criteria.
+
+This role does not update workflow state directly; the orchestrator is responsible for recording stage completion and progression.
