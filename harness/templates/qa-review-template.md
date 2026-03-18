@@ -35,16 +35,23 @@ Reference the approved implementation plan artifact.
 ## Lifecycle Check
 
 Task ID: {{TASK_ID}}  
-Active Task Pointer: `harness/active-task.md`  
+Run State: `harness/run-state.md`  
+Current Stage: {{CURRENT_STAGE}}  
 Proceeding Validly: {{YES_OR_NO}}
 
 Brief note:
 
-Confirm that:
+Explain whether the current run-state, lifecycle stage, and required upstream artifacts make this QA pass valid.
 
-- the active task pointer exists
-- the active task pointer references this task
-- the task lifecycle stage allows QA review to proceed
+Examples of points to confirm:
+
+- `harness/run-state.md` exists
+- the run-state references this task
+- the current stage is `QA`
+- the required upstream artifacts exist
+- the task is in a valid lifecycle position for QA review
+
+Do not reference `active-task.md`.
 
 ---
 
@@ -65,17 +72,19 @@ Use one of:
 
 Review each acceptance criterion from the approved feature specification.
 
-Use a clear status for each item:
+For each item use:
 
-- Pass
-- Warn
-- Fail
+- Status: Pass
+- Status: Warn
+- Status: Fail
 
-Format:
+Format each item like this:
 
 1. Acceptance criterion  
    Status: Pass / Warn / Fail  
    Notes:
+
+The notes should reflect the current implementation and current evidence, not prior assumptions.
 
 ---
 
@@ -83,72 +92,97 @@ Format:
 
 Assess whether the implementation matches the approved design note.
 
-Review areas such as:
+Cover areas such as:
 
 - structural alignment
-- component/pattern alignment
-- responsive behavior expectations
+- visual/system alignment
+- responsive behavior
 - accessibility expectations
+- component/pattern alignment
 
-Summarize:
+Use this section to explain:
 
 - what matches well
 - what is partially aligned
 - what deviates
 
+Do not repeat earlier issues unless they are still present in the current implementation.
+
 ---
 
 ## Implementation Plan Alignment Review
 
-Assess whether the implementation followed the approved implementation plan.
+Assess whether the implementation follows the approved implementation plan.
 
 Focus on:
 
-- whether implementation slices were followed
-- whether likely affected areas were appropriate
-- whether the implementation stayed within the approved scope
+- whether the planned implementation slices were completed
+- whether affected code areas match the plan
+- whether the implementation stayed within approved scope
+- whether the plan’s expected validation work was completed
+
+Clearly distinguish:
+
+- completed plan items
+- partially completed plan items
+- deviations from the plan
 
 ---
 
 ## Test Coverage Review
 
-Review the current testing state.
+Review the testing state for the feature.
 
 Cover:
 
 - tests added or updated
-- whether coverage aligns with acceptance criteria
-- whether any expected coverage appears missing
-- whether tests were actually executed or only added
+- how the tests align with acceptance criteria
+- gaps in current coverage
+- whether the tests are behavior-focused or brittle
+- whether recorded validation evidence exists
+
+This section should explicitly state the current evidence available for:
+
+- lint
+- typecheck
+- unit/integration tests
+- end-to-end tests
+
+If build validation evidence is missing, say so clearly.
 
 ---
 
 ## Issues Identified
 
-List all issues found during review.
+List all current issues found during review.
 
 For each issue include:
 
-- description
-- severity (Low / Medium / High)
-- whether it blocks approval
+- Description
+- Severity: Low / Medium / High
+- Blocks approval: Yes / No
 
-If no issues were found, state that clearly.
+Only include issues that are currently present in the code, artifacts, run-state, or recorded evidence.
+
+If no issues are found, state that clearly.
 
 ---
 
 ## Governance / Process Issues
 
-List any harness or workflow issues observed during the QA stage.
+List any workflow or governance issues observed during the QA pass.
 
 Examples:
 
-- lifecycle mismatch
-- missing artifact link
-- missing approval state update
-- test execution not confirmed
+- invalid current stage in run-state
+- missing run report
+- missing artifact path
+- run ID mismatch
+- approval state inconsistency
 
-If none were observed, state that clearly.
+This section is for process issues, not product implementation issues.
+
+If none are found, state that clearly.
 
 ---
 
@@ -158,18 +192,21 @@ Describe what should happen next.
 
 Examples:
 
-- proceed to human approval
-- fix listed issues and return to Build
-- rerun tests before approval
+- proceed to Awaiting Approval
+- return to Build for corrective work
+- regenerate missing evidence
+- normalize workflow metadata
+
+Recommendations should be specific and based on the actual issues identified.
 
 ---
 
 ## Approval Readiness
 
-State clearly whether the task is ready to move to:
+State clearly whether the task should move to:
 
 - Awaiting Approval
-- Back to In Progress
+- Back to Build
 - Blocked
 
-This section informs the human reviewer, but does not change task state automatically.
+This section informs the human reviewer and orchestrator, but does not change workflow state directly.

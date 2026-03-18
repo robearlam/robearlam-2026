@@ -1,17 +1,16 @@
 ---
 name: build
-description: Implement the approved single active harness task using the approved specification, design note, and implementation plan.
+description: Implement the active task defined in harness/run-state.md using the approved specification, design note, and implementation plan.
 tools:
-  - edit/editFiles
-  - search/codebase
+  - editFiles
+  - codebase
   - search
   - execute/runInTerminal
   - read/terminalLastCommand
-  - execute/getTerminalOutput
 handoffs:
   - label: Move to QA Review
     agent: qa
-    prompt: The implementation for the active task has been completed and reviewed. Read the active task, approved feature specification, approved design note, approved implementation plan, and implementation results, then produce a QA review using the harness role, standards, and template. Stop after producing the QA review and wait for human review.
+    prompt: Continue the workflow for the current task.
     send: false
 ---
 
@@ -27,26 +26,41 @@ Follow these standards and references:
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/run-id-standard.md`
 
-Read the active task pointer in:
+Use this template:
 
-- `harness/active-task.md`
+- `harness/templates/run_report_template.md`
 
-Use the referenced task file as the only task for this run.
+Read the live execution state in:
 
-Read the approved artifacts linked from the active task before making changes:
+- `harness/run-state.md`
+
+Use the task file referenced there as the only task for this run.
+
+Read the approved artifacts referenced by the task file and/or run-state before making changes:
 
 - feature specification
 - design note
 - implementation plan
 
-Use a run ID whose stage matches the work being performed.
-For this stage, use the `BUILD` stage code when a run ID is required.
+Generate a stage-appropriate Build run ID using the run-id standard.
+
+Determine the canonical run report path from the task file and/or run-state.
+
+Create or update the run report with:
+
+- task metadata
+- current stage
+- current run ID
+- stage history entry for the Build stage
+- validation evidence
+- stop or pause state if relevant
+- notes relevant to QA handoff
 
 Do not modify governance-controlled files or paths as part of normal implementation work.
 
 Governance-controlled paths include:
 
-- `harness/active-task.md`
+- `harness/run-state.md`
 - `harness/tasks/`
 - `harness/backlog/`
 - `harness/standards/`
@@ -54,7 +68,7 @@ Governance-controlled paths include:
 - `harness/templates/`
 - `.github/agents/`
 
-If governance metadata appears inconsistent, report it in the implementation summary instead of changing it.
+If governance metadata appears inconsistent, report it in the implementation summary and run report instead of changing it.
 
 Use the controlled validation loop defined by the Build role when command execution is available.
 
@@ -62,4 +76,4 @@ The validation loop may run only the approved commands and must stay within the 
 
 Operate only within the approved task scope.
 
-Make implementation changes and required test changes, but do not continue beyond this stage without human review.
+Make implementation changes, required test changes, and the run report update, but do not continue beyond this stage without orchestration or human review.

@@ -10,17 +10,15 @@ Date: {{DATE}}
 
 ## Title
 
-Name of the feature or layout being designed.
+Feature name.
 
 ---
 
 ## Feature Overview
 
-Brief description of the feature and its purpose.
+Briefly describe the feature and the user-facing problem it solves.
 
-Explain the role of the feature in the overall application and the user-facing problem it solves.
-
-Keep this section concise and aligned with the approved Feature Specification.
+Keep this section concise and aligned with the approved feature specification.
 
 ---
 
@@ -35,23 +33,20 @@ This should include:
 - how the feature should align with the design system
 - usability considerations
 
-Design intent should guide downstream implementation decisions without prescribing exact code.
+Keep this focused on UX intent rather than implementation detail.
 
 ---
 
 ## Lifecycle Check
 
 Task ID: {{TASK_ID}}  
-Active Task Pointer: `harness/active-task.md`  
+Run State: `harness/run-state.md`  
+Current Stage: {{CURRENT_STAGE}}  
 Proceeding Validly: {{YES_OR_NO}}
 
 Brief note:
 
-Confirm that:
-
-- the active task pointer exists
-- the active task pointer references this task
-- the task lifecycle stage allows design work to proceed
+Briefly explain whether the current run-state and available prerequisite artifacts make this design pass valid.
 
 ---
 
@@ -63,11 +58,11 @@ Explain the major regions or layout hierarchy.
 
 Examples may include:
 
-- header
-- navigation
-- main content region
-- footer
-- feature-specific containers
+- heading region
+- intro region
+- content sections
+- feature-specific groupings
+- footer behavior if relevant to the page
 
 Focus on semantic layout and structure, not implementation details.
 
@@ -75,7 +70,7 @@ Focus on semantic layout and structure, not implementation details.
 
 ## Section Breakdown
 
-Describe each structural region in more detail.
+Describe each major structural region in more detail.
 
 For each region describe:
 
@@ -84,45 +79,21 @@ For each region describe:
 - visual guidance
 - interaction expectations if applicable
 
-Example sections:
-
-### Header
-
-Purpose of the header and expected elements.
-
-### Navigation
-
-Navigation structure and interaction patterns.
-
-### Main Content Region
-
-Content container behavior and layout guidance.
-
-### Footer
-
-Footer structure and expected content.
+Use only the sections needed for the feature.
 
 ---
 
 ## Component Recommendations
 
-Focus on component roles and reusable UI patterns, not exact implementation locations or code-level instructions.
-
-Recommend reusable components or UI primitives that should be used to implement the design.
+Recommend reusable component roles or UI patterns that should be used to implement the design.
 
 These should reference:
 
-- existing components
-- design system primitives
-- known UI patterns
+- existing components or primitives
+- established design-system patterns
+- reusable layout or interaction patterns
 
-Avoid defining new component systems unless absolutely required.
-
-Example guidance:
-
-- use existing navigation primitives
-- prefer reusable layout components
-- avoid bespoke UI patterns when system components exist
+Avoid code-level implementation guidance and avoid introducing new component systems unless clearly necessary.
 
 ---
 
@@ -135,23 +106,22 @@ Include guidance for:
 ### Mobile
 
 - layout adjustments
-- navigation behaviour
-- interaction patterns
+- navigation or interaction behavior if relevant
+- readability expectations
 
 ### Tablet
 
-- layout scaling and spacing behaviour
+- layout scaling and spacing behavior
 
 ### Desktop
 
-- layout expansion
-- navigation visibility
+- layout expansion or grouping behavior
 
-Include any cross-breakpoint rules such as:
+Include any important cross-breakpoint rules such as:
 
 - preventing horizontal overflow
+- preserving hierarchy
 - maintaining readable content width
-- preserving layout hierarchy
 
 ---
 
@@ -161,14 +131,15 @@ Describe accessibility requirements and expectations.
 
 Examples include:
 
-- semantic landmarks (`header`, `nav`, `main`, `footer`)
-- keyboard navigation support
+- semantic structure
+- heading hierarchy
+- keyboard accessibility
 - visible focus states
-- sufficient color contrast
-- logical heading hierarchy
-- accessible mobile navigation behavior
+- sufficient contrast
+- icon + text pairing where relevant
+- meaningful grouping for assistive technologies
 
-Accessibility guidance should align with design-system accessibility standards.
+Keep this focused on user-facing accessibility expectations rather than testing detail.
 
 ---
 
@@ -178,10 +149,10 @@ Identify dependencies relevant to the design.
 
 Examples:
 
-- existing component libraries
-- layout primitives
-- design system tokens
-- shared application structure
+- approved specification
+- design system tokens or patterns
+- inherited global layout or shared components
+- external content or URLs if required by the feature
 
 ---
 
@@ -191,20 +162,17 @@ Identify design or UX risks that may affect implementation.
 
 Examples:
 
-- unclear content requirements
-- potential navigation complexity
+- unresolved content
+- ambiguous interaction behavior
+- icon or asset uncertainty
 - responsive layout edge cases
-- accessibility concerns
+
+Keep this list concise and relevant.
 
 ---
 
 ## Open Questions
 
-List any unresolved questions requiring clarification before implementation.
+List only the unresolved questions that must be answered before or during implementation planning.
 
-Examples:
-
-- final navigation labels
-- final footer content
-- routes that should bypass the global layout
-- any design system edge cases requiring confirmation
+Do not include questions that have already been resolved in the design note unless the resolution remains uncertain.
