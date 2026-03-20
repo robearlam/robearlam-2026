@@ -298,6 +298,48 @@ The orchestrator must not advance state if the expected artifact was not produce
 
 ---
 
+## QA Remediation Loop
+
+If the current stage is `QA`, the orchestrator must inspect the QA artifact outcome before advancing workflow state.
+
+If the QA artifact indicates any of the following:
+
+- `Validation Result: Issues Found`
+- `Approval Readiness: Back to Build`
+- a blocking issue that prevents approval
+- acceptance criteria not fully satisfied
+
+then the orchestrator must not advance to `Awaiting Approval` or `Complete`.
+
+Instead, the orchestrator must:
+
+1. update `harness/run-state.md` so that:
+   - `Current Stage` = `Build`
+   - `Current Status` = `Active`
+   - `Stop Reason` is cleared if the task is being actively remediated
+   - `Notes` records that QA returned the task to Build for remediation
+
+2. update the run report with:
+   - the QA result
+   - the reason the task was returned to Build
+   - the specific blocking issues or failed acceptance criteria
+
+3. invoke the Build Agent again using the active task context plus the QA artifact as remediation input
+
+4. after Build completes, invoke QA again
+
+The orchestrator may repeat this QA → Build → QA remediation loop up to 2 times after the initial QA failure.
+
+If QA still reports blocking issues after the remediation retry limit is reached, the orchestrator must:
+
+- set `Current Status` to `Blocked`
+- keep `Current Stage` at `QA`
+- set `Stop Reason` to `QA remediation retry limit reached`
+- update the run report
+- halt for human review
+
+---
+
 ## Deterministic Process
 
 Follow this exact process when orchestrating a task:
@@ -329,28 +371,33 @@ Follow this exact process when orchestrating a task:
 8. After the stage agent completes:
    - verify the expected artifact exists at the canonical path
    - re-open and validate the artifact
-   - record the completed stage
-   - advance run-state
    - update the run report
 
-9. Continue to the next stage automatically unless:
+9. If the completed stage is `QA`, apply the QA Remediation Loop rules before advancing workflow state.
+
+10. If the completed stage passes normally:
+   - record the completed stage
+   - advance run-state
+
+11. Continue to the next stage automatically unless:
    - an approval gate is reached
    - a stage fails or becomes blocked
+   - QA returns the task to Build for remediation
    - the user explicitly requested a bounded orchestration test
 
-10. If stage invocation fails because the runtime cannot dispatch the mapped subagent:
+12. If stage invocation fails because the runtime cannot dispatch the mapped subagent:
    - set `Current Status` to `Blocked`
    - keep the current stage unchanged
    - record a clear stop reason
    - update the run report
    - stop cleanly
 
-11. If a stage fails or becomes blocked:
+13. If a stage fails or becomes blocked:
    - update run-state with the blocking condition
    - record the stop reason in the run report
    - stop
 
-12. If an approval gate is reached:
+14. If an approval gate is reached:
    - update run-state to reflect `Awaiting Approval`
    - set the next stage and next stage run ID
    - record the stop reason in the run report
@@ -425,6 +472,7 @@ The orchestrator must stop when:
 - the active stage is already Awaiting Approval
 - the task is already Complete
 - a stage cannot proceed within its declared input contract
+- QA remediation retry limit is reached
 
 When stopping, it must update run-state and the run report clearly.
 

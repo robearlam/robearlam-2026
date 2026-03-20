@@ -24,9 +24,8 @@ Run Report: `harness/runs/RUN-2026-03-20-T003.md`
 
 ## Acceptance Criteria
 
-- Blog content files must be stored in a top-level `data/blogs/` directory at the root of the Next.js application source tree.
-- The `data` directory must not be placed inside `app/`.
-- Canonical content path: `/src/data/blogs/{year}/{slug}.md`
+- Blog posts are sourced from Markdown files located in `/src/data/blogs/{year}/{slug}.md`
+- The `data` directory must not be located inside `/src/app`
 - Each Markdown file includes required frontmatter fields:
   - `title`
   - `slug`
@@ -59,19 +58,23 @@ Run Report: `harness/runs/RUN-2026-03-20-T003.md`
   - Non-existent blog slugs
 - Empty state is handled gracefully when no posts are available for a tag
 - New Markdown blog files are automatically included in the blog without requiring code changes
-- The implementation must include enough sample blog posts to exercise multiple pagination fetches beyond the initial render.
-- Minimum sample dataset: 15 posts.
-- Sample posts must span multiple years and multiple tags to validate pagination, tag filtering, and recursive infinite scroll loading.
+- Markdown rendering must use a maintained markdown parsing/rendering library.
+- Do not implement custom handwritten markdown parsing logic except for trivial frontmatter extraction where explicitly approved.
+- Prefer established libraries for parsing Markdown content and rendering it safely.
+- Pagination functions correctly for any number of posts
+- At least 15 sample blog posts are included to validate multi-page infinite scroll behaviour
+- Ensure that the sample blog posts contain a variety of HTML elements to properly test the Markdown Parsing
+- Sample content must support:
+  - multiple pagination loads
+  - tag-based filtering across pages
 - No hardcoded content exists within UI components
 - All data access is abstracted through a defined data layer
 - Tailwind CSS is used exclusively (no inline styles)
 - TypeScript strict mode is enabled and enforced
 - No usage of `any` type in the implementation
-- Blog-specific UI components must be stored under `/src/components/blog/`.
-- Blog-specific data and utility code must be stored under `/src/lib/blog/`.
-- A root-level `/src/features/blog/` directory must not be introduced.
-- Shared non-blog components may remain in `/src/components/`.
-- Shared non-blog utilities may remain in `/src/lib/`.
+- Blog-specific components must be located in `/src/components/blog/`
+- Blog-specific library code must be located in `/src/lib/blog/`
+- A `/src/features/blog/` directory must not be introduced
 - Components are reusable and not tightly coupled to specific pages
 
 ---
@@ -94,6 +97,15 @@ Key decisions:
 - Tag routes reuse the same listing and pagination logic as the main blog page
 - Social sharing is implemented via URL-based share links (no SDK integrations)
 - Mastodon support has been intentionally excluded to reduce complexity
+
+Additional implementation constraints:
+
+- Canonical blog content path is `/src/data/blogs/{year}/{slug}.md`
+- Blog content must not be placed inside `/src/app`
+- Blog-specific components must be placed in `/src/components/blog/`
+- Blog-specific library code must be placed in `/src/lib/blog/`
+- Do not introduce `/src/features/blog/`
+- Include a minimum of 15 sample blog posts to validate recursive pagination and tag filtering
 
 Out of scope for this task:
 

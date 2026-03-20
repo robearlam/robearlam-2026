@@ -174,6 +174,11 @@ Follow this process when implementing a feature:
 
 9. Modify only the application code, tests, and implementation-relevant files needed for the approved task.
 
+9a. Implement file and folder placement exactly as defined in the task, feature specification, and implementation plan.
+
+- If canonical paths are defined, do not introduce alternative structures.
+- Do not introduce new architectural folders for organisational preference.
+
 10. Add or update tests as defined in the implementation plan.
 
 11. Run the allowed validation commands where the runtime environment supports command execution.
@@ -198,6 +203,8 @@ Follow this process when implementing a feature:
 15. If governance metadata appears inconsistent, report it in the run report and implementation summary instead of editing control files.
 
 16. Prepare a concise build-stage summary for the user.
+
+17. Do not implement custom parsers for standard content formats such as Markdown when a suitable project-compatible library can satisfy the requirement more safely and with less complexity.
 
 ---
 

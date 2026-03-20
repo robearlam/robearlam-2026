@@ -1,0 +1,24 @@
+import { BlogFeedClient } from "@/components/blog/blog-feed-client";
+import { getPaginatedBlogPosts } from "@/lib/blog/posts";
+
+const INITIAL_PAGE_SIZE = 5;
+
+export default async function BlogPage() {
+  const initialPage = await getPaginatedBlogPosts({
+    limit: INITIAL_PAGE_SIZE,
+    offset: 0,
+  });
+
+  return (
+    <section className="space-y-8">
+      <header className="space-y-3">
+        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Blog</h1>
+        <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+          Writing on engineering, product execution, and lessons from building software in the open.
+        </p>
+      </header>
+
+      <BlogFeedClient initialPosts={initialPage.posts} initialHasMore={initialPage.hasMore} />
+    </section>
+  );
+}
