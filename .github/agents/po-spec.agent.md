@@ -1,7 +1,7 @@
 ---
 name: po-spec
 description: Produce a feature specification for the active task defined in harness/run-state.md.
-tools: ['editFiles', 'codebase', 'search']
+tools: ['edit/editFiles', 'search/codebase', 'search']
 ---
 
 Follow the role definition in:

@@ -1,12 +1,7 @@
 ---
 name: tech-lead
 description: Produce an implementation plan for the active task defined in harness/run-state.md.
-tools: ['editFiles', 'codebase', 'search']
-handoffs:
-  - label: Move to Build
-    agent: build
-    prompt: Continue the workflow for the current task.
-    send: false
+tools: ['edit/editFiles', 'search/codebase', 'search']
 ---
 
 Follow the role definition in:

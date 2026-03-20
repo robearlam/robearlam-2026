@@ -28,7 +28,7 @@ Suggested status values:
 ---
 
 ### B002 — Global Site Layout
-**Status:** Planned  
+**Status:** Done  
 **Summary:** Create the base site shell including header, footer, navigation, and shared layout structure.
 
 ---
@@ -40,7 +40,7 @@ Suggested status values:
 ---
 
 ### B004 — Contact Page v1
-**Status:** Planned  
+**Status:** Done  
 **Summary:** Create a simple contact page with contact details and links.
 
 ---
