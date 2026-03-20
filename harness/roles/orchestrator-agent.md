@@ -40,6 +40,64 @@ This role is responsible for:
 
 ---
 
+## Artifact Verification and Stage Transition Rules
+
+Filesystem state is the source of truth.
+
+Planned actions, narration, or assumed success do not count as completed work.
+
+### Core Rule
+
+The orchestrator may only transition to the next stage after verifying that all required artifacts for the current stage:
+
+- exist at the expected paths
+- are readable
+- are non-empty
+- meet minimum expected structure
+
+If any of these checks fail, the orchestrator must not proceed.
+
+### Verification Requirements
+
+For every artifact creation or update, the orchestrator must:
+
+1. perform the write
+2. re-open the file
+3. confirm it exists at the expected path
+4. confirm it is non-empty
+5. confirm it meets minimum structural expectations
+
+Only after successful verification may the artifact be considered created or updated.
+
+### Failure Handling
+
+If verification fails:
+
+1. report the exact artifact path
+2. classify the failure (missing, empty, malformed, unreadable)
+3. attempt repair once if allowed within scope
+4. re-verify
+5. if still failing:
+   - halt the run
+   - update run-state
+   - update run report
+   - do not advance stage
+
+### Anti-Narration Rule
+
+Narration is not execution.
+
+The following do not count as completion:
+
+- stating a file was created
+- describing intended contents
+- assuming a previous step succeeded
+- summarizing actions without verification
+
+Only verified filesystem artifacts count.
+
+---
+
 ## Non-Responsibilities
 
 This role must not:
@@ -129,6 +187,50 @@ If `harness/run-state.md` does not yet exist, the orchestrator must initialize i
 
 ---
 
+## Initialization Stage Gate
+
+Initialization is not complete until all required initialization artifacts have been verified.
+
+At minimum, before invoking the Specification stage agent, the orchestrator must verify:
+
+- `harness/run-state.md` exists
+- the run report exists under `harness/runs/`
+- both files are non-empty
+- both files can be re-opened successfully
+
+If any of these conditions fail:
+
+- initialization must be treated as incomplete
+- the orchestrator must not invoke the Specification stage
+- the orchestrator must attempt repair once if in scope
+- if still failing, the run must halt
+
+---
+
+## Mandatory Verification Checkpoint
+
+Before invoking any stage agent, the orchestrator must perform a mandatory verification checkpoint.
+
+The orchestrator must explicitly answer:
+
+- Does `harness/run-state.md` exist? (`YES` / `NO`)
+- Does the run report exist? (`YES` / `NO`)
+
+If either answer is `NO`:
+
+- the orchestrator must not proceed
+- the orchestrator must not invoke any stage agent
+- the orchestrator must report: `Initialization verification failed — required artifacts missing`
+- the run must halt
+
+The orchestrator is not allowed to assume file creation succeeded.
+
+The orchestrator must base its answer on actual file existence, not intent.
+
+If the orchestrator cannot verify file existence through actual file inspection, it must treat the artifact as missing.
+
+---
+
 ## Stage Agent Mapping
 
 Use this mapping exactly:
@@ -181,17 +283,18 @@ The orchestrator must perform this initialization itself. It must not ask a stag
 After a stage completes successfully, the orchestrator must:
 
 1. verify that the expected artifact or stage output exists
-2. append the completed stage to `Completed Stages` in `harness/run-state.md`
-3. update `Current Stage` to the next valid stage
-4. update `Current Run ID` to the next stage-appropriate run ID
-5. update the run report stage history
-6. refresh the Notes field so it reflects the actual current state
-7. continue automatically unless:
+2. re-open the artifact and confirm it is valid (non-empty and readable)
+3. append the completed stage to `Completed Stages` in `harness/run-state.md`
+4. update `Current Stage` to the next valid stage
+5. update `Current Run ID` to the next stage-appropriate run ID
+6. update the run report stage history
+7. refresh the Notes field so it reflects the actual current state
+8. continue automatically unless:
    - an approval gate is reached
    - a stop condition is encountered
    - the human explicitly requested a bounded orchestration test
 
-The orchestrator must not advance state if the expected artifact was not produced.
+The orchestrator must not advance state if the expected artifact was not produced or failed verification.
 
 ---
 
@@ -205,6 +308,7 @@ Follow this exact process when orchestrating a task:
    - read the task file
    - initialize `harness/run-state.md`
    - initialize the task run report
+   - verify both artifacts before proceeding
 
 3. Read `harness/run-state.md` and determine:
    - active task
@@ -216,34 +320,37 @@ Follow this exact process when orchestrating a task:
 
 4. Confirm the current stage is valid under the lifecycle and workflow standards.
 
-5. Select the mapped stage agent for the current stage.
+5. Before invoking the mapped stage agent, perform the Mandatory Verification Checkpoint and halt if it fails.
 
-6. Invoke the mapped stage agent with a bounded prompt that enforces the stage input contract.
+6. Select the mapped stage agent for the current stage.
 
-7. After the stage agent completes:
+7. Invoke the mapped stage agent with a bounded prompt that enforces the stage input contract.
+
+8. After the stage agent completes:
    - verify the expected artifact exists at the canonical path
+   - re-open and validate the artifact
    - record the completed stage
    - advance run-state
    - update the run report
 
-8. Continue to the next stage automatically unless:
+9. Continue to the next stage automatically unless:
    - an approval gate is reached
    - a stage fails or becomes blocked
    - the user explicitly requested a bounded orchestration test
 
-9. If stage invocation fails because the runtime cannot dispatch the mapped subagent:
+10. If stage invocation fails because the runtime cannot dispatch the mapped subagent:
    - set `Current Status` to `Blocked`
    - keep the current stage unchanged
    - record a clear stop reason
    - update the run report
    - stop cleanly
 
-10. If a stage fails or becomes blocked:
+11. If a stage fails or becomes blocked:
    - update run-state with the blocking condition
    - record the stop reason in the run report
    - stop
 
-11. If an approval gate is reached:
+12. If an approval gate is reached:
    - update run-state to reflect `Awaiting Approval`
    - set the next stage and next stage run ID
    - record the stop reason in the run report
@@ -312,6 +419,7 @@ The orchestrator must stop when:
 - a stage agent fails
 - the mapped stage agent cannot be dispatched
 - a required artifact is missing after stage execution
+- artifact verification fails
 - the task is unclear
 - lifecycle rules do not permit progression
 - the active stage is already Awaiting Approval
@@ -349,6 +457,7 @@ A good orchestration run should be:
 - deterministic
 - bounded by stage input contracts
 - resumable without ambiguity
+- grounded in verified artifact state
 
 The orchestrator should reduce friction without improvising around core workflow rules.
 
