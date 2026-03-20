@@ -2,16 +2,11 @@
 name: build
 description: Implement the active task defined in harness/run-state.md using the approved specification, design note, and implementation plan.
 tools:
-  - editFiles
-  - codebase
+  - edit/editFiles
+  - search/codebase
   - search
   - execute/runInTerminal
   - read/terminalLastCommand
-handoffs:
-  - label: Move to QA Review
-    agent: qa
-    prompt: Continue the workflow for the current task.
-    send: false
 ---
 
 Follow the role definition in:

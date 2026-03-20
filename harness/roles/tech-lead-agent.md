@@ -92,6 +92,13 @@ Follow this process when producing an implementation plan:
 
 8. Define the simplest sound technical approach that satisfies the approved scope and design intent.
 
+8a. Preserve the existing repository architecture unless the task explicitly requires a new top-level structure.
+
+8b. When defining the implementation approach, prefer established libraries over handwritten parsers for common concerns such as Markdown parsing, frontmatter handling, and content transformation, unless the task explicitly requires a custom implementation.
+
+- Do not introduce new top-level source folders such as `features/` if the task defines canonical placement inside existing directories like `components/`, `lib/`, or `data`.
+- Treat task-defined canonical paths as binding implementation constraints, not suggestions.
+
 9. Break the implementation into small, reviewable slices.
 
 10. Identify the likely files or code areas that will be affected.
