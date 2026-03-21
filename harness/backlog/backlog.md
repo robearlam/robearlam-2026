@@ -46,7 +46,7 @@ Suggested status values:
 ---
 
 ### B005 — Blog Structure
-**Status:** Planned  
+**Status:** Done  
 **Summary:** Introduce blog listing and individual article pages using markdown content.
 
 ---
@@ -57,9 +57,9 @@ Suggested status values:
 
 ---
 
-### B007 — Projects Page
-**Status:** Deferred  
-**Summary:** Create a page to showcase selected projects and work.
+### B007 — UI Framework and Design System
+**Status:** Planned
+**Summary:** Establish a basic design system and UI component library for consistent styling and faster development.
 
 ---
 
@@ -67,14 +67,3 @@ Suggested status values:
 **Status:** Planned  
 **Summary:** Add baseline metadata, social sharing support, and search-friendly structure.
 
----
-
-### B009 — Content Model Refinement
-**Status:** Planned  
-**Summary:** Improve markdown content structure and shared content loading patterns.
-
----
-
-### B010 — Contact Form Feature
-**Status:** Deferred  
-**Summary:** Add an interactive contact form once the static contact page is complete and stable.
