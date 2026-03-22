@@ -39,7 +39,7 @@ export function BlogShareLinks({ title, slug }: BlogShareLinksProps) {
   ];
 
   return (
-    <section aria-labelledby="share-post-title" className="space-y-3 rounded-xl border border-border bg-card p-4 sm:p-5">
+    <section aria-labelledby="share-post-title" className="space-y-3 border-t border-border pt-6">
       <h2 id="share-post-title" className="text-base font-semibold tracking-tight">
         Share this post
       </h2>

@@ -32,10 +32,10 @@ export default async function TagPage({ params }: TagPageProps) {
   });
 
   return (
-    <section className="space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Posts tagged #{resolvedParams.tag}</h1>
-        <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+    <section className="space-y-10">
+      <header className="space-y-4">
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Posts tagged #{resolvedParams.tag}</h1>
+        <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
           Explore all posts grouped under this topic.
         </p>
       </header>

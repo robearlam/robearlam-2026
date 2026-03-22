@@ -139,7 +139,7 @@ Accent usage should be rare and intentional.
 
 Neutrals provide the structural foundation of the UI.
 
-Background: #F8F7F6  
+Background: #FFFFFF  
 Surface: #FFFFFF  
 Primary text: #1F1F1F  
 Secondary text: #6B6B6B  
