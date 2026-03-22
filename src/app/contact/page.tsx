@@ -1,5 +1,7 @@
 import type { IconType } from "react-icons";
 import { FaBluesky, FaDev, FaGithub, FaLinkedin, FaMastodon, FaYoutube } from "react-icons/fa6";
+import { HeroSection } from "@/components/editorial/hero-section";
+import { SectionWrapper } from "@/components/editorial/section-wrapper";
 
 type ProfileLink = {
   href: string;
@@ -42,36 +44,36 @@ const profileLinks: ProfileLink[] = [
 
 export default function ContactPage() {
   return (
-    <section className="space-y-8">
-      <header className="space-y-4">
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Contact</h1>
-        <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-          Reach out directly by email, or find me on the channels below for updates and writing.
-        </p>
-      </header>
+    <div className="space-y-12">
+      <HeroSection
+        heading="Contact"
+        lead="Reach out directly by email, or find me on the channels below for updates and writing."
+      />
 
-      <section className="space-y-4" aria-labelledby="external-profiles-heading">
-        <h2 id="external-profiles-heading" className="text-xl font-semibold tracking-tight">
-          External Profiles
-        </h2>
+      <SectionWrapper>
+        <section className="space-y-4" aria-labelledby="external-profiles-heading">
+          <h2 id="external-profiles-heading" className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            External Profiles
+          </h2>
 
-        <ul className="grid gap-3 sm:grid-cols-2" aria-label="Social profiles">
-          {profileLinks.map(({ href, label, Icon }) => (
-            <li key={href}>
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${label} profile`}
-                className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3 text-foreground transition-colors hover:border-primary/60 hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <Icon aria-hidden="true" className="h-5 w-5 shrink-0" />
-                <span className="text-sm font-medium sm:text-base">{label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </section>
+          <ul className="grid gap-3 sm:grid-cols-2" aria-label="Social profiles">
+            {profileLinks.map(({ href, label, Icon }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${label} profile`}
+                  className="flex items-center gap-3 border-b border-border px-2 py-3 text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  <Icon aria-hidden="true" className="h-5 w-5 shrink-0" />
+                  <span className="text-sm font-medium sm:text-base">{label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </SectionWrapper>
+    </div>
   );
 }

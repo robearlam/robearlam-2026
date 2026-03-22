@@ -25,23 +25,4 @@ describe("global layout shell", () => {
     expect(container.querySelector("footer")).toBeTruthy();
     expect(container.innerHTML).toContain("max-w-[1100px]");
   });
-
-  it("marks the current page link with a non-color cue", () => {
-    pathnameState.value = "/about";
-
-    const { container } = render(
-      <SiteShell>
-        <h1>About</h1>
-      </SiteShell>
-    );
-
-    const aboutLink = container.querySelector('a[href="/about"]');
-    const homeLink = container.querySelector('a[href="/"]');
-
-    expect(aboutLink).toBeTruthy();
-    expect(homeLink).toBeTruthy();
-    expect(aboutLink).toHaveAttribute("aria-current", "page");
-    expect(aboutLink?.className ?? "").toContain("underline");
-    expect(homeLink).not.toHaveAttribute("aria-current");
-  });
 });

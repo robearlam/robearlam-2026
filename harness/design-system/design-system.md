@@ -33,15 +33,28 @@ Avoid visual elements that distract from the content.
 
 ---
 
+## Editorial Design
+
+The site follows a **typography-led editorial design approach**.
+
+- layout supports reading, not application behaviour  
+- visual hierarchy is driven by typography and spacing  
+- components should feel lightweight and unobtrusive  
+
+Avoid “app-like” UI patterns where possible.
+
+---
+
 ## Visual Restraint
 
 The site should maintain a minimal, calm aesthetic.
 
 Avoid:
 
-- excessive colour usage
-- unnecessary visual decoration
-- overly complex layouts
+- excessive colour usage  
+- heavy shadows or gradients  
+- unnecessary visual decoration  
+- overly complex layouts  
 
 Design decisions should favour clarity and simplicity.
 
@@ -59,10 +72,10 @@ Users should feel that every page belongs to the same visual system.
 
 Design choices must support accessibility:
 
-- maintain strong colour contrast
-- preserve logical heading hierarchy
-- ensure readable font sizes
-- support keyboard interaction where applicable
+- maintain strong colour contrast  
+- preserve logical heading hierarchy  
+- ensure readable font sizes  
+- support keyboard interaction where applicable  
 
 Accessibility should be treated as a first-class design concern.
 
@@ -70,9 +83,9 @@ Accessibility should be treated as a first-class design concern.
 
 # Colour System
 
-The visual identity uses a **dark red primary colour** supported by neutral tones and subtle accent colours.
+The visual identity uses a restrained palette built primarily on neutral tones, with a dark red used sparingly for emphasis.
 
-The palette is intentionally restrained to maintain a professional tone.
+The palette is intentionally minimal to maintain a calm and professional tone.
 
 ---
 
@@ -82,14 +95,13 @@ Dark red brand colour.
 
 Hex value: #7A1C1C
 
-Used for:
+Used sparingly for:
 
-- primary buttons
-- highlighted UI elements
-- key accents
-- active navigation states
+- key accents  
+- active navigation states  
+- subtle emphasis  
 
-The primary colour should not dominate the interface. Use it sparingly for emphasis.
+Primary colour should **not dominate the interface**.
 
 ---
 
@@ -101,9 +113,10 @@ Hex value: #B23A3A
 
 Used for:
 
-- hover states
-- subtle highlights
-- secondary accents
+- subtle hover states  
+- light emphasis  
+
+Usage should remain minimal.
 
 ---
 
@@ -115,11 +128,10 @@ Hex value: #D97706
 
 Used sparingly for:
 
-- small visual highlights
-- link hover states
-- callouts or emphasis
+- small highlights  
+- occasional emphasis  
 
-Accent colour usage should remain limited.
+Accent usage should be rare and intentional.
 
 ---
 
@@ -127,19 +139,21 @@ Accent colour usage should remain limited.
 
 Neutrals provide the structural foundation of the UI.
 
-Background: #F8F7F6  
+Background: #FFFFFF  
 Surface: #FFFFFF  
 Primary text: #1F1F1F  
 Secondary text: #6B6B6B  
-Borders / dividers: #E5E5E5
+Borders / dividers: #E5E5E5  
 
-Neutrals should dominate the interface, allowing accent colours to stand out when used.
+Neutrals should dominate the interface.
+
+Colour should never be the primary tool for creating hierarchy.
 
 ---
 
 # Typography
 
-Typography prioritises readability and clear information hierarchy.
+Typography is the **primary visual system driver**.
 
 ---
 
@@ -149,10 +163,10 @@ Primary UI font: Inter
 
 Reasons:
 
-- excellent readability
-- widely used in modern UI
-- strong browser support
-- performs well at many sizes
+- excellent readability  
+- widely used in modern UI  
+- strong browser support  
+- performs well across sizes  
 
 ---
 
@@ -160,16 +174,17 @@ Reasons:
 
 Suggested heading scale:
 
-- H1 — 36–48px
-- H2 — 30–36px
-- H3 — 24–28px
-- H4 — 20–22px
+- H1 — 36–48px  
+- H2 — 30–36px  
+- H3 — 24–28px  
+- H4 — 20–22px  
 
 Guidelines:
 
-- maintain a clear hierarchy
-- avoid skipping heading levels
-- headings should separate sections clearly
+- maintain clear hierarchy  
+- avoid skipping heading levels  
+- use spacing to reinforce structure  
+- avoid decorative styling  
 
 ---
 
@@ -179,93 +194,144 @@ Body text should prioritise reading comfort.
 
 Guidelines:
 
-- body font size around 16–18px
-- generous line height
-- avoid extremely long line lengths
-- maintain consistent paragraph spacing
+- body font size: 16–18px  
+- generous line height  
+- limit line length for readability  
+- maintain consistent paragraph spacing  
+
+---
+
+## Supporting Text
+
+- use muted colour for metadata (dates, tags, descriptions)  
+- ensure supporting text does not compete with primary content  
 
 ---
 
 # Spacing System
 
-Spacing should follow a consistent rhythm.
+Spacing should follow a consistent vertical rhythm.
 
 Base spacing scale:
 
-- 4
-- 8
-- 16
-- 24
-- 32
-- 48
-- 64
+- 4  
+- 8  
+- 16  
+- 24  
+- 32  
+- 48  
+- 64  
 
-Guidelines:
+---
 
-- avoid arbitrary spacing values
-- reuse spacing consistently
-- maintain strong vertical rhythm
-- give sections generous breathing room
+## Layout Rhythm
+
+Common patterns:
+
+- small grouping: `space-y-4`  
+- standard grouping: `space-y-6`  
+- section spacing: `space-y-10` to `space-y-16`  
+
+---
+
+## Guidelines
+
+- avoid arbitrary spacing values  
+- reuse spacing consistently  
+- prioritise vertical rhythm  
+- use spacing instead of borders or backgrounds where possible  
 
 ---
 
 # Layout System
 
-Pages should follow a predictable structural layout.
-
-Typical structure:
+Pages follow a predictable structural layout:
 
 Page  
 → Section  
 → Container  
 → Content  
 
-This structure helps maintain visual consistency across pages.
-
 ---
 
 ## Container Width
 
-Maximum content width: ~1100px
+Maximum content width:
+
+- `max-w-3xl` to `max-w-4xl`
 
 Guidelines:
 
-- keep content centered
-- avoid overly wide reading columns
-- maintain comfortable reading widths
+- prioritise readable line length  
+- avoid wide, application-style layouts  
+- keep content centered  
+- allow breathing room via padding  
+
+---
+
+## Page Structure
+
+Typical structure:
+
+- Header  
+- Main Content  
+- Footer  
+
+Content should be structured into clearly defined sections using spacing.
 
 ---
 
 # Section Patterns
 
-Most pages should follow predictable section patterns.
+Most pages follow predictable section patterns:
 
-Typical structure:
+- Hero Section  
+- Content Section  
+- Content Section  
+- Call to Action  
+- Footer  
 
-Hero Section  
-Content Section  
-Content Section  
-Call to Action  
-Footer  
-
-Sections should be separated by spacing rather than heavy visual borders.
+Sections should be separated primarily by spacing, not heavy visual elements.
 
 ---
 
 # Component Strategy
 
-This project uses **shadcn/ui** as the base component library.
+The UI should be built from a **small, focused set of reusable components**.
 
 Guidelines:
 
-- prefer existing primitives when possible
-- wrap primitives when reusable patterns emerge
-- avoid unnecessary custom components
-- maintain consistent component usage across pages
+- prefer simple, composable components  
+- avoid large or complex component systems  
+- prioritise reuse over duplication  
+- rely on layout and typography rather than visual decoration  
 
-Reusable components should live in:
+---
 
-`src/components`
+## Use of Component Libraries
+
+Libraries such as shadcn/ui may be used as implementation primitives, but:
+
+- they must not define the visual system  
+- unnecessary components should not be imported  
+- generated UI should not be copied wholesale  
+
+All components must conform to this design system.
+
+---
+
+## Core Component Types
+
+- layout containers  
+- header and navigation  
+- footer  
+- section wrappers  
+- typography blocks  
+- blog list / content previews  
+- minimal buttons  
+- simple form inputs  
+
+Components should remain lightweight and purpose-driven.
 
 ---
 
@@ -275,12 +341,12 @@ Navigation should remain simple and predictable.
 
 Guidelines:
 
-- clear top-level navigation
-- minimal nesting
-- consistent placement
-- easy access to main site areas
+- clear top-level navigation  
+- minimal nesting  
+- consistent placement  
+- calm visual presentation  
 
-Navigation should not become overly complex for a personal site.
+Avoid complex navigation patterns.
 
 ---
 
@@ -288,31 +354,35 @@ Navigation should not become overly complex for a personal site.
 
 The site must work cleanly across:
 
-- mobile
-- tablet
-- desktop
+- mobile  
+- tablet  
+- desktop  
 
 Guidelines:
 
-- mobile-first layout thinking
-- maintain readable text sizes
-- preserve hierarchy on small screens
-- avoid layouts that collapse poorly on narrow devices
+- use mobile-first layout thinking  
+- maintain readable text sizes  
+- preserve hierarchy across breakpoints  
+- ensure container width does not become excessive on large screens  
 
 ---
 
 # Interaction Design
 
-Interactive elements should behave consistently.
+Interactive elements should behave consistently and subtly.
 
 Examples include:
 
-- button hover states
-- link hover behaviour
-- focus states
-- navigation highlights
+- button hover states  
+- link hover behaviour  
+- focus states  
+- navigation highlights  
 
-Interaction feedback should be subtle but clear.
+Guidelines:
+
+- interactions should be minimal and unobtrusive  
+- avoid unnecessary animation  
+- use simple visual feedback (underline, slight colour shift)  
 
 ---
 
@@ -322,13 +392,13 @@ Design decisions should support accessibility by default.
 
 Requirements include:
 
-- sufficient colour contrast
-- readable font sizes
-- logical heading order
-- clear focus states
-- meaningful link text
+- sufficient colour contrast  
+- readable font sizes  
+- logical heading order  
+- clear focus states  
+- meaningful link text  
 
-Accessibility should not be treated as optional.
+Accessibility is a core requirement, not optional.
 
 ---
 
@@ -336,12 +406,12 @@ Accessibility should not be treated as optional.
 
 The design system should evolve when:
 
-- repeated layout issues appear
-- new feature types require new patterns
-- accessibility improvements are needed
-- better component patterns emerge
+- repeated layout or readability issues appear  
+- new content patterns emerge  
+- accessibility improvements are required  
+- better component patterns are identified  
 
-Changes should be documented clearly in this file.
+Changes must be documented clearly in this file.
 
 ---
 
@@ -349,6 +419,12 @@ Changes should be documented clearly in this file.
 
 The **UI Designer role** maintains this design system.
 
-The **Feature Design role** applies this system when designing individual features.
+The **Feature Design role** applies this system when designing features.
 
-Feature designs should reuse existing patterns wherever possible rather than introducing new visual rules.
+Feature designs must:
+
+- reuse existing patterns  
+- follow spacing and typography rules  
+- avoid introducing new visual systems  
+
+The goal is a cohesive, unified UI across the entire site.

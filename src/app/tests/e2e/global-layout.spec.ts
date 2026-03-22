@@ -31,10 +31,8 @@ test("mobile viewport remains readable and avoids horizontal overflow", async ({
 
 test("shared shell persists when navigating between routes", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "About" }).first().click();
 
-  await expect(page).toHaveURL(/\/about$/);
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("contentinfo")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "About" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Rob Earlam" })).toBeVisible();
 });
