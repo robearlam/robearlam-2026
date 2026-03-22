@@ -58,12 +58,23 @@ Suggested status values:
 ---
 
 ### B007 — UI Framework and Design System
-**Status:** Planned
+**Status:** Done
 **Summary:** Establish a basic design system and UI component library for consistent styling and faster development.
 
 ---
 
 ### B008 — SEO Foundations
 **Status:** Planned  
-**Summary:** Add baseline metadata, social sharing support, and search-friendly structure.
+**Summary:** Add baseline metadata, social sharing support, and search-friendly structure, AEO & GEO enablement, Google Analytics Tracking.
 
+---
+
+### B009 - Import real blog content
+**Status:** Planned  
+**Summary:** Import existing blog content from previous project.
+
+---
+
+### B010 - Blog Disqus integration
+**Status:** Planned  
+**Summary:** Add Diqus integration for blog posts.
