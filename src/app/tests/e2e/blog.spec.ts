@@ -19,7 +19,7 @@ test("blog detail exposes tags and social links with secure new-tab attributes",
 
   await expect(page).toHaveURL(/\/blog\/[^/]+$/);
 
-  const sharePlatforms = ["Facebook", "LinkedIn", "Reddit", "X", "Bluesky"] as const;
+  const sharePlatforms = ["Facebook", "LinkedIn", "Reddit", "Twitter / X", "Bluesky"] as const;
 
   for (const platform of sharePlatforms) {
     const link = page.getByRole("link", { name: platform });

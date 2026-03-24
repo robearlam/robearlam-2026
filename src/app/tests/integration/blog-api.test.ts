@@ -19,7 +19,7 @@ describe("blog API route", () => {
   });
 
   it("supports tag filtering", async () => {
-    const request = new NextRequest("http://localhost:3000/api/blog?limit=10&offset=0&tag=platform-engineering");
+    const request = new NextRequest("http://localhost:3000/api/blog?limit=10&offset=0&tag=Sitecore");
     const response = await GET(request);
     const body = (await response.json()) as {
       posts: Array<{ tags: string[] }>;
@@ -27,7 +27,7 @@ describe("blog API route", () => {
 
     expect(response.status).toBe(200);
     expect(body.posts.length).toBeGreaterThan(0);
-    expect(body.posts.every((post) => post.tags.includes("platform-engineering"))).toBe(true);
+    expect(body.posts.every((post) => post.tags.includes("Sitecore"))).toBe(true);
   });
 
   it("rejects invalid pagination parameters", async () => {

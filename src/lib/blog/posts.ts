@@ -20,7 +20,7 @@ function isStringArray(value: unknown): value is string[] {
 }
 
 export function isValidTagSlug(tag: string): boolean {
-  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tag);
+  return /^[a-zA-Z0-9.\s]+(?:-[a-zA-Z0-9.\s]+)*$/.test(tag);
 }
 
 function isValidDateString(value: string): boolean {
@@ -118,6 +118,7 @@ async function loadAllBlogFileRecords(): Promise<BlogFileRecord[]> {
       const frontmatter = normalizeBlogFrontmatter(parsed.data);
 
       if (!frontmatter) {
+        console.log(`Invalid frontmatter in file: ${filePath}`);
         return null;
       }
 
