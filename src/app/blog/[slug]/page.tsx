@@ -58,7 +58,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <header className="space-y-4">
         <p className="text-sm text-muted-foreground">{formatPublishDate(post.publishDate)}</p>
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">{post.title}</h1>
-        <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground">{post.abstract}</p>
 
         <ul className="flex flex-wrap gap-2" aria-label="Post tags">
           {post.tags.map((tag) => (

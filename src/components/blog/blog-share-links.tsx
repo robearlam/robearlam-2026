@@ -29,7 +29,7 @@ export function BlogShareLinks({ title, slug }: BlogShareLinksProps) {
       href: `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
     },
     {
-      platform: "X",
+      platform: "Twitter / X",
       href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
     },
     {

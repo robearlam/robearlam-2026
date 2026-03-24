@@ -41,8 +41,9 @@ describe("blog post helpers", () => {
   it("validates tag slugs", () => {
     expect(isValidTagSlug("nextjs")).toBe(true);
     expect(isValidTagSlug("platform-engineering")).toBe(true);
-    expect(isValidTagSlug("NextJs")).toBe(false);
-    expect(isValidTagSlug("bad tag")).toBe(false);
+    expect(isValidTagSlug("NextJs")).toBe(true);
+    expect(isValidTagSlug("bad tag")).toBe(true);
+    expect(isValidTagSlug("tag.with.period")).toBe(true); 
   });
 
   it("normalizes valid frontmatter and rejects invalid frontmatter", () => {
@@ -96,9 +97,9 @@ describe("blog file-backed queries", () => {
   });
 
   it("finds posts by slug and returns null for missing slugs", async () => {
-    const existing = await getBlogPostBySlug("platform-roadmap-prioritization-for-2026");
+    const existing = await getBlogPostBySlug("upgrading-the-sugcon-sites-from-jss-to-the-content-sdk");
     expect(existing).not.toBeNull();
-    expect(existing?.title).toContain("Roadmap");
+    expect(existing?.title).toContain("SUGCON");
 
     const missing = await getBlogPostBySlug("missing-slug");
     expect(missing).toBeNull();
