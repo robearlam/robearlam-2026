@@ -12,7 +12,7 @@ Last month I had the pleasure of talking at the very first SUGCON India, being h
 
 I presented an Introduction to Sitecore Experience Commerce and was really happy with the engagement from the attendess at the session, I got some really interesting questions. If you want to view the session yourself then its just been published to YouTube and you can watch it below. Note that the MVP award ceremony happens first and my session comes in just before the 9min mark:
 
-<div class="video-container"><iframe width="1000" height="600" src="https://www.youtube.com/embed/tqDnanpefB4" frameborder="0" allowfullscreen></iframe></div>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/tqDnanpefB4" frameborder="0" allowfullscreen></iframe></div>
 
 You can also view the slides from this session on <a href="https://www.slideshare.net/RobertEarlam/an-introduction-to-sitecore-experience-commerce" rel="noopener" target="_blank">SlideShare</a>.
     
