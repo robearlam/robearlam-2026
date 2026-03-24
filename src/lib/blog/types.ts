@@ -34,3 +34,9 @@ export type MonthlyArchiveEntry = {
   label: string;
   count: number;
 };
+
+export type YearlyArchiveGroup = {
+  year: string;
+  count: number;
+  months: MonthlyArchiveEntry[];
+};

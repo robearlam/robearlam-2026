@@ -41,7 +41,7 @@ export default async function TagPage({ params }: TagPageProps) {
         </p>
       </header>
 
-      <div className="grid gap-8 md:grid-cols-[1fr_280px]">
+      <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_280px]">
         <div>
           {initialPage.posts.length === 0 ? (
             <section className="rounded-xl border border-border bg-card p-6 text-center">

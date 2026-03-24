@@ -23,6 +23,6 @@ describe("global layout shell", () => {
     expect(container.querySelector("header")).toBeTruthy();
     expect(container.querySelector("main")).toBeTruthy();
     expect(container.querySelector("footer")).toBeTruthy();
-    expect(container.innerHTML).toContain("max-w-[1100px]");
+    expect(container.innerHTML).toContain("max-w-[1200px]");
   });
 });

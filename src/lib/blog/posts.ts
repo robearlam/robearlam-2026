@@ -1,7 +1,15 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import type { BlogFrontmatter, BlogPost, BlogPostSummary, BlogQueryParams, BlogQueryResult, MonthlyArchiveEntry } from "@/lib/blog/types";
+import type {
+  BlogFrontmatter,
+  BlogPost,
+  BlogPostSummary,
+  BlogQueryParams,
+  BlogQueryResult,
+  MonthlyArchiveEntry,
+  YearlyArchiveGroup,
+} from "@/lib/blog/types";
 
 const BLOG_DATA_ROOT = path.join(process.cwd(), "data", "blogs");
 const MAX_LIMIT = 20;
@@ -76,16 +84,25 @@ export function filterPostsByTag(posts: BlogPostSummary[], tag?: string): BlogPo
 }
 
 export function filterPostsByYearMonth(posts: BlogPostSummary[], year?: string, month?: string): BlogPostSummary[] {
-  if (!year || !month) {
+  if (!year) {
     return posts;
   }
 
   return posts.filter((post) => {
     const publishDate = new Date(post.publishDate);
     const postYear = String(publishDate.getUTCFullYear());
+
+    if (postYear !== year) {
+      return false;
+    }
+
+    if (!month) {
+      return true;
+    }
+
     const postMonth = String(publishDate.getUTCMonth() + 1).padStart(2, "0");
 
-    return postYear === year && postMonth === month;
+    return postMonth === month;
   });
 }
 
@@ -165,6 +182,12 @@ export async function getAllBlogTags(): Promise<string[]> {
 }
 
 export async function getTopTags(limit: number): Promise<string[]> {
+  const tagsWithCount = await getTopTagsWithCount(limit);
+
+  return tagsWithCount.map(({ tag }) => tag);
+}
+
+export async function getTopTagsWithCount(limit: number): Promise<Array<{ tag: string; count: number }>> {
   const posts = await getAllBlogPosts();
   const tagCounts = new Map<string, number>();
 
@@ -183,13 +206,12 @@ export async function getTopTags(limit: number): Promise<string[]> {
       return left[0].localeCompare(right[0]);
     })
     .slice(0, limit)
-    .map(([tag]) => tag);
+    .map(([tag, count]) => ({ tag, count }));
 }
 
 function getArchiveLabel(year: string, month: string): string {
   return new Intl.DateTimeFormat("en-GB", {
     month: "long",
-    year: "numeric",
     timeZone: "UTC",
   }).format(new Date(`${year}-${month}-01T00:00:00.000Z`));
 }
@@ -225,6 +247,35 @@ export async function getAllArchiveMonths(): Promise<Array<{ year: string; month
   const archiveEntries = await getMonthlyArchive();
 
   return archiveEntries.map(({ year, month }) => ({ year, month }));
+}
+
+export async function getYearlyArchiveGroups(): Promise<YearlyArchiveGroup[]> {
+  const monthlyArchive = await getMonthlyArchive();
+  const archiveGroups = new Map<string, YearlyArchiveGroup>();
+
+  for (const entry of monthlyArchive) {
+    const existingGroup = archiveGroups.get(entry.year);
+
+    if (existingGroup) {
+      existingGroup.months.push(entry);
+      existingGroup.count += entry.count;
+      continue;
+    }
+
+    archiveGroups.set(entry.year, {
+      year: entry.year,
+      count: entry.count,
+      months: [entry],
+    });
+  }
+
+  return [...archiveGroups.values()].sort((left, right) => right.year.localeCompare(left.year));
+}
+
+export async function getAllArchiveYears(): Promise<Array<{ year: string }>> {
+  const archiveGroups = await getYearlyArchiveGroups();
+
+  return archiveGroups.map(({ year }) => ({ year }));
 }
 
 export async function getPaginatedBlogPosts({ limit, offset, tag, year, month }: BlogQueryParams): Promise<BlogQueryResult> {

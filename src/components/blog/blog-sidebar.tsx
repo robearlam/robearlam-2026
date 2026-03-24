@@ -1,6 +1,6 @@
 import { MonthlyArchivePanel } from "@/components/blog/monthly-archive-panel";
 import { TopTagsPanel } from "@/components/blog/top-tags-panel";
-import { getMonthlyArchive, getTopTags } from "@/lib/blog/posts";
+import { getTopTagsWithCount, getYearlyArchiveGroups } from "@/lib/blog/posts";
 
 type BlogSidebarProps = {
   activeTag?: string;
@@ -9,7 +9,7 @@ type BlogSidebarProps = {
 const TOP_TAG_LIMIT = 10;
 
 export async function BlogSidebar({ activeTag }: BlogSidebarProps) {
-  const [tags, archiveEntries] = await Promise.all([getTopTags(TOP_TAG_LIMIT), getMonthlyArchive()]);
+  const [tags, archiveEntries] = await Promise.all([getTopTagsWithCount(TOP_TAG_LIMIT), getYearlyArchiveGroups()]);
 
   return (
     <aside aria-label="Blog navigation" className="hidden md:block">

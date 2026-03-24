@@ -19,7 +19,7 @@ export default async function BlogPage() {
         </p>
       </header>
 
-      <div className="grid gap-8 md:grid-cols-[1fr_280px]">
+      <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_280px]">
         <BlogFeedClient initialPosts={initialPage.posts} initialHasMore={initialPage.hasMore} />
         <BlogSidebar />
       </div>
