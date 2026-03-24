@@ -8,6 +8,7 @@ import {
   paginatePosts,
   sortPostsByDateDesc,
 } from "@/lib/blog/posts";
+import { DISQUS_SHORTNAME, getDisqusEmbedUrl } from "@/lib/blog/disqus";
 import type { BlogPostSummary } from "@/lib/blog/types";
 
 const samplePosts: BlogPostSummary[] = [
@@ -38,6 +39,11 @@ const samplePosts: BlogPostSummary[] = [
 ];
 
 describe("blog post helpers", () => {
+  it("uses the configured Disqus shortname contract", () => {
+    expect(DISQUS_SHORTNAME).toBe("robearlam");
+    expect(getDisqusEmbedUrl(DISQUS_SHORTNAME)).toBe("https://robearlam.disqus.com/embed.js");
+  });
+
   it("validates tag slugs", () => {
     expect(isValidTagSlug("nextjs")).toBe(true);
     expect(isValidTagSlug("platform-engineering")).toBe(true);
