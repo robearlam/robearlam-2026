@@ -1,8 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  filterPostsByYearMonth,
   filterPostsByTag,
+  getAllArchiveYears,
   getBlogPostBySlug,
+  getMonthlyArchive,
   getPaginatedBlogPosts,
+  getTopTags,
+  getTopTagsWithCount,
+  getYearlyArchiveGroups,
   isValidTagSlug,
   normalizeBlogFrontmatter,
   paginatePosts,
@@ -85,6 +91,13 @@ describe("blog post helpers", () => {
     expect(filtered.map((post) => post.slug)).toEqual(["post-a", "post-c"]);
   });
 
+  it("filters posts by year and month", () => {
+    const filtered = filterPostsByYearMonth(samplePosts, "2026", "01");
+    expect(filtered.map((post) => post.slug)).toEqual(["post-a"]);
+    expect(filterPostsByYearMonth(samplePosts, "2026").map((post) => post.slug)).toEqual(["post-a", "post-b"]);
+    expect(filterPostsByYearMonth(samplePosts)).toEqual(samplePosts);
+  });
+
   it("paginates with hasMore and total values", () => {
     const page = paginatePosts(samplePosts, 1, 1);
     expect(page.posts).toHaveLength(1);
@@ -100,6 +113,59 @@ describe("blog file-backed queries", () => {
     expect(page.posts).toHaveLength(5);
     expect(page.total).toBeGreaterThanOrEqual(15);
     expect(page.posts[0]?.publishDate >= page.posts[1]?.publishDate).toBe(true);
+  });
+
+  it("returns filtered paginated posts for an archive month", async () => {
+    const archive = await getMonthlyArchive();
+    const firstEntry = archive[0];
+
+    expect(firstEntry).toBeDefined();
+
+    const page = await getPaginatedBlogPosts({
+      limit: 20,
+      offset: 0,
+      year: firstEntry!.year,
+      month: firstEntry!.month,
+    });
+
+    expect(page.posts.length).toBe(firstEntry!.count);
+    expect(page.posts.every((post) => post.publishDate.startsWith(`${firstEntry!.year}-${firstEntry!.month}`))).toBe(true);
+  });
+
+  it("returns filtered paginated posts for an archive year", async () => {
+    const archiveYears = await getAllArchiveYears();
+    const firstYear = archiveYears[0];
+
+    expect(firstYear).toBeDefined();
+
+    const page = await getPaginatedBlogPosts({
+      limit: 50,
+      offset: 0,
+      year: firstYear!.year,
+    });
+
+    expect(page.posts.length).toBeGreaterThan(0);
+    expect(page.posts.every((post) => post.publishDate.startsWith(firstYear!.year))).toBe(true);
+  });
+
+  it("returns top tags without counts and archive entries with counts", async () => {
+    const [topTags, topTagsWithCount, archive, yearGroups] = await Promise.all([
+      getTopTags(10),
+      getTopTagsWithCount(10),
+      getMonthlyArchive(),
+      getYearlyArchiveGroups(),
+    ]);
+
+    expect(topTags.length).toBeGreaterThan(0);
+    expect(topTags.length).toBeLessThanOrEqual(10);
+    expect(topTagsWithCount[0]?.tag).toBe(topTags[0]);
+    expect(topTagsWithCount[0]?.count).toBeGreaterThan(0);
+    expect(archive.length).toBeGreaterThan(0);
+    expect(archive[0]?.label).toMatch(/[A-Za-z]/);
+    expect(archive[0]?.count).toBeGreaterThan(0);
+    expect(yearGroups.length).toBeGreaterThan(0);
+    expect(yearGroups[0]?.months.length).toBeGreaterThan(0);
+    expect(yearGroups[0]?.count).toBeGreaterThanOrEqual(yearGroups[0]!.months[0]!.count);
   });
 
   it("finds posts by slug and returns null for missing slugs", async () => {

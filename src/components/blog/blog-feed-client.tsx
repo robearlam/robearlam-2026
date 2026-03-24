@@ -11,6 +11,10 @@ type BlogFeedClientProps = {
   initialPosts: BlogPostSummary[];
   initialHasMore: boolean;
   tag?: string;
+  year?: string;
+  month?: string;
+  emptyTitle?: string;
+  emptyDescription?: string;
 };
 
 type BlogApiResponse = {
@@ -19,7 +23,7 @@ type BlogApiResponse = {
   hasMore: boolean;
 };
 
-export function BlogFeedClient({ initialPosts, initialHasMore, tag }: BlogFeedClientProps) {
+export function BlogFeedClient({ initialPosts, initialHasMore, tag, year, month, emptyTitle, emptyDescription }: BlogFeedClientProps) {
   const [posts, setPosts] = useState<BlogPostSummary[]>(initialPosts);
   const [offset, setOffset] = useState<number>(initialPosts.length);
   const [hasMore, setHasMore] = useState<boolean>(initialHasMore);
@@ -37,8 +41,16 @@ export function BlogFeedClient({ initialPosts, initialHasMore, tag }: BlogFeedCl
       query.set("tag", tag);
     }
 
+    if (year) {
+      query.set("year", year);
+    }
+
+    if (month) {
+      query.set("month", month);
+    }
+
     return `/api/blog?${query.toString()}`;
-  }, [offset, tag]);
+  }, [month, offset, tag, year]);
 
   const loadMore = useCallback(async () => {
     if (!hasMore || isLoading) {
@@ -95,8 +107,8 @@ export function BlogFeedClient({ initialPosts, initialHasMore, tag }: BlogFeedCl
   if (posts.length === 0) {
     return (
       <section className="rounded-xl border border-border bg-card p-6 text-center">
-        <h2 className="text-lg font-semibold tracking-tight">No posts found for this tag</h2>
-        <p className="mt-2 text-sm text-muted-foreground">Try another tag, or browse all posts from the main blog listing.</p>
+        <h2 className="text-lg font-semibold tracking-tight">{emptyTitle ?? "No posts found for this tag"}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">{emptyDescription ?? "Try another tag, or browse all posts from the main blog listing."}</p>
         <Link href="/blog" className="mt-4 inline-block text-sm font-medium text-primary hover:underline">View all posts</Link>
       </section>
     );

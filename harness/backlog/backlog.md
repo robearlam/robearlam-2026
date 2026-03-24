@@ -76,5 +76,12 @@ Suggested status values:
 ---
 
 ### B010 - Blog Disqus integration
-**Status:** In Progress  
+**Status:** Done 
 **Summary:** Add Diqus integration for blog posts.
+
+---
+
+### B011 - Blog Right Columns Panels
+**Status:** Ready for Spec  
+**Task:** T007  
+**Summary:** Add right panels to the blog listing pages, one showing the top tags, the other showing blog counts by month/year with count.

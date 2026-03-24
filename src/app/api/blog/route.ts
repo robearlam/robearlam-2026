@@ -8,6 +8,8 @@ export async function GET(request: NextRequest): Promise<Response> {
   const limitParam = searchParams.get("limit") ?? String(DEFAULT_LIMIT);
   const offsetParam = searchParams.get("offset") ?? "0";
   const tag = searchParams.get("tag") ?? undefined;
+  const year = searchParams.get("year") ?? undefined;
+  const month = searchParams.get("month") ?? undefined;
 
   const limit = Number.parseInt(limitParam, 10);
   const offset = Number.parseInt(offsetParam, 10);
@@ -20,6 +22,8 @@ export async function GET(request: NextRequest): Promise<Response> {
     limit,
     offset,
     tag,
+    year,
+    month,
   });
 
   return Response.json(result, { status: 200 });

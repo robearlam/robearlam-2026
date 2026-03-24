@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import BlogPage from "@/app/blog/page";
-import BlogPostPage from "@/app/blog/[slug]/page";
+import BlogPostPage from "@/app/blog/(post)/[slug]/page";
 import TagPage from "@/app/blog/tag/[tag]/page";
 import { DISQUS_SHORTNAME } from "@/lib/blog/disqus";
 
