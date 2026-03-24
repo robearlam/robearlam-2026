@@ -68,7 +68,7 @@ export function BlogFeedClient({ initialPosts, initialHasMore, tag }: BlogFeedCl
   }, [endpoint, hasMore, isLoading]);
 
   useEffect(() => {
-    if (!hasMore || !sentinelRef.current) {
+    if (!hasMore || !sentinelRef.current || typeof window.IntersectionObserver === "undefined") {
       return;
     }
 

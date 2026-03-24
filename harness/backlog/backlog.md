@@ -70,11 +70,11 @@ Suggested status values:
 ---
 
 ### B009 - Import real blog content
-**Status:** Planned  
+**Status:** Done  
 **Summary:** Import existing blog content from previous project.
 
 ---
 
 ### B010 - Blog Disqus integration
-**Status:** Planned  
+**Status:** In Progress  
 **Summary:** Add Diqus integration for blog posts.

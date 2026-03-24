@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
+import { BlogCommentsSection } from "@/components/blog/blog-comments-section";
 import { BlogShareLinks } from "@/components/blog/blog-share-links";
 import { BlogTagLink } from "@/components/blog/blog-tag-link";
 import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/blog/posts";
@@ -103,6 +104,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </section>
 
       <BlogShareLinks title={post.title} slug={post.slug} />
+
+      <BlogCommentsSection disqusId={post.disqusId} slug={post.slug} title={post.title} />
 
       <footer>
         <Link
