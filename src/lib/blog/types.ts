@@ -18,10 +18,19 @@ export type BlogQueryParams = {
   limit: number;
   offset: number;
   tag?: string;
+  year?: string;
+  month?: string;
 };
 
 export type BlogQueryResult = {
   posts: BlogPostSummary[];
   total: number;
   hasMore: boolean;
+};
+
+export type MonthlyArchiveEntry = {
+  year: string;
+  month: string;
+  label: string;
+  count: number;
 };

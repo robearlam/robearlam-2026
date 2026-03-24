@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  filterPostsByYearMonth,
   filterPostsByTag,
   getBlogPostBySlug,
+  getMonthlyArchive,
   getPaginatedBlogPosts,
+  getTopTags,
   isValidTagSlug,
   normalizeBlogFrontmatter,
   paginatePosts,
@@ -85,6 +88,12 @@ describe("blog post helpers", () => {
     expect(filtered.map((post) => post.slug)).toEqual(["post-a", "post-c"]);
   });
 
+  it("filters posts by year and month", () => {
+    const filtered = filterPostsByYearMonth(samplePosts, "2026", "01");
+    expect(filtered.map((post) => post.slug)).toEqual(["post-a"]);
+    expect(filterPostsByYearMonth(samplePosts)).toEqual(samplePosts);
+  });
+
   it("paginates with hasMore and total values", () => {
     const page = paginatePosts(samplePosts, 1, 1);
     expect(page.posts).toHaveLength(1);
@@ -100,6 +109,33 @@ describe("blog file-backed queries", () => {
     expect(page.posts).toHaveLength(5);
     expect(page.total).toBeGreaterThanOrEqual(15);
     expect(page.posts[0]?.publishDate >= page.posts[1]?.publishDate).toBe(true);
+  });
+
+  it("returns filtered paginated posts for an archive month", async () => {
+    const archive = await getMonthlyArchive();
+    const firstEntry = archive[0];
+
+    expect(firstEntry).toBeDefined();
+
+    const page = await getPaginatedBlogPosts({
+      limit: 20,
+      offset: 0,
+      year: firstEntry!.year,
+      month: firstEntry!.month,
+    });
+
+    expect(page.posts.length).toBe(firstEntry!.count);
+    expect(page.posts.every((post) => post.publishDate.startsWith(`${firstEntry!.year}-${firstEntry!.month}`))).toBe(true);
+  });
+
+  it("returns top tags without counts and archive entries with counts", async () => {
+    const [topTags, archive] = await Promise.all([getTopTags(10), getMonthlyArchive()]);
+
+    expect(topTags.length).toBeGreaterThan(0);
+    expect(topTags.length).toBeLessThanOrEqual(10);
+    expect(archive.length).toBeGreaterThan(0);
+    expect(archive[0]?.label).toMatch(/[A-Za-z]+\s\d{4}/);
+    expect(archive[0]?.count).toBeGreaterThan(0);
   });
 
   it("finds posts by slug and returns null for missing slugs", async () => {

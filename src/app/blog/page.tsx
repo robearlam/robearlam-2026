@@ -1,4 +1,5 @@
 import { BlogFeedClient } from "@/components/blog/blog-feed-client";
+import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { getPaginatedBlogPosts } from "@/lib/blog/posts";
 
 const INITIAL_PAGE_SIZE = 5;
@@ -18,7 +19,10 @@ export default async function BlogPage() {
         </p>
       </header>
 
-      <BlogFeedClient initialPosts={initialPage.posts} initialHasMore={initialPage.hasMore} />
+      <div className="grid gap-8 md:grid-cols-[1fr_280px]">
+        <BlogFeedClient initialPosts={initialPage.posts} initialHasMore={initialPage.hasMore} />
+        <BlogSidebar />
+      </div>
     </section>
   );
 }
