@@ -82,6 +82,12 @@ Suggested status values:
 ---
 
 ### B011 - Blog Right Columns Panels
-**Status:** Ready for Spec  
+**Status:** Done 
 **Task:** T007  
 **Summary:** Add right panels to the blog listing pages, one showing the top tags, the other showing blog counts by month/year with count.
+
+---
+
+### B012 - Videos Page
+**Status:** Planned  
+**Summary:** A page listing all of the videos that I have created.
