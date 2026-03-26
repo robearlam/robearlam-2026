@@ -117,4 +117,9 @@ export async function getPaginatedVideos({ limit, offset }: VideoQueryParams): P
   return paginateVideos(nonFeaturedVideos, offset, limit);
 }
 
+export async function getLatestVideos(n: number): Promise<VideoEntry[]> {
+  const all = await getAllVideos();
+  return all.slice(0, n);
+}
+
 

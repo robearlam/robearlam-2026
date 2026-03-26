@@ -299,3 +299,8 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
     content: match.content,
   };
 }
+
+export async function getLatestPosts(n: number): Promise<BlogPostSummary[]> {
+  const posts = await getAllBlogPosts();
+  return posts.slice(0, n);
+}

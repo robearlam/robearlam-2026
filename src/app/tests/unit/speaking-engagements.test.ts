@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  getAllEngagements,
+  getUpcomingEngagements,
   normalizeSpeakingEngagement,
   partitionEngagements,
   sortUpcoming,
@@ -178,5 +180,23 @@ describe("sortPastByYear", () => {
     const groups = sortPastByYear(input);
     const group2025 = groups.find((g) => g.year === "2025");
     expect(group2025?.engagements.map((e) => e.name)).toEqual(["B", "A"]);
+  });
+});
+
+// ─── getUpcomingEngagements ────────────────────────────────────────────────────
+
+describe("getUpcomingEngagements (file-backed integration)", () => {
+  it("returns empty array when asOf date is far in the future", async () => {
+    const result = await getUpcomingEngagements(new Date("2099-12-31T00:00:00Z"));
+    expect(result).toHaveLength(0);
+  });
+
+  it("returns all engagements when asOf date is far in the past, sorted ascending by start", async () => {
+    const all = await getAllEngagements();
+    const result = await getUpcomingEngagements(new Date("2000-01-01T00:00:00Z"));
+    expect(result).toHaveLength(all.length);
+    if (result.length > 1) {
+      expect(result[0]!.start <= result[1]!.start).toBe(true);
+    }
   });
 });

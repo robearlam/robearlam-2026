@@ -3,7 +3,9 @@ import {
   filterPostsByYearMonth,
   filterPostsByTag,
   getAllArchiveYears,
+  getAllBlogPosts,
   getBlogPostBySlug,
+  getLatestPosts,
   getMonthlyArchive,
   getPaginatedBlogPosts,
   getTopTags,
@@ -175,5 +177,25 @@ describe("blog file-backed queries", () => {
 
     const missing = await getBlogPostBySlug("missing-slug");
     expect(missing).toBeNull();
+  });
+});
+
+describe("getLatestPosts (file-backed integration)", () => {
+  it("returns 3 most recent posts sorted by publishDate descending", async () => {
+    const posts = await getLatestPosts(3);
+    expect(posts).toHaveLength(3);
+    expect(posts[0]!.publishDate >= posts[1]!.publishDate).toBe(true);
+    expect(posts[1]!.publishDate >= posts[2]!.publishDate).toBe(true);
+  });
+
+  it("returns all posts when n exceeds total count", async () => {
+    const all = await getAllBlogPosts();
+    const posts = await getLatestPosts(all.length + 100);
+    expect(posts).toHaveLength(all.length);
+  });
+
+  it("returns empty array for n=0", async () => {
+    const posts = await getLatestPosts(0);
+    expect(posts).toHaveLength(0);
   });
 });

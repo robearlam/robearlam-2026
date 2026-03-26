@@ -34,7 +34,8 @@ Suggested status values:
 ---
 
 ### B003 — Homepage v1
-**Status:** Planned  
+**Status:** Ready for Spec  
+**Task:** T010  
 **Summary:** Create the first homepage with hero content, introduction, and clear navigation to key areas.
 
 ---
@@ -89,5 +90,11 @@ Suggested status values:
 ---
 
 ### B012 - Videos Page
-**Status:** Planned  
+**Status:** Done  
 **Summary:** A page listing all of the videos that I have created.
+
+---
+
+### B013 - Make Harness IDE Agnostic
+**Status:** Planned  
+**Summary:** Replicate the defined agent defintions currently used for vscode into a format that can be leveraged by Cursor / Claude.
