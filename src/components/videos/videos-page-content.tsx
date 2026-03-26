@@ -1,15 +1,15 @@
 import { VideoCard } from "@/components/videos/video-card";
 import { VideosEmptyState } from "@/components/videos/videos-empty-state";
-import { VideosGrid } from "@/components/videos/videos-grid";
+import { VideosGridClient } from "@/components/videos/videos-grid-client";
 import type { VideoEntry } from "@/lib/videos/types";
 
 type VideosPageContentProps = {
-  videos: VideoEntry[];
+  featuredVideo: VideoEntry | undefined;
+  initialVideos: VideoEntry[];
+  initialHasMore: boolean;
 };
 
-export function VideosPageContent({ videos }: VideosPageContentProps) {
-  const [featuredVideo, ...remainingVideos] = videos;
-
+export function VideosPageContent({ featuredVideo, initialVideos, initialHasMore }: VideosPageContentProps) {
   if (!featuredVideo) {
     return <VideosEmptyState />;
   }
@@ -25,7 +25,7 @@ export function VideosPageContent({ videos }: VideosPageContentProps) {
           <VideoCard video={featuredVideo} featured />
         </div>
       </section>
-      <VideosGrid videos={remainingVideos} />
+          <VideosGridClient initialVideos={initialVideos} initialHasMore={initialHasMore} />
     </div>
   );
 }

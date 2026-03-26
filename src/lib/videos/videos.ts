@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import type { VideoEntry, VideoFrontmatter } from "@/lib/videos/types";
+import type { VideoEntry, VideoFrontmatter, VideoQueryParams, VideoQueryResult } from "@/lib/videos/types";
 
 const VIDEOS_DATA_ROOT = path.join(process.cwd(), "data", "videos");
 
@@ -97,11 +97,24 @@ export async function getAllVideos(): Promise<VideoEntry[]> {
   return sortVideosByDateDesc(results.filter((video): video is VideoEntry => video !== null));
 }
 
-export function formatVideoDate(value: string): string {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${value}T00:00:00.000Z`));
+const MAX_LIMIT = 20;
+
+export function paginateVideos(videos: VideoEntry[], offset: number, limit: number): VideoQueryResult {
+  const safeOffset = Math.max(0, offset);
+  const safeLimit = Math.max(1, Math.min(limit, MAX_LIMIT));
+  const paginatedVideos = videos.slice(safeOffset, safeOffset + safeLimit);
+
+  return {
+    videos: paginatedVideos,
+    total: videos.length,
+    hasMore: safeOffset + safeLimit < videos.length,
+  };
 }
+
+export async function getPaginatedVideos({ limit, offset }: VideoQueryParams): Promise<VideoQueryResult> {
+  const allVideos = await getAllVideos();
+  const [, ...nonFeaturedVideos] = allVideos;
+  return paginateVideos(nonFeaturedVideos, offset, limit);
+}
+
+

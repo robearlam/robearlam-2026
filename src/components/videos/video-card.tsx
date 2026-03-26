@@ -1,4 +1,4 @@
-import { formatVideoDate } from "@/lib/videos/videos";
+import { formatVideoDate } from "@/lib/videos/utils";
 import type { VideoEntry } from "@/lib/videos/types";
 
 type VideoCardProps = {

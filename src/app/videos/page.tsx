@@ -1,6 +1,6 @@
 import { HeroSection } from "@/components/editorial/hero-section";
 import { VideosPageContent } from "@/components/videos/videos-page-content";
-import { getAllVideos } from "@/lib/videos/videos";
+import { getAllVideos, getPaginatedVideos } from "@/lib/videos/videos";
 
 export const metadata = {
   title: "Videos",
@@ -8,7 +8,9 @@ export const metadata = {
 };
 
 export default async function VideosPage() {
-  const videos = await getAllVideos();
+  const allVideos = await getAllVideos();
+  const featuredVideo = allVideos[0];
+  const { videos: initialVideos, hasMore: initialHasMore } = await getPaginatedVideos({ limit: 6, offset: 0 });
 
   return (
     <div className="space-y-12">
@@ -16,7 +18,7 @@ export default async function VideosPage() {
         heading="Videos"
         lead="Tutorials, conference talks, and developer videos collected in one place, with the latest release featured first."
       />
-      <VideosPageContent videos={videos} />
+      <VideosPageContent featuredVideo={featuredVideo} initialVideos={initialVideos} initialHasMore={initialHasMore} />
     </div>
   );
 }
