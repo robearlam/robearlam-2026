@@ -32,7 +32,7 @@ test("homepage has a View all videos link pointing to /videos", async ({ page })
 
 test("homepage profile image has a non-empty alt attribute", async ({ page }) => {
   await page.goto("/");
-  const img = page.getByRole("img", { name: /rob earlam/i });
+  const img = page.getByRole("img", { name: "Profile photo of Rob Earlam" });
   await expect(img).toBeVisible();
   const alt = await img.getAttribute("alt");
   expect(alt).toBeTruthy();
