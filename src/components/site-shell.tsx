@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import { SiteNav } from "@/components/site-nav";
 
@@ -11,8 +12,15 @@ export function SiteShell({ children }: SiteShellProps) {
     <div className="flex min-h-screen flex-col bg-background">
       <header className="relative border-b border-border bg-white">
         <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <Link href="/" className="text-lg font-semibold tracking-tight text-foreground">
-            Rob Earlam
+          <Link href="/" className="inline-flex items-center" aria-label="Rob Earlam home">
+            <Image
+              src="/img/logo.png"
+              alt="Rob Earlam"
+              width={280}
+              height={64}
+              priority
+              className="h-8 w-auto sm:h-9 lg:h-10"
+            />
           </Link>
           <nav aria-label="Primary navigation" className="hidden md:block">
             <SiteNav variant="desktop" />
