@@ -18,11 +18,11 @@ export default async function Home() {
     <div>
       <HomepageHero
         name="Rob Earlam"
-        lead="Engineering leader and software architect with a focus on platform engineering, developer experience, and building products that scale. Writing about the craft of software, team leadership, and lessons learned from building in the open."
+        lead="Developer advocate, software developer, movie lover, music listener, pizza eater, meat smoker"
         imageSrc="/img/rob.png"
         imageAlt="Profile photo of Rob Earlam"
       />
-      <HomepageSection heading="Latest Writing" ctaLabel="View all posts →" ctaHref="/blog">
+      <HomepageSection heading="Latest Blogs" ctaLabel="View all posts →" ctaHref="/blog">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
           {latestPosts.map((post) => (
             <BlogPostCard key={post.slug} post={post} />
@@ -37,7 +37,7 @@ export default async function Home() {
         </div>
       </HomepageSection>
       {upcomingEngagements.length > 0 && (
-        <HomepageSection heading="Upcoming Speaking" ctaLabel="View all speaking →" ctaHref="/speaking">
+        <HomepageSection heading="Upcoming Events" ctaLabel="View all speaking →" ctaHref="/speaking">
           <div className="space-y-6">
             {upcomingEngagements.map((engagement) => (
               <EngagementItem key={`${engagement.name}-${engagement.start}`} engagement={engagement} />
