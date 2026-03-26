@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getAllVideos, getPaginatedVideos, normalizeVideoFrontmatter, paginateVideos, sortVideosByDateDesc } from "@/lib/videos/videos";
+import { getAllVideos, getLatestVideos, getPaginatedVideos, normalizeVideoFrontmatter, paginateVideos, sortVideosByDateDesc } from "@/lib/videos/videos";
 import { formatVideoDate } from "@/lib/videos/utils";
 import type { VideoEntry } from "@/lib/videos/types";
 
@@ -94,6 +94,25 @@ describe("paginateVideos (pure pagination utility)", () => {
     const result = paginateVideos(makeVideos(3), 6, 6);
     expect(result.videos).toHaveLength(0);
     expect(result.hasMore).toBe(false);
+  });
+});
+
+describe("getLatestVideos (file-backed integration)", () => {
+  it("returns 3 most recently added videos sorted by date descending", async () => {
+    const videos = await getLatestVideos(3);
+    expect(videos).toHaveLength(3);
+    expect(videos[0]!.date >= videos[1]!.date).toBe(true);
+  });
+
+  it("returns all videos when n exceeds total count", async () => {
+    const all = await getAllVideos();
+    const videos = await getLatestVideos(all.length + 100);
+    expect(videos).toHaveLength(all.length);
+  });
+
+  it("returns empty array for n=0", async () => {
+    const videos = await getLatestVideos(0);
+    expect(videos).toHaveLength(0);
   });
 });
 

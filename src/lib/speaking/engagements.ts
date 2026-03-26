@@ -154,3 +154,10 @@ export async function getAllEngagements(): Promise<SpeakingEngagement[]> {
 
   return results.filter((e): e is SpeakingEngagement => e !== null);
 }
+
+export async function getUpcomingEngagements(asOf: Date): Promise<SpeakingEngagement[]> {
+  const all = await getAllEngagements();
+  const todayStr = asOf.toISOString().slice(0, 10);
+  const { upcoming } = partitionEngagements(all, todayStr);
+  return sortUpcoming(upcoming);
+}
