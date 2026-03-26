@@ -52,7 +52,7 @@ Suggested status values:
 ---
 
 ### B006 — Speaking Page
-**Status:** Planned  
+**Status:** Done  
 **Summary:** Create a page to showcase speaking engagements, topics, and related content.
 
 ---
