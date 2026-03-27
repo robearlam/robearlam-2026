@@ -1,40 +1,61 @@
-import { getAllBlogPosts } from "@/lib/blog/posts";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
+import remarkRehype from "remark-rehype";
+import rehypeRaw from "rehype-raw";
+import rehypeStringify from "rehype-stringify";
+import { getAllBlogPostsWithContent } from "@/lib/blog/posts";
 import { canonicalUrl } from "@/lib/seo/canonical";
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/seo/constants";
+import { SITE_URL } from "@/lib/seo/constants";
 
-function escapeXml(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
+const CHANNEL_TITLE = "Rob Earlam - Blog";
+const CHANNEL_DESCRIPTION =
+  "Developer advocate, Software Developer, Movie Lover, Music Listener, Pizza Eater, Meat Smoker";
+
+async function markdownToHtml(markdown: string): Promise<string> {
+  const result = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
+    .use(rehypeStringify)
+    .process(markdown);
+
+  return String(result);
+}
+
+function cdata(text: string): string {
+  return `<![CDATA[ ${text} ]]>`;
 }
 
 export async function GET(): Promise<Response> {
-  const posts = await getAllBlogPosts();
+  const posts = await getAllBlogPostsWithContent();
+  const lastBuildDate = posts.length > 0 ? new Date(posts[0].publishDate).toUTCString() : new Date().toUTCString();
 
-  const items = posts
-    .map((post) => {
+  const itemsHtml = await Promise.all(
+    posts.map(async (post) => {
       const url = canonicalUrl(`/blog/${post.slug}`);
-      return `    <item>
-      <title>${escapeXml(post.title)}</title>
-      <link>${url}</link>
-      <description>${escapeXml(post.abstract)}</description>
-      <pubDate>${new Date(post.publishDate).toUTCString()}</pubDate>
-      <guid isPermaLink="true">${url}</guid>
-    </item>`;
+      const htmlContent = await markdownToHtml(post.content);
+      return `  <item>
+    <title>${cdata(post.title)}</title>
+    <link>${url}</link>
+    <guid>${url}</guid>
+    <description>${cdata(post.abstract)}</description>
+    <pubDate>${new Date(post.publishDate).toUTCString()}</pubDate>
+    <content:encoded>${cdata(htmlContent)}</content:encoded>
+  </item>`;
     })
-    .join("\n");
+  );
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
-    <title>${escapeXml(SITE_NAME)}</title>
+    <atom:link href="${SITE_URL}/rss" rel="self" type="application/rss+xml"/>
+    <title>${CHANNEL_TITLE}</title>
     <link>${SITE_URL}</link>
-    <description>${escapeXml(SITE_DESCRIPTION)}</description>
-    <language>en</language>
-${items}
+    <description>${CHANNEL_DESCRIPTION}</description>
+    <lastBuildDate>${lastBuildDate}</lastBuildDate>
+${itemsHtml.join("\n")}
   </channel>
 </rss>`;
 
