@@ -1,7 +1,18 @@
+import type { Metadata } from "next";
 import type { IconType } from "react-icons";
 import { FaBluesky, FaDev, FaGithub, FaLinkedin, FaMastodon, FaYoutube } from "react-icons/fa6";
 import { HeroSection } from "@/components/editorial/hero-section";
 import { SectionWrapper } from "@/components/editorial/section-wrapper";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { webPageJsonLd } from "@/lib/seo/json-ld";
+import { JsonLdScript } from "@/lib/seo/json-ld-script";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Contact",
+  description:
+    "Get in touch with Rob Earlam — find, social profiles, and community links.",
+  path: "/contact",
+});
 
 type ProfileLink = {
   href: string;
@@ -45,6 +56,14 @@ const profileLinks: ProfileLink[] = [
 export default function ContactPage() {
   return (
     <div className="space-y-12">
+      <JsonLdScript
+        data={webPageJsonLd({
+          name: "Contact",
+          description:
+            "Get in touch with Rob Earlam — find social profiles, and community links.",
+          path: "/contact",
+        })}
+      />
       <HeroSection
         heading="Contact"
         lead="Reach out directly by email, or find me on the channels below for updates and writing."

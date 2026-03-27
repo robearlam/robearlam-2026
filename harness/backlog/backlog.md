@@ -34,7 +34,7 @@ Suggested status values:
 ---
 
 ### B003 — Homepage v1
-**Status:** Ready for Spec  
+**Status:** Done  
 **Task:** T010  
 **Summary:** Create the first homepage with hero content, introduction, and clear navigation to key areas.
 
@@ -98,3 +98,9 @@ Suggested status values:
 ### B013 - Make Harness IDE Agnostic
 **Status:** Planned  
 **Summary:** Replicate the defined agent defintions currently used for vscode into a format that can be leveraged by Cursor / Claude.
+
+---
+
+### B014 - Blog RSS, Sitemap, Robots.txt, Webfinger etc
+**Status:** Planned  
+**Summary:** Implements other auxillary protocols that are needed for general website subscriptions

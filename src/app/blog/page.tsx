@@ -1,6 +1,17 @@
+import type { Metadata } from "next";
 import { BlogFeedClient } from "@/components/blog/blog-feed-client";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { getPaginatedBlogPosts } from "@/lib/blog/posts";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { webPageJsonLd } from "@/lib/seo/json-ld";
+import { JsonLdScript } from "@/lib/seo/json-ld-script";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Blog",
+  description:
+    "Writing on engineering, product execution, and lessons from building software in the open.",
+  path: "/blog",
+});
 
 const INITIAL_PAGE_SIZE = 5;
 
@@ -12,6 +23,14 @@ export default async function BlogPage() {
 
   return (
     <section className="space-y-10">
+      <JsonLdScript
+        data={webPageJsonLd({
+          name: "Blog",
+          description:
+            "Writing on engineering, product execution, and lessons from building software in the open.",
+          path: "/blog",
+        })}
+      />
       <header className="space-y-4">
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Blog</h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
