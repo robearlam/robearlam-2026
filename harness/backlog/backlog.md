@@ -102,5 +102,11 @@ Suggested status values:
 ---
 
 ### B014 - Blog RSS, Sitemap, Robots.txt, Webfinger etc
-**Status:** Planned  
+**Status:** Done  
 **Summary:** Implements other auxillary protocols that are needed for general website subscriptions
+
+---
+
+### B015 - Introduce Security Agent
+**Status:** Planned  
+**Summary:** Add a new agent to perform security scans on the codebase after each change. This could leverage something like SEMGREP to perform the check as it has a free tier.
