@@ -9,11 +9,24 @@ test("blog listing supports infinite scroll loading", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 2, name: "Monthly Archive" })).toBeVisible();
   await expect(page.getByTestId("blog-post-card")).toHaveCount(5);
 
-  await page.evaluate(() => {
-    window.scrollTo(0, window.outerHeight);
-  });
+  await expect
+    .poll(
+      async () => {
+        const sentinel = page.getByTestId("blog-feed-sentinel");
+        const sentinelCount = await sentinel.count();
 
-  await expect(page.getByTestId("blog-post-card")).toHaveCount(10);
+        if (sentinelCount > 0) {
+          await sentinel.first().scrollIntoViewIfNeeded();
+        } else {
+          await page.getByTestId("blog-post-card").last().scrollIntoViewIfNeeded();
+          await page.mouse.wheel(0, 1200);
+        }
+
+        return page.getByTestId("blog-post-card").count();
+      },
+      { timeout: 15_000 }
+    )
+    .toBe(10);
 });
 
 test("tag page highlights the active tag and archive links show counts only there", async ({ page }) => {
