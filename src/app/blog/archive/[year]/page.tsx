@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: YearArchivePageProps): Promis
 
   return {
     title: `Blog Archive: ${resolvedParams.year}`,
+    robots: { index: false, follow: true },
   };
 }
 

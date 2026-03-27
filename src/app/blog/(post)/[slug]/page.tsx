@@ -10,6 +10,9 @@ import { BlogCommentsSection } from "@/components/blog/blog-comments-section";
 import { BlogShareLinks } from "@/components/blog/blog-share-links";
 import { BlogTagLink } from "@/components/blog/blog-tag-link";
 import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/blog/posts";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { blogPostingJsonLd } from "@/lib/seo/json-ld";
+import { JsonLdScript } from "@/lib/seo/json-ld-script";
 
 type BlogPostPageProps = {
   params: Promise<{
@@ -41,8 +44,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   return {
-    title: post.title,
-    description: post.abstract,
+    ...pageMetadata({
+      title: post.title,
+      description: post.abstract,
+      path: `/blog/${post.slug}`,
+      ogImage: post.heroImage,
+    }),
   };
 }
 
@@ -56,6 +63,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <article className="space-y-10">
+      <JsonLdScript
+        data={blogPostingJsonLd({
+          title: post.title,
+          description: post.abstract,
+          slug: post.slug,
+          publishDate: post.publishDate,
+          heroImage: post.heroImage,
+        })}
+      />
       <header className="space-y-4">
         <p className="text-sm text-muted-foreground">{formatPublishDate(post.publishDate)}</p>
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">{post.title}</h1>

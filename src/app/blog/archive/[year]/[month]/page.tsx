@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: ArchivePageProps): Promise<Me
 
   return {
     title: `Blog Archive: ${label}`,
+    robots: { index: false, follow: true },
   };
 }
 

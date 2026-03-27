@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getLatestPosts } from "@/lib/blog/posts";
 import { getLatestVideos } from "@/lib/videos/videos";
 import { getUpcomingEngagements } from "@/lib/speaking/engagements";
@@ -6,6 +7,16 @@ import { HomepageSection } from "@/components/homepage/homepage-section";
 import { BlogPostCard } from "@/components/blog/blog-post-card";
 import { VideoCard } from "@/components/videos/video-card";
 import { EngagementItem } from "@/components/speaking/engagement-item";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { webPageJsonLd } from "@/lib/seo/json-ld";
+import { JsonLdScript } from "@/lib/seo/json-ld-script";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Rob Earlam — Developer Advocate & Speaker",
+  description:
+    "Personal site of Rob Earlam — developer advocate, software developer, and speaker sharing posts, videos, and speaking engagements.",
+  path: "/",
+});
 
 export default async function Home() {
   const [latestPosts, latestVideos, upcomingEngagements] = await Promise.all([
@@ -16,6 +27,14 @@ export default async function Home() {
 
   return (
     <div>
+      <JsonLdScript
+        data={webPageJsonLd({
+          name: "Rob Earlam — Developer Advocate & Speaker",
+          description:
+            "Personal site of Rob Earlam — developer advocate, software developer, and speaker sharing posts, videos, and speaking engagements.",
+          path: "/",
+        })}
+      />
       <HomepageHero
         name="Rob Earlam"
         lead="Developer advocate, software developer, movie lover, music listener, pizza eater, meat smoker"

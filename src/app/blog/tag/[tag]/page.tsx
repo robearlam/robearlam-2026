@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
   const resolvedParams = await params;
   return {
     title: `Blog Tag: ${resolvedParams.tag}`,
+    robots: { index: false, follow: true },
   };
 }
 
