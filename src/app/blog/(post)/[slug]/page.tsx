@@ -84,15 +84,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           ))}
         </ul>
 
-        {post.heroImage ? (
+        <div className="flex justify-center">
           <Image
-            src={post.heroImage}
+            src={post.heroImage ?? "/img/blog-images/blog-placeholder.png"}
             alt={`Hero image for ${post.title}`}
-            className="w-full rounded-xl border border-border object-cover"
-            width={1200}
-            height={630}
+            className="rounded-xl border border-border object-cover"
+            width={600}
+            height={315}
           />
-        ) : null}
+        </div>
       </header>
 
       <section

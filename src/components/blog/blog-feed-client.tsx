@@ -117,10 +117,10 @@ export function BlogFeedClient({ initialPosts, initialHasMore, tag, year, month,
   return (
     <section className="space-y-6" aria-live="polite">
       {posts.map((post) => (
-        <BlogPostCard key={post.slug} post={post} />
+        <BlogPostCard key={post.slug} post={post} layout="horizontalCompact" />
       ))}
 
-      <div ref={sentinelRef} className="h-1" aria-hidden="true" />
+      <div ref={sentinelRef} data-testid="blog-feed-sentinel" className="h-1" aria-hidden="true" />
 
       {isLoading ? <p className="text-sm text-muted-foreground">Loading more posts...</p> : null}
 

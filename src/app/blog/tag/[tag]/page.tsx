@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BlogFeedClient } from "@/components/blog/blog-feed-client";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { getAllBlogTags, getPaginatedBlogPosts } from "@/lib/blog/posts";
+import { normalizeBlogTag } from "@/lib/blog/tags";
 
 const INITIAL_PAGE_SIZE = 5;
 
@@ -14,8 +15,10 @@ type TagPageProps = {
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
   const resolvedParams = await params;
+  const normalizedTag = normalizeBlogTag(resolvedParams.tag);
+
   return {
-    title: `Blog Tag: ${resolvedParams.tag}`,
+    title: `Blog Tag: ${normalizedTag}`,
     robots: { index: false, follow: true },
   };
 }
@@ -27,18 +30,19 @@ export async function generateStaticParams(): Promise<Array<{ tag: string }>> {
 
 export default async function TagPage({ params }: TagPageProps) {
   const resolvedParams = await params;
+  const normalizedTag = normalizeBlogTag(resolvedParams.tag);
   const initialPage = await getPaginatedBlogPosts({
     limit: INITIAL_PAGE_SIZE,
     offset: 0,
-    tag: resolvedParams.tag,
+    tag: normalizedTag,
   });
 
   return (
     <section className="space-y-10">
       <header className="space-y-4">
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Blog posts on #{resolvedParams.tag}</h1>
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Blog posts on #{normalizedTag}</h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Explore all posts I've written, tagged with #{resolvedParams.tag}.
+          Explore all posts I've written, tagged with #{normalizedTag}.
         </p>
       </header>
 
@@ -56,10 +60,10 @@ export default async function TagPage({ params }: TagPageProps) {
               </Link>
             </section>
           ) : (
-            <BlogFeedClient initialPosts={initialPage.posts} initialHasMore={initialPage.hasMore} tag={resolvedParams.tag} />
+            <BlogFeedClient initialPosts={initialPage.posts} initialHasMore={initialPage.hasMore} tag={normalizedTag} />
           )}
         </div>
-        <BlogSidebar activeTag={resolvedParams.tag} />
+        <BlogSidebar activeTag={normalizedTag} />
       </div>
     </section>
   );

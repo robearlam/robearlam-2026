@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getBlogTagHref } from "@/lib/blog/tags";
 
 type TopTagsPanelProps = {
   tags: Array<{ tag: string; }>;
@@ -16,7 +17,7 @@ export function TopTagsPanel({ tags, activeTag }: TopTagsPanelProps) {
           return (
             <li key={tag}>
               <Link
-                href={`/blog/tag/${tag}`}
+                href={getBlogTagHref(tag)}
                 aria-current={isActive ? "page" : undefined}
                 className={[
                   "inline-flex items-center rounded-full border px-3 py-1 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
