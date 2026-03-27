@@ -117,7 +117,7 @@ export function BlogFeedClient({ initialPosts, initialHasMore, tag, year, month,
   return (
     <section className="space-y-6" aria-live="polite">
       {posts.map((post) => (
-        <BlogPostCard key={post.slug} post={post} />
+        <BlogPostCard key={post.slug} post={post} layout="horizontalCompact" />
       ))}
 
       <div ref={sentinelRef} className="h-1" aria-hidden="true" />
