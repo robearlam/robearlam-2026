@@ -9,7 +9,7 @@ import { JsonLdScript } from "@/lib/seo/json-ld-script";
 export const metadata: Metadata = pageMetadata({
   title: "Blog",
   description:
-    "Writing on engineering, product execution, and lessons from building software in the open.",
+    "I've been writing software for many years, below you can find various things I've learned along the way, including tips, tutorials, and various insights I hope you find helpful.",
   path: "/blog",
 });
 
@@ -27,14 +27,14 @@ export default async function BlogPage() {
         data={webPageJsonLd({
           name: "Blog",
           description:
-            "Writing on engineering, product execution, and lessons from building software in the open.",
+            "I've been writing software for many years, below you can find various things I've learned along the way, including tips, tutorials, and various insights I hope you find helpful.",
           path: "/blog",
         })}
       />
       <header className="space-y-4">
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Blog</h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Writing on engineering, product execution, and lessons from building software in the open.
+          I've been writing software for many years, below you can find various things I've learned along the way, including tips, tutorials, and various insights I hope you find helpful.
         </p>
       </header>
 

@@ -66,7 +66,7 @@ export default function ContactPage() {
       />
       <HeroSection
         heading="Contact"
-        lead="Reach out directly by email, or find me on the channels below for updates and writing."
+        lead="Hi, my name is Rob Earlam. I've been writing software for a long time and like to share my thoughts on it here. Hopefully some of the things I share here can help you on your journey, like all of the amazing people who have helped me on mine. As well as blogging here, I'm also active on the following other platforms, feel free to reach out and say hello if you like!"
       />
 
       <SectionWrapper>
