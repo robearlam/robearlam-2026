@@ -49,9 +49,9 @@ export default async function ArchivePage({ params }: ArchivePageProps) {
   return (
     <section className="space-y-10">
       <header className="space-y-4">
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Archive: {label}</h1>
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Archive: {label} {year}</h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Posts published in {label}.
+          All posts published in {label} {year}.
         </p>
       </header>
 

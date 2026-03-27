@@ -8,7 +8,7 @@ import { JsonLdScript } from "@/lib/seo/json-ld-script";
 
 export const metadata: Metadata = pageMetadata({
   title: "Videos",
-  description: "Browse tutorials, talks, and developer videos in one editorial listing.",
+  description: "Browse tutorials, talks, and developer videos in one listing.",
   path: "/videos",
 });
 
@@ -22,7 +22,7 @@ export default async function VideosPage() {
       <JsonLdScript
         data={webPageJsonLd({
           name: "Videos",
-          description: "Browse tutorials, talks, and developer videos in one editorial listing.",
+          description: "Browse tutorials, talks, and developer videos in one listing.",
           path: "/videos",
         })}
       />
@@ -38,7 +38,7 @@ export default async function VideosPage() {
       ))}
       <HeroSection
         heading="Videos"
-        lead="Tutorials, conference talks, and developer videos collected in one place, with the latest release featured first."
+        lead="Tutorials, conference talks, and developer videos collected in one place."
       />
       <VideosPageContent featuredVideo={featuredVideo} initialVideos={initialVideos} initialHasMore={initialHasMore} />
     </div>
