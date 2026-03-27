@@ -15,6 +15,12 @@ describe("blog sidebar panels", () => {
     expect(otherLink).toHaveAttribute("href", "/blog/tag/testing");
   });
 
+  it("encodes whitespace in tag links", () => {
+    render(<TopTagsPanel tags={[{ tag: "power platform" }]} activeTag="power platform" />);
+
+    expect(screen.getByRole("link", { name: /power platform/i })).toHaveAttribute("href", "/blog/tag/power%20platform");
+  });
+
   it("renders yearly archive groups with linked year headings and month counts", () => {
     render(
       <MonthlyArchivePanel

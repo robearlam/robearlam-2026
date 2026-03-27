@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
+import { normalizeBlogTag } from "@/lib/blog/tags";
 import type {
   BlogFrontmatter,
   BlogPost,
@@ -80,7 +81,9 @@ export function filterPostsByTag(posts: BlogPostSummary[], tag?: string): BlogPo
     return posts;
   }
 
-  return posts.filter((post) => post.tags.includes(tag));
+  const normalizedTag = normalizeBlogTag(tag);
+
+  return posts.filter((post) => post.tags.some((postTag) => normalizeBlogTag(postTag) === normalizedTag));
 }
 
 export function filterPostsByYearMonth(posts: BlogPostSummary[], year?: string, month?: string): BlogPostSummary[] {

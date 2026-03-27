@@ -16,6 +16,7 @@ import {
   paginatePosts,
   sortPostsByDateDesc,
 } from "@/lib/blog/posts";
+import { getBlogTagHref, normalizeBlogTag } from "@/lib/blog/tags";
 import { DISQUS_SHORTNAME, getDisqusEmbedUrl } from "@/lib/blog/disqus";
 import type { BlogPostSummary } from "@/lib/blog/types";
 
@@ -91,6 +92,25 @@ describe("blog post helpers", () => {
 
     const filtered = filterPostsByTag(sorted, "nextjs");
     expect(filtered.map((post) => post.slug)).toEqual(["post-a", "post-c"]);
+  });
+
+  it("normalizes encoded whitespace tags for routing and filtering", () => {
+    const postsWithWhitespaceTags: BlogPostSummary[] = [
+      {
+        title: "Whitespace tag post",
+        slug: "whitespace-tag-post",
+        publishDate: "2026-03-01",
+        disqusId: "whitespace-tag-post",
+        abstract: "Whitespace tags should still resolve from encoded routes.",
+        tags: ["power platform"],
+      },
+    ];
+
+    expect(normalizeBlogTag("power%20platform")).toBe("power platform");
+    expect(getBlogTagHref("power platform")).toBe("/blog/tag/power%20platform");
+    expect(filterPostsByTag(postsWithWhitespaceTags, "power%20platform").map((post) => post.slug)).toEqual([
+      "whitespace-tag-post",
+    ]);
   });
 
   it("filters posts by year and month", () => {
