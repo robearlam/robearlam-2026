@@ -304,3 +304,10 @@ export async function getLatestPosts(n: number): Promise<BlogPostSummary[]> {
   const posts = await getAllBlogPosts();
   return posts.slice(0, n);
 }
+
+export async function getAllBlogPostsWithContent(): Promise<BlogPost[]> {
+  const records = await loadAllBlogFileRecords();
+  const posts = records.map((record) => ({ ...record.summary, content: record.content }));
+
+  return posts.sort((left, right) => Date.parse(right.publishDate) - Date.parse(left.publishDate));
+}
