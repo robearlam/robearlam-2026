@@ -42,7 +42,7 @@ export default async function SpeakingPage() {
       />
       {allEngagements.map((engagement) => (
         <JsonLdScript
-          key={`${engagement.name}-${engagement.start}`}
+          key={`${engagement.name}-${engagement.sessionName}-${engagement.start}`}
           data={eventJsonLd({
             name: engagement.name,
             sessionName: engagement.sessionName,
