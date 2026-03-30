@@ -62,6 +62,7 @@ Governance-controlled paths include:
 - `harness/roles/`
 - `harness/templates/`
 - `.github/agents/`
+- `.cursor/rules/`
 
 If governance metadata appears inconsistent, report it in the implementation summary and run report instead of changing it.
 

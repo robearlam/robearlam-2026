@@ -170,6 +170,7 @@ During normal feature execution:
 5. Update run log and progress to next stage if gates pass.
 
 ## Related Docs
+- `AGENTS.md` (Cursor: project rules mirroring `.github/agents/`)
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/stage-input-contracts.md`
