@@ -29,7 +29,7 @@ declare global {
 function applyDisqusConfig(identifier: string, title: string, urlPath: string): void {
   window.disqus_config = function disqusConfig() {
     this.page = this.page || {};
-    this.page.url = urlPath;
+    this.page.url = `${window.location.origin}${urlPath}`;
     this.page.identifier = identifier;
     this.page.title = title;
   };
