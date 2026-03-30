@@ -20,7 +20,7 @@ Follow these standards and references:
 Use these templates:
 
 - `harness/templates/run-state-template.md`
-- `harness/templates/run_report_template.md`
+- `harness/templates/run-report-template.md`
 
 When `harness/run-state.md` does not exist, initialize it yourself from the task file and the run-state template.
 
