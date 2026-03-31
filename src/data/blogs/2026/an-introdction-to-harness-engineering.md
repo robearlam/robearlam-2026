@@ -23,6 +23,7 @@ In this case the harness is a series of agents, roles, artifacts, and workflow r
 
 If we look at the agents, I ended up having the following execution flow between each of them...
 
+``` mermaid
 flowchart TD
     O[Orchestrator]
 
@@ -44,9 +45,7 @@ flowchart TD
     Q --> QR{QA passed?}
     QR -->|No| B
     QR -->|Yes| O
-
-    O --> C[Complete]
-
+```
 
 
 
