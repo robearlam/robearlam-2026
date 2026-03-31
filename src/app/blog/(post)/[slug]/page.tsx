@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
+import { MermaidCodeBlock } from "@/components/blog/mermaid-code-block";
 import { BlogCommentsSection } from "@/components/blog/blog-comments-section";
 import { BlogShareLinks } from "@/components/blog/blog-share-links";
 import { BlogTagLink } from "@/components/blog/blog-tag-link";
@@ -110,10 +111,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 attributes: {
                   ...defaultSchema.attributes,
                   iframe: ["src", "width", "height", "frameBorder", "allowFullScreen", "allow", "title"],
+                  code: [...(defaultSchema.attributes?.code ?? []), "className"],
                 },
               },
             ],
           ]}
+          components={{
+            code: MermaidCodeBlock,
+          }}
         >
           {post.content}
         </ReactMarkdown>

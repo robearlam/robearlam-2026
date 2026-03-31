@@ -114,6 +114,12 @@ Suggested status values:
 ---
 
 ### B016 - Blog hero images
-**Status:** Ready for Spec  
+**Status:** Done  
 **Task:** T013  
 **Summary:** The blog hero images aren't used on the homepage preview component. We need to have them output there, if the blog doesn't have an image then use the default placeholder located at `/src/public/img/blog-images/blog-placeholder.png`
+
+---
+
+### B017 - Blog support for Mermaid Diagrams
+**Status:** Planned  
+**Summary:** Add support for mermaid diagrams to be added into the blog post functionality for the site.
