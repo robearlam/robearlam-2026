@@ -18,7 +18,6 @@ export function HomepageHero({ name, lead, imageSrc, imageAlt }: HomepageHeroPro
             fill
             sizes="224px"
             priority
-            unoptimized
             className="object-cover"
           />
         </div>
