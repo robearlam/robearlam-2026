@@ -6,6 +6,7 @@ import { globalJsonLd } from "@/lib/seo/json-ld";
 import { JsonLdScript } from "@/lib/seo/json-ld-script";
 import { GoogleAnalytics } from "@/lib/seo/google-analytics";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -27,6 +28,7 @@ export default function RootLayout({
         <GoogleAnalytics />
         <SiteShell>{children}</SiteShell>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
