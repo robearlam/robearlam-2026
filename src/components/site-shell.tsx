@@ -19,7 +19,6 @@ export function SiteShell({ children }: SiteShellProps) {
               width={32}
               height={32}
               priority
-              unoptimized
               className="h-8 w-auto sm:h-9 lg:h-10"
             />
           </Link>
