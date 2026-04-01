@@ -8,7 +8,7 @@ type BlogPostCardProps = {
   layout?: "vertical" | "horizontalCompact";
 };
 
-const BLOG_PLACEHOLDER_IMAGE = "/img/blog-images/blog-placeholder.png";
+const BLOG_PLACEHOLDER_IMAGE = "/img/blog-images/blog-placeholder.jpg";
 
 function formatPublishDate(value: string): string {
   return new Date(value).toLocaleDateString("en-GB", {

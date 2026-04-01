@@ -33,7 +33,7 @@ List the behaviours and capabilities included in this feature.
 - Add image rendering to each card in the homepage "Latest Blogs" preview section.
 - Add thumbnail rendering to each post card across all blog listing pages included in the current listing experience.
 - Use a post's existing optional `heroImage` value when one is defined.
-- Use the existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.png` when a post does not define a hero image.
+- Use the existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.jpg` when a post does not define a hero image.
 - Ensure card images link to the same post destination as the associated title or card.
 - Preserve current latest-post selection, reverse-chronological ordering, pagination, archive filtering, tag filtering, and existing text metadata.
 - Define acceptance criteria for responsive presentation, intentional fallback behavior, meaningful alt text, and avoidance of obvious layout breakage or severe image-load shift.
@@ -81,12 +81,12 @@ Avoid vague examples such as:
 
 1. The homepage "Latest Blogs" section renders one image per preview card for the same three posts selected by the existing latest-post behavior.
 2. When a homepage previewed post defines a hero image, that image is shown on its preview card.
-3. When a homepage previewed post does not define a hero image, its preview card shows the existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.png` instead of an empty, broken, or missing image state.
+3. When a homepage previewed post does not define a hero image, its preview card shows the existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.jpg` instead of an empty, broken, or missing image state.
 4. Each homepage preview card image links to the same blog post destination as the card title.
 5. Homepage preview cards continue to display the existing publish date, title, abstract, and tags correctly after image support is added.
 6. All blog listing pages in the current blog browsing experience render one thumbnail image for each listed post card.
 7. When a listed post defines a hero image, that image is used as the listing thumbnail for that post.
-8. When a listed post does not define a hero image, the listing thumbnail uses the existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.png`.
+8. When a listed post does not define a hero image, the listing thumbnail uses the existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.jpg`.
 9. Each listing thumbnail links to the same blog post destination as the associated title or card.
 10. Existing listing behavior remains intact after thumbnail support is added, including current ordering, pagination, archive filtering, and tag filtering where applicable.
 11. Existing listing metadata remains present and correct after thumbnail support is added.
@@ -111,7 +111,7 @@ Examples:
 
 - The task definition and run state remain the authoritative scope and stage inputs for this artifact.
 - Blog post data already exposes an optional hero-image field through the existing normalization flow described in the task.
-- The existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.png` is available for reuse.
+- The existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.jpg` is available for reuse.
 - Current homepage latest-blog and blog listing surfaces remain the baseline behavior to preserve.
 
 ---

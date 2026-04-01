@@ -13,7 +13,7 @@ Add hero image rendering to homepage and blog listing cards so blog discovery su
 Scope for this task is:
 - updating the homepage blog preview presentation so each card displays the post hero image when one is available
 - updating all blog listing pages so each listed post includes a thumbnail derived from the post hero image
-- using the existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.png` when a post does not define `heroImage`
+- using the existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.jpg` when a post does not define `heroImage`
 - preserving the current latest-post selection, ordering, linking, pagination, filtering, and text content while extending list card layouts to support imagery
 
 ---
@@ -34,7 +34,7 @@ Run Report: `harness/runs/{{RUN_ID}}.md`
 
 - The homepage "Latest Blogs" section renders an image for each preview card
 - If a post defines `heroImage`, that image is shown on the homepage preview card for that post
-- If a post does not define `heroImage`, the homepage preview card uses the existing placeholder asset located at `/src/public/img/blog-images/blog-placeholder.png`
+- If a post does not define `heroImage`, the homepage preview card uses the existing placeholder asset located at `/src/public/img/blog-images/blog-placeholder.jpg`
 - The preview card image links to the same blog post destination as the card title
 - Existing post metadata shown on the homepage preview cards remains present and correct, including publish date, title, abstract, and tags
 - Latest blog selection remains based on the existing `getLatestPosts(3)` behavior and current reverse-chronological ordering
@@ -43,7 +43,7 @@ Run Report: `harness/runs/{{RUN_ID}}.md`
 
 - All blog listing pages render a thumbnail image for each listed post
 - If a listed post defines `heroImage`, that image is used as the thumbnail on blog listing pages
-- If a listed post does not define `heroImage`, blog listing pages use the existing placeholder asset located at `/src/public/img/blog-images/blog-placeholder.png`
+- If a listed post does not define `heroImage`, blog listing pages use the existing placeholder asset located at `/src/public/img/blog-images/blog-placeholder.jpg`
 - Thumbnail images on blog listing pages link to the same blog post destination as the associated title or card
 - Existing listing behaviors remain intact, including current ordering, pagination, archive filtering, and tag filtering where applicable
 - Existing post metadata shown on blog listing pages remains present and correct after thumbnail support is added

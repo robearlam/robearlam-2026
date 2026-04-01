@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div className="flex justify-center">
           <Image
-            src={post.heroImage ?? "/img/blog-images/blog-placeholder.png"}
+            src={post.heroImage ?? "/img/blog-images/blog-placeholder.jpg"}
             alt={`Hero image for ${post.title}`}
             className="rounded-xl border border-border object-cover"
             width={600}
