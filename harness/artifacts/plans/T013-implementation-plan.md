@@ -49,7 +49,7 @@ Confirm that:
 
 Implement this feature by extending the existing shared blog card pattern rather than creating separate homepage and listing card systems. Minimal code inspection shows that both the homepage latest-post grid and the blog listing experience already render `BlogPostCard`, with listing routes flowing through `BlogFeedClient`. That makes the simplest sound approach to add a reusable image region and fallback behavior to the shared card component, then adjust the homepage and listing wrappers only as needed to preserve layout density and readability in each context.
 
-The card should consume the existing optional `heroImage` value from the normalized blog post summary model and fall back to the runtime public asset path `/img/blog-images/blog-placeholder.png` when no hero image is present. The image region should reserve layout space with a stable aspect ratio and use the project's existing Next.js image handling so homepage and listing cards avoid obvious layout shift. Accessibility should be handled at the card level with deliberate alt-text behavior that does not create noisy repetition next to the linked title. No changes are planned to latest-post selection, pagination, archive filtering, tag filtering, or the blog content schema.
+The card should consume the existing optional `heroImage` value from the normalized blog post summary model and fall back to the runtime public asset path `/img/blog-images/blog-placeholder.jpg` when no hero image is present. The image region should reserve layout space with a stable aspect ratio and use the project's existing Next.js image handling so homepage and listing cards avoid obvious layout shift. Accessibility should be handled at the card level with deliberate alt-text behavior that does not create noisy repetition next to the linked title. No changes are planned to latest-post selection, pagination, archive filtering, tag filtering, or the blog content schema.
 
 Where homepage and listing density need to diverge, prefer a small extension of the existing card API or wrapper styling over introducing a second card implementation. Keep the blog data pipeline unchanged unless a narrowly scoped helper is needed to centralize image fallback or alt-text derivation.
 
@@ -132,7 +132,7 @@ Likely read-only dependencies to preserve rather than redesign:
 
 - existing blog summary data from `src/lib/blog/posts.ts`
 - existing blog summary type in `src/lib/blog/types.ts`
-- existing placeholder asset served from `/img/blog-images/blog-placeholder.png`
+- existing placeholder asset served from `/img/blog-images/blog-placeholder.jpg`
 
 ---
 
@@ -169,7 +169,7 @@ Likely read-only dependencies to preserve rather than redesign:
 ## Assumptions
 
 - The existing optional `heroImage` field in the blog summary model is already sufficient and does not require schema changes.
-- The runtime placeholder path should be `/img/blog-images/blog-placeholder.png`, matching existing public-asset usage on blog post detail pages.
+- The runtime placeholder path should be `/img/blog-images/blog-placeholder.jpg`, matching existing public-asset usage on blog post detail pages.
 - `BlogPostCard` is the correct shared extension point for homepage and listing discovery surfaces because both flows already render it.
 - Existing Vitest and Testing Library setup under `src/app/tests/` remains the preferred place for focused regression coverage for this task.
 

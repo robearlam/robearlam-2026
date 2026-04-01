@@ -124,7 +124,7 @@ The image region should read as part of the card rather than a separate widget. 
 - Live workflow context in `harness/run-state.md`
 - Existing design-system guidance for content-first, editorial card presentation
 - Existing optional hero-image data in the blog content model
-- Existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.png`
+- Existing placeholder asset at `/src/public/img/blog-images/blog-placeholder.jpg`
 - Existing homepage and blog listing card patterns that this feature extends rather than replaces
 
 ---

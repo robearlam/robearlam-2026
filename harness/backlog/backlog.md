@@ -116,7 +116,7 @@ Suggested status values:
 ### B016 - Blog hero images
 **Status:** Done  
 **Task:** T013  
-**Summary:** The blog hero images aren't used on the homepage preview component. We need to have them output there, if the blog doesn't have an image then use the default placeholder located at `/src/public/img/blog-images/blog-placeholder.png`
+**Summary:** The blog hero images aren't used on the homepage preview component. We need to have them output there, if the blog doesn't have an image then use the default placeholder located at `/src/public/img/blog-images/blog-placeholder.jpg`
 
 ---
 

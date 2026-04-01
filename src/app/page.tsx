@@ -38,7 +38,7 @@ export default async function Home() {
       <HomepageHero
         name="Rob Earlam"
         lead="Developer advocate, software developer, movie lover, music listener, pizza eater, meat smoker"
-        imageSrc="/img/rob.png"
+        imageSrc="/img/rob.jpg"
         imageAlt="Profile photo of Rob Earlam"
       />
       <HomepageSection heading="Latest Blogs" ctaLabel="View all posts →" ctaHref="/blog">

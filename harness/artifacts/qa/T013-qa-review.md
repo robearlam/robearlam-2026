@@ -63,7 +63,7 @@ Pass With Minor Issues
 
 3. When a homepage previewed post does not define a hero image, its preview card shows the existing placeholder asset instead of an empty or broken image state.  
    Status: Pass  
-   Notes: BlogPostCard uses /img/blog-images/blog-placeholder.png as fallback and renders it through Next Image.
+   Notes: BlogPostCard uses /img/blog-images/blog-placeholder.jpg as fallback and renders it through Next Image.
 
 4. Each homepage preview card image links to the same blog post destination as the card title.  
    Status: Pass  
@@ -83,7 +83,7 @@ Pass With Minor Issues
 
 8. When a listed post does not define a hero image, the listing thumbnail uses the existing placeholder asset.  
    Status: Pass  
-   Notes: Shared fallback path is fixed to /img/blog-images/blog-placeholder.png.
+   Notes: Shared fallback path is fixed to /img/blog-images/blog-placeholder.jpg.
 
 9. Each listing thumbnail links to the same blog post destination as the associated title or card.  
    Status: Pass  
