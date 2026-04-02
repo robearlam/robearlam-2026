@@ -4,7 +4,7 @@ slug: "upgrading-the-sugcon-sites-from-jss-to-the-content-sdk"
 publishDate: "2026-03-23"
 disqusId: "dffef881-6f5c-4194-9919-5c9d9eb53280"
 abstract: "Ok, so as the heading suggests, I want to start this blog post with a bit of a confession… We were bad developers and didn’t upgrade the SUGCON sites as the newer versions of JSS were released."
-tags: ['SiecoreAI', 'Content SDK', 'JSS']
+tags: ['SitecoreAI', 'Content SDK', 'JSS']
 ---
 
 ## Confession time
