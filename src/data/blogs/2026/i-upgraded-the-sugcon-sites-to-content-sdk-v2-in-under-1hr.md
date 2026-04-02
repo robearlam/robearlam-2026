@@ -1,6 +1,6 @@
 ---
-title: "I upgraded the SUGCON sites from to Content SDK v2 in under 1hr"
-slug: "i-upgraded-the-sugcon-sites-from-to-content-sdk-v2-in-under-1hr"
+title: "I upgraded the SUGCON sites to Content SDK v2 in under 1hr"
+slug: "i-upgraded-the-sugcon-sites-to-content-sdk-v2-in-under-1hr"
 publishDate: "2026-04-02"
 disqusId: "d2df15a4-245a-40a4-a0c4-2251141e1079"
 abstract: "Just a quick blog post about a win I just had. I blogged last month about the process of upgrading the SUGCON sites from JSS to the Content SDK, and how the sites had been a bit neglected and were running a super old version"
