@@ -10,7 +10,7 @@ heroImage: "/img/blog-images/2026/sugcon-csdk-v2-upgrade-hero.jpg"
 
 Just a quick blog post about a win I just had. I blogged last month about the process of <a href="/blog/upgrading-the-sugcon-sites-from-jss-to-the-content-sdk" target="_blank" rel="nofollow">upgrading the SUGCON sites from JSS to the Content SDK</a>, and how the sites had been a bit neglected and were running a super old version. I finished the post by promising not to let that happen, and how we were going to ensure we kept up to date with future releases of the Content SDK. Well shortly after v2 of the SDK was released, so I knew I had to get onboard and update the sites to the latest version.
 
-I decided to see how far AI could get me in the process... and it turns out it basically did it all for me first time. All in all the upgrade took me less than an to go from nothing to an <a href="https://github.com/Sitecore/XM-Cloud-Introduction/pull/585" target="_blank" rel="nofollow">open PR</a> ready for my colleagues to review.
+I decided to see how far AI could get me in the process... and it turns out it basically did it all for me first time. All in all the upgrade took me less than an hour to go from nothing to an <a href="https://github.com/Sitecore/XM-Cloud-Introduction/pull/585" target="_blank" rel="nofollow">open PR</a> ready for my colleagues to review.
 
 I did this by leveraging Copilot CLI and the Adversarial Testing feature that it supports. All I did was to create a new branch on my machine, open the root of the repo using the Copilot CLI and give it the following prompt.
 
