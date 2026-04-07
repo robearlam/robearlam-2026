@@ -65,7 +65,7 @@ Suggested status values:
 ---
 
 ### B008 — SEO Foundations
-**Status:** Planned  
+**Status:** Done  
 **Summary:** Add baseline metadata, social sharing support, and search-friendly structure, AEO & GEO enablement, Google Analytics Tracking.
 
 ---
@@ -96,14 +96,14 @@ Suggested status values:
 ---
 
 ### B013 - Make Harness IDE Agnostic
-**Status:** Planned  
-**Summary:** Replicate the defined agent defintions currently used for vscode into a format that can be leveraged by Cursor / Claude.
+**Status:** Done  
+**Summary:** Replicate the defined agent definitions currently used for vscode into a format that can be leveraged by Cursor / Claude.
 
 ---
 
 ### B014 - Blog RSS, Sitemap, Robots.txt, Webfinger etc
 **Status:** Done  
-**Summary:** Implements other auxillary protocols that are needed for general website subscriptions
+**Summary:** Implements other auxiliary protocols that are needed for general website subscriptions
 
 ---
 
@@ -121,5 +121,12 @@ Suggested status values:
 ---
 
 ### B017 - Blog support for Mermaid Diagrams
-**Status:** Planned  
+**Status:** Done  
 **Summary:** Add support for mermaid diagrams to be added into the blog post functionality for the site.
+
+---
+
+### B018 - Dark mode support
+**Status:** Ready for Spec  
+**Task:** T015  
+**Summary:** Add support for Dark Mode on the site. This should default to the system setting, but include a toggle for people to change.

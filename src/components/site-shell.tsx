@@ -10,7 +10,7 @@ type SiteShellProps = {
 export function SiteShell({ children }: SiteShellProps) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <header className="relative border-b border-border bg-white">
+      <header className="relative border-b border-border bg-background">
         <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" className="inline-flex items-center" aria-label="Rob Earlam home">
             <Image
@@ -22,7 +22,7 @@ export function SiteShell({ children }: SiteShellProps) {
               className="h-8 w-auto sm:h-9 lg:h-10"
             />
           </Link>
-          <nav aria-label="Primary navigation" className="hidden md:block">
+          <nav aria-label="Primary navigation" className="hidden md:flex md:items-center md:gap-2">
             <SiteNav variant="desktop" />
           </nav>
           <nav aria-label="Mobile primary navigation" className="md:hidden">
