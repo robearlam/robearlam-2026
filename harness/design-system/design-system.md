@@ -151,6 +151,37 @@ Colour should never be the primary tool for creating hierarchy.
 
 ---
 
+## Dark Mode Colour Palette
+
+The site supports a dark mode that is activated via a toggle in the site header and persists to `localStorage`. On first visit, the system `prefers-color-scheme` preference is respected.
+
+Dark mode uses a warm dark palette derived from the brand's dark red identity. It is not a pure black/white inversion.
+
+### Dark Mode Neutral Palette
+
+Background: #1F1616  
+Surface (cards, panels): #2A1E1E  
+Primary text: #FFFFFF  
+Secondary / metadata text: #C9BFBF  
+Borders / dividers: #4A3939  
+Muted surface: #352727  
+
+### Dark Mode Brand Colours
+
+| Colour | Light Mode | Dark Mode | Notes |
+|---|---|---|---|
+| Primary (brand red) | `#7A1C1C` | `#B23A3A` | Lightened for legibility on dark background |
+| Secondary | `#B23A3A` | `#7A1C1C` | Roles swap in dark mode |
+| Accent | `#D97706` | `#D97706` | Unchanged — amber works in both modes |
+
+### Implementation
+
+Dark mode colours are defined as CSS custom properties in `src/app/globals.css` under the `.dark` class selector. The Tailwind v4 `@custom-variant dark (&:is(.dark *))` variant activates when the `dark` class is present on any ancestor element (applied to `<html>`).
+
+All colour tokens are accessible via standard Tailwind semantic utility classes (`bg-background`, `text-foreground`, `bg-card`, `border-border`, etc.).
+
+---
+
 # Typography
 
 Typography is the **primary visual system driver**.
