@@ -1,7 +1,7 @@
 # Task T015 — Dark Mode Support
 
 Status: Ready  
-Backlog Item: B017  
+Backlog Item: B018  
 Created: 2026-04-02
 
 ---

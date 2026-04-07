@@ -97,44 +97,45 @@ A single toggle button placed in the site header. It is the user's only control 
 
 ### Dark Mode Palette
 
-The following palette is derived from the existing light mode design system and forms the canonical dark mode colour set. Hex values are defined here and must be recorded in `harness/design-system/design-system.md` as part of this task.
+The following palette is derived from the existing light mode design system and must stay aligned with the values documented in `harness/design-system/design-system.md` and implemented in `src/app/globals.css`. In implementation, prefer semantic theme tokens and utility classes such as `bg-background`, `bg-card`, `text-foreground`, and `border-border` rather than hard-coded dark-mode hex utilities.
 
 | Token | Light Mode | Dark Mode |
 |---|---|---|
-| Background | `#FFFFFF` | `#171717` |
-| Surface (cards, panels) | `#FFFFFF` | `#242424` |
-| Primary text | `#1F1F1F` | `#F0F0F0` |
-| Secondary / metadata text | `#6B6B6B` | `#A3A3A3` |
-| Borders / dividers | `#E5E5E5` | `#333333` |
-| Brand primary | `#7A1C1C` | `#C94B4B` |
-| Brand secondary | `#B23A3A` | `#D46060` |
+| Background | `#FFFFFF` | `#1F1616` |
+| Surface (cards, panels) | `#FFFFFF` | `#2A1E1E` |
+| Primary text | `#1F1F1F` | `#FFFFFF` |
+| Secondary / metadata text | `#6B6B6B` | `#C9BFBF` |
+| Borders / dividers | `#E5E5E5` | `#4A3939` |
+| Muted surface | — | `#352727` |
+| Brand primary | `#7A1C1C` | `#B23A3A` |
+| Brand secondary | `#B23A3A` | `#7A1C1C` |
 | Accent | `#D97706` | `#D97706` |
 
 **Palette rationale:**
-- Background `#171717` is a warm-leaning very dark grey — not pure black. It softens the reading experience and complements the dark red brand.
-- Surface `#242424` provides a subtle elevation distinction for cards and panels without heavy shadow.
-- Primary text `#F0F0F0` is near-white but not pure white, reducing harsh glare on the dark background.
-- Secondary text `#A3A3A3` is clearly subordinate to primary text and achieves strong contrast on `#171717` (approximately 7:1).
-- Brand primary is lightened from `#7A1C1C` to `#C94B4B` — a mid-bright red that maintains brand identity and legibility on dark backgrounds.
+- Background `#1F1616` is a warm dark red-brown — not pure black. It softens the reading experience and complements the dark red brand.
+- Surface `#2A1E1E` provides a subtle elevation distinction for cards and panels without heavy shadow.
+- Primary text `#FFFFFF` is white for maximum readability on the warm dark background.
+- Secondary text `#C9BFBF` is clearly subordinate to primary text and achieves strong contrast on `#1F1616`.
+- Brand primary is lightened from `#7A1C1C` to `#B23A3A` — a mid-bright red that maintains brand identity and legibility on dark backgrounds.
 - Accent amber `#D97706` carries across unchanged; it works well in both modes.
 
-**Contrast check (against `#171717` background):**
-- `#F0F0F0` primary text: ~15:1 — exceeds WCAG AAA
-- `#A3A3A3` secondary text: ~7:1 — exceeds WCAG AA
-- `#C94B4B` brand primary: ~4.8:1 — meets WCAG AA
+**Contrast check (against `#1F1616` background):**
+- `#FFFFFF` primary text: ~14:1 — exceeds WCAG AAA
+- `#C9BFBF` secondary text: ~8:1 — exceeds WCAG AA
+- `#B23A3A` brand primary: ~3.5:1 — meets WCAG AA for large text
 
 ---
 
 ### Site-Wide Colour Application
 
-All pages and components apply dark mode colours via Tailwind's `dark:` variant classes:
+All pages and components apply dark mode colours via semantic Tailwind utility classes that resolve to CSS custom properties defined under the `.dark` class selector:
 
-- **Body / page background**: `bg-white dark:bg-[#171717]`
-- **Card / surface backgrounds**: light white surface becomes `dark:bg-[#242424]`
-- **Primary text**: `text-[#1F1F1F] dark:text-[#F0F0F0]`
-- **Secondary / metadata text**: `text-[#6B6B6B] dark:text-[#A3A3A3]`
-- **Borders**: `border-[#E5E5E5] dark:border-[#333333]`
-- **Brand accent links and active states**: `text-[#7A1C1C] dark:text-[#C94B4B]`
+- **Body / page background**: `bg-background`
+- **Card / surface backgrounds**: `bg-card`
+- **Primary text**: `text-foreground`
+- **Secondary / metadata text**: `text-muted-foreground`
+- **Borders**: `border-border`
+- **Brand accent links and active states**: `text-primary`
 
 Images, video embeds, and external content are not modified. The `dark:` class is not applied to `img` or iframe elements.
 

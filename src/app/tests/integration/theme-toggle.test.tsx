@@ -11,7 +11,7 @@ describe("ThemeToggle", () => {
 
   it("renders with aria-label indicating switch to dark mode when in light mode", async () => {
     render(<ThemeToggle />);
-    // After mount effect runs, the aria-label reflects the light mode state
+    // Wait for the external store snapshot to be reflected in the button's aria-label
     const button = await screen.findByRole("button", { name: "Switch to dark mode" });
     expect(button).toBeInTheDocument();
   });

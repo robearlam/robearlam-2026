@@ -7,25 +7,25 @@ type MonthlyArchivePanelProps = {
 
 export function MonthlyArchivePanel({ entries }: MonthlyArchivePanelProps) {
   return (
-    <section className="rounded-sm border border-[#E5E5E5] dark:border-border p-4">
-      <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#4B4B4B] dark:text-muted-foreground">Monthly Archive</h2>
+    <section className="rounded-sm border border-border p-4">
+      <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Monthly Archive</h2>
       <ul className="mt-4 space-y-4">
         {entries.map((entry) => (
           <li key={entry.year} className="space-y-2">
             <Link
               href={`/blog/archive/${entry.year}`}
-              className="inline-flex rounded-sm text-sm font-semibold text-[#1F1F1F] dark:text-foreground transition-colors hover:text-[#B23A3A] dark:hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex rounded-sm text-sm font-semibold text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               {entry.year}
             </Link>
-            <ul className="space-y-2 border-l border-[#E5E5E5] dark:border-border pl-3">
+            <ul className="space-y-2 border-l border-border pl-3">
               {entry.months.map((monthEntry) => (
                 <li key={`${monthEntry.year}-${monthEntry.month}`}>
                   <Link
                     href={`/blog/archive/${monthEntry.year}/${monthEntry.month}`}
-                    className="rounded-sm text-sm text-[#1F1F1F] dark:text-foreground transition-colors hover:text-[#B23A3A] dark:hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    className="rounded-sm text-sm text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   >
-                    {monthEntry.label} <span className="text-[#4B4B4B] dark:text-muted-foreground">({monthEntry.count})</span>
+                    {monthEntry.label} <span className="text-muted-foreground">({monthEntry.count})</span>
                   </Link>
                 </li>
               ))}
