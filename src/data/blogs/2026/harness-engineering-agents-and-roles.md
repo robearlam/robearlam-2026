@@ -13,7 +13,7 @@ Carrying on from my recent post giving an <a href="/blog/an-introduction-to-harn
 ## Agents and Roles
 A lot of AI workflow discussion seems to treat agents and roles as one, but I found that separating them makes the system easier to design, understand, and to iteratively improve on. In the setup I created, I ended up with a 1-1 relationship between my **Agents** and **Roles**, so you might be wondering why they are separated and not just combined together. Well there are some distinct benefits to defining them separately.
 
-Keeping them separate allowed me to have the Agents be responsible for defining the tools it has access to, but its actual tasks are defined in the role itself. So if we take the **Build Agent** for example it's definition is quite skinny, it defines the tools it has access to, the areas of the codebase it can access, and also what areas it shouldn't.
+Keeping them separate allowed me to have the Agents be responsible for defining the tools it has access to, but its actual tasks are defined in the role itself. So if we take the **Build Agent** for example it's definition is quite skinny, it defines the tools it has access to, the areas of the codebase it can access, and also what areas it shouldn't. You can see a slightly truncated version of the build agent definition below.
 
 ``` md
 ---
@@ -30,38 +30,14 @@ tools:
 Follow the role definition in:
 - `harness/roles/build-agent.md`
 
-Follow these standards and references:
-- `harness/standards/coding-standard.md`
-- `harness/standards/testing-standard.md`
-- `harness/standards/feature-workflow.md`
-- `harness/standards/task-lifecycle.md`
-- `harness/standards/run-id-standard.md`
-
-Use this template:
-- `harness/templates/run_report_template.md`
-
-Read the live execution state in:
-- `harness/run-state.md`
-
-Use the task file referenced there as the only task for this run.
+......
 
 Read the approved artifacts referenced by the task file and/or run-state before making changes:
 - feature specification
 - design note
 - implementation plan
 
-Generate a stage-appropriate Build run ID using the run-id standard.
-
-Determine the canonical run report path from the task file and/or run-state.
-
-Create or update the run report with:
-- task metadata
-- current stage
-- current run ID
-- stage history entry for the Build stage
-- validation evidence
-- stop or pause state if relevant
-- notes relevant to QA handoff
+.....
 
 Do not modify governance-controlled files or paths as part of normal implementation work.
 
@@ -86,7 +62,7 @@ Operate only within the approved task scope.
 Make implementation changes, required test changes, and the run report update, but do not continue beyond this stage without orchestration or human review.
 ```
 
-If we take a look at the **Build Role** you can see it is much more detailed, defining things like where to access the coding guidance docs, how to build and run the project, the process it should follow and also its required output alongside much more.
+If we take a look at the **Build Role** you can see it is much more detailed, defining things like where to access the coding guidance docs, how to build and run the project, the process it should follow and also its required output alongside much more. Again, you can see a slightly truncated version of the definition below.
 
 ``` md
 # Build Agent
@@ -138,101 +114,7 @@ If the implementation plan appears incorrect or incomplete, the role should esca
 
 If governance or lifecycle metadata appears inconsistent, the role should report it and stop, not fix it.
 
----
-
-## Required Inputs
-
-This role requires:
-- the live run state
-- the referenced active task file
-- the approved feature specification
-- the approved design note
-- the approved implementation plan
-- access to the repository codebase
-- the run report template
-
-This role should rely on `harness/run-state.md` as the authoritative source of active task and current run context.
-
----
-
-## Required References
-
-Before making changes, this role should review:
-- `harness/run-state.md`
-- `harness/roles/build-agent.md`
-- `harness/standards/coding-standard.md`
-- `harness/standards/testing-standard.md`
-- `harness/standards/feature-workflow.md`
-- `harness/standards/task-lifecycle.md`
-- `harness/standards/run-id-standard.md`
-- `harness/templates/run_report_template.md`
-
-These standards and templates define expectations for implementation quality, workflow boundaries, run naming, validation loop behavior, and durable build evidence recording.
-
----
-
-## Protected Files and Paths
-
-The following paths are governance-controlled and must not be modified by this role unless the human reviewer explicitly requests a harness change:
-- `harness/run-state.md`
-- `harness/tasks/`
-- `harness/backlog/`
-- `harness/standards/`
-- `harness/roles/`
-- `harness/templates/`
-- `.github/agents/`
-
-This role may read these files when required, but must not edit them as part of normal feature implementation.
-
-The Build Agent may create or update the current task run report in `harness/runs/` because the run report is an execution artifact, not the authoritative workflow-state file.
-
----
-
-## Validation Loop Rules
-
-This role may run a controlled validation loop during implementation.
-
-### Allowed Validation Commands
-
-When available in the runtime environment, the Build Agent may run:
-- `pnpm lint`
-- `pnpm typecheck`
-- `pnpm test`
-- `pnpm test:e2e`
-
-These commands must be run from the application workspace (`src/`) unless project structure requires otherwise.
-
-### Allowed Fix Scope
-
-The Build Agent may fix:
-- implementation defects introduced or revealed within the approved task scope
-- test failures caused by implementation or test/config issues directly related to the active task
-- configuration issues required for the approved task's tests to run correctly
-
-The Build Agent must not use the validation loop to introduce unrelated cleanup, broad refactors, or new features.
-
-### Retry Limit
-
-The Build Agent may perform up to **3 validation-fix iterations** in a single build run.
-
-A validation-fix iteration means:
-1. run an allowed validation command
-2. inspect the failure
-3. apply a bounded fix
-4. rerun validation
-
-If validation still fails after 3 iterations, the Build Agent must stop and escalate.
-
-### Stop Conditions
-
-The Build Agent must stop the validation loop when:
-- all required validation commands pass
-- a failure implies broader scope than the approved task
-- a failure suggests the implementation plan is insufficient or incorrect
-- a governance inconsistency blocks reliable continuation
-- the retry limit is reached
-
----
+.....
 
 ## Process
 
@@ -337,13 +219,13 @@ Escalation should clearly explain the blocker.
 
 ---
 
-## Handoff
-The output of this role becomes the input for the QA Agent, which validates that the implementation satisfies the feature specification and acceptance criteria.
+.....
 
-This role does not update workflow state directly; the orchestrator is responsible for recording stage completion and progression.
 ```
 
-Another cool advantage to separating responsibilities like this, is that it allows you to remain somewhat IDE agnostic. With the vast majority of the definition existing in the **Role** and not the **Agent**, all you need to do is replicate the skinny **Agent** format for each of the IDE's you want to support instead of having to replicate the full definition for each.
+I'm going to be releasing the full repository including the harness as Open Source, once I think it is in the best place to be able to help people follow the same process at which point you'll be able to see the full Agent and Role definitions for each of the system sections.
+
+Another cool advantage to separating responsibilities like this, is that it allows you to remain somewhat **IDE agnostic**. With the vast majority of the definition existing in the **Role** and not the **Agent**, all you need to do is replicate the skinny **Agent** format for each of the IDE's you want to support instead of having to replicate the full definition for each.
 
 The way I like to think about this is that **Agents** are there to **Execute**, whereas Roles are there to **Govern**.
 
