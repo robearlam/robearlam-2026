@@ -8,12 +8,12 @@ tags: ['AI Development', 'Harness Engineering', 'Agentic AI']
 heroImage: "/img/blog-images/2026/agents-and-roles.jpg"
 ---
 
-Carrying on from my recent post giving an <a href="/blog/upgrading-the-sugcon-sites-from-jss-to-the-content-sdk" target="_blank" rel="nofollow">Introduction to Harness Engineering</a>, I want to start to dig a level deeper on the topics involved. First up we're going to look at the **Agents** and **Roles** that are defined in a setup like this. They're one of the key elements in Harness Engineering and are what actually execute the work you want completed, so they're a good place to get started!
+Carrying on from my recent post giving an <a href="/blog/an-introduction-to-harness-engineering" target="_blank" rel="nofollow">Introduction to Harness Engineering</a>, I want to start to dig a level deeper on the topics involved. First up we're going to look at the **Agents** and **Roles** that are defined in a setup like this. They're one of the key elements in Harness Engineering and are what actually control and execute the work you want completed, so they're a good place to get started!
 
 ## Agents and Roles
 A lot of AI workflow discussion seems to treat agents and roles as one, but I found that separating them makes the system easier to design, understand, and to iteratively improve on. In the setup I created, I ended up with a 1-1 relationship between my **Agents** and **Roles**, so you might be wondering why they are separated and not just combined together. Well there are some distinct benefits to defining them separately.
 
-Keeping them separate allowed me to have the Agents be responsible for defining the tools is has access to, but its actual tasks are defined in the role itself. So if we take the **Build Agent** for example it's definition is quite skinny, it defines the tools it has access to, the areas of the codebase it can access, and also what areas it shouldn't.
+Keeping them separate allowed me to have the Agents be responsible for defining the tools it has access to, but its actual tasks are defined in the role itself. So if we take the **Build Agent** for example it's definition is quite skinny, it defines the tools it has access to, the areas of the codebase it can access, and also what areas it shouldn't.
 
 ``` md
 ---
@@ -86,7 +86,7 @@ Operate only within the approved task scope.
 Make implementation changes, required test changes, and the run report update, but do not continue beyond this stage without orchestration or human review.
 ```
 
-If we take a look at the **Build Role** you can see it is much more detailed, defining things like where to access the coding guidance docs, how to build and run the project, the process it should follow and also it's required output alongside much more.
+If we take a look at the **Build Role** you can see it is much more detailed, defining things like where to access the coding guidance docs, how to build and run the project, the process it should follow and also its required output alongside much more.
 
 ``` md
 # Build Agent
@@ -407,6 +407,6 @@ sequenceDiagram
 ```
 
 ## Artifacts, Inputs and Context
-I'm going to focus more on this topic in my next post, but you can see from the diagram above that as each of the subagents executes, it is responsible for producing a specific single output, e.g. the **PO-Spec Agent** is responsible for taking the Task definition I create and generating a **Feature Specification** defining what it is the system is going to build. That is all though, the agent doesn't then make any code change or anything else, it just produces that document then stops. That document is that used as an input for the **Feature Design Agent** to be able to create the **Design Note**. Both of these documents are then used by the **Tech Lead Agent** to create a detailed **Implementation Plan**.
+I'm going to focus more on this topic in my next post, but you can see from the diagram above that as each of the subagents executes, it is responsible for producing a specific single output, e.g. the **PO-Spec Agent** is responsible for taking the Task definition I create and generating a **Feature Specification** defining what it is the system is going to build. That is all though, the agent doesn't then make any code change or anything else, it just produces that document then stops. That document is then used as an input for the **Feature Design Agent** to be able to create the **Design Note**. Both of these documents are then used by the **Tech Lead Agent** to create a detailed **Implementation Plan**.
 
 This is what I mean when I talk about *discrete agents with narrow responsibility*. Each of the agents has a single task, and the outputs of those tasks are used by the subsequent agents for them to complete their own tasks. This means that each agent is provided the exact amount of context it requires to get it's job done.
