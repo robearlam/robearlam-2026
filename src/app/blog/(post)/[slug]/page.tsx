@@ -12,7 +12,7 @@ import { BlogShareLinks } from "@/components/blog/blog-share-links";
 import { BlogTagLink } from "@/components/blog/blog-tag-link";
 import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/blog/posts";
 import { pageMetadata } from "@/lib/seo/metadata";
-import { blogPostingJsonLd } from "@/lib/seo/json-ld";
+import { blogPostingJsonLd, breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { JsonLdScript } from "@/lib/seo/json-ld-script";
 
 type BlogPostPageProps = {
@@ -71,7 +71,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           slug: post.slug,
           publishDate: post.publishDate,
           heroImage: post.heroImage,
+          wordCount: post.content.split(/\s+/).filter(Boolean).length,
+          articleSection: post.tags[0],
         })}
+      />
+      <JsonLdScript
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ])}
       />
       <header className="space-y-4">
         <p className="text-sm text-muted-foreground">{formatPublishDate(post.publishDate)}</p>

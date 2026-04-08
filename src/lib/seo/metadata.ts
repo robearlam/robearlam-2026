@@ -35,6 +35,9 @@ export function defaultMetadata(): Metadata {
     },
     alternates: {
       canonical: SITE_URL,
+      types: {
+        "application/rss+xml": `${SITE_URL}/rss`,
+      },
     },
     icons: {
       icon: "/img/favicon.png",
