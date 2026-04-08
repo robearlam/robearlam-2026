@@ -3,7 +3,8 @@ import { BlogFeedClient } from "@/components/blog/blog-feed-client";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { getPaginatedBlogPosts } from "@/lib/blog/posts";
 import { pageMetadata } from "@/lib/seo/metadata";
-import { webPageJsonLd } from "@/lib/seo/json-ld";
+import { webPageJsonLd, itemListJsonLd } from "@/lib/seo/json-ld";
+import { canonicalUrl } from "@/lib/seo/canonical";
 import { JsonLdScript } from "@/lib/seo/json-ld-script";
 
 export const metadata: Metadata = pageMetadata({
@@ -30,6 +31,14 @@ export default async function BlogPage() {
             "I've been writing software for many years, below you can find various things I've learned along the way, including tips, tutorials, and various insights I hope you find helpful.",
           path: "/blog",
         })}
+      />
+      <JsonLdScript
+        data={itemListJsonLd(
+          initialPage.posts.map((post) => ({
+            name: post.title,
+            url: canonicalUrl(`/blog/${post.slug}`),
+          }))
+        )}
       />
       <header className="space-y-4">
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Blog</h1>

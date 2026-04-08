@@ -30,7 +30,7 @@ describe("BlogPostCard", () => {
     render(<BlogPostCard post={basePost} />);
 
     const image = screen.getByRole("img", { name: "Placeholder image for Card test post" });
-    expect(image).toHaveAttribute("src", "/img/blog-images/blog-placeholder.png");
+    expect(image).toHaveAttribute("src", "/img/blog-images/blog-placeholder.jpg");
   });
 
   it("keeps image and title links pointed at the same destination", () => {

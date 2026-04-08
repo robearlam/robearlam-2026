@@ -4,7 +4,7 @@ import { FaBluesky, FaDev, FaGithub, FaLinkedin, FaMastodon, FaYoutube } from "r
 import { HeroSection } from "@/components/editorial/hero-section";
 import { SectionWrapper } from "@/components/editorial/section-wrapper";
 import { pageMetadata } from "@/lib/seo/metadata";
-import { webPageJsonLd } from "@/lib/seo/json-ld";
+import { profilePageJsonLd } from "@/lib/seo/json-ld";
 import { JsonLdScript } from "@/lib/seo/json-ld-script";
 
 export const metadata: Metadata = pageMetadata({
@@ -57,7 +57,7 @@ export default function ContactPage() {
   return (
     <div className="space-y-12">
       <JsonLdScript
-        data={webPageJsonLd({
+        data={profilePageJsonLd({
           name: "Contact",
           description:
             "Get in touch with Rob Earlam — find social profiles, and community links.",
