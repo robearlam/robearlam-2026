@@ -1,6 +1,11 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
+import {
+  getServerThemeSnapshot,
+  getThemeSnapshot,
+  subscribeToTheme,
+} from "@/lib/theme";
 
 type MermaidDiagramProps = {
   code: string;
@@ -15,6 +20,11 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
   const id = useId();
   const containerRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<DiagramState>({ status: "loading" });
+  const dark = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -22,7 +32,10 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
     async function renderDiagram() {
       try {
         const { default: mermaid } = await import("mermaid");
-        mermaid.initialize({ startOnLoad: false });
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: dark ? "dark" : "default",
+        });
 
         // Mermaid requires an alphanumeric ID (no colons from useId)
         const safeId = `mermaid-${id.replace(/[^a-zA-Z0-9]/g, "")}`;
@@ -43,7 +56,7 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
     return () => {
       cancelled = true;
     };
-  }, [code, id]);
+  }, [code, id, dark]);
 
   if (state.status === "loading") {
     return (
