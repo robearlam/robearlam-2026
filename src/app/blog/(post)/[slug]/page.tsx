@@ -135,7 +135,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <BlogShareLinks title={post.title} slug={post.slug} />
 
-      <BlogCommentsSection disqusId={post.disqusId} slug={post.slug} title={post.title} />
+      {/* <BlogCommentsSection disqusId={post.disqusId} slug={post.slug} title={post.title} /> */}
 
       <footer>
         <Link
