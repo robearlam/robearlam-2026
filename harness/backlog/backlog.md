@@ -109,7 +109,7 @@ Suggested status values:
 
 ### B015 - Introduce Security Agent
 **Status:** Planned  
-**Summary:** Add a new agent to perform security scans on the codebase after each change. This could leverage something like SEMGREP to perform the check as it has a free tier.
+**Summary:** Add a new agent to perform security scans on the codebase after each change. This could leverage something like SEMGREP to perform the check as it has a free tier. Also have the agent run as a Github action on commit to ensure this isn't missed.
 
 ---
 
@@ -127,6 +127,13 @@ Suggested status values:
 ---
 
 ### B018 - Dark mode support
-**Status:** Ready for Spec  
+**Status:** Done
 **Task:** T015  
 **Summary:** Add support for Dark Mode on the site. This should default to the system setting, but include a toggle for people to change.
+
+
+---
+
+### B019 - Change backlog to run from GitHub issues
+**Status:** Planned 
+**Summary:** Change the backlog functionality to instead be run from GitHub Issues.
