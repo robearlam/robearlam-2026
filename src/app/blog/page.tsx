@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { BlogFeedClient } from "@/components/blog/blog-feed-client";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
-import { getPaginatedBlogPosts } from "@/lib/blog/posts";
+import { getAllBlogPosts, getPaginatedBlogPosts } from "@/lib/blog/posts";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { webPageJsonLd, itemListJsonLd } from "@/lib/seo/json-ld";
 import { canonicalUrl } from "@/lib/seo/canonical";
@@ -17,10 +17,10 @@ export const metadata: Metadata = pageMetadata({
 const INITIAL_PAGE_SIZE = 5;
 
 export default async function BlogPage() {
-  const initialPage = await getPaginatedBlogPosts({
-    limit: INITIAL_PAGE_SIZE,
-    offset: 0,
-  });
+  const [initialPage, allPosts] = await Promise.all([
+    getPaginatedBlogPosts({ limit: INITIAL_PAGE_SIZE, offset: 0 }),
+    getAllBlogPosts(),
+  ]);
 
   return (
     <section className="space-y-10">
@@ -34,7 +34,7 @@ export default async function BlogPage() {
       />
       <JsonLdScript
         data={itemListJsonLd(
-          initialPage.posts.map((post) => ({
+          allPosts.map((post) => ({
             name: post.title,
             url: canonicalUrl(`/blog/${post.slug}`),
           }))

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BlogFeedClient } from "@/components/blog/blog-feed-client";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { getAllArchiveYears, getPaginatedBlogPosts } from "@/lib/blog/posts";
+import { canonicalUrl } from "@/lib/seo/canonical";
 
 const INITIAL_PAGE_SIZE = 5;
 
@@ -18,6 +19,7 @@ export async function generateMetadata({ params }: YearArchivePageProps): Promis
   return {
     title: `Blog Archive: ${resolvedParams.year}`,
     robots: { index: false, follow: true },
+    alternates: { canonical: canonicalUrl(`/blog/archive/${resolvedParams.year}`) },
   };
 }
 

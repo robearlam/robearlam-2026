@@ -60,7 +60,7 @@ export function pageMetadata({
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: url, types: { "application/rss+xml": `${SITE_URL}/rss` } },
     ...(noIndex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       type: "website",

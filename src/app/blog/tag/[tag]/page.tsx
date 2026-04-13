@@ -4,8 +4,10 @@ import { BlogFeedClient } from "@/components/blog/blog-feed-client";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { getAllBlogTags, getPaginatedBlogPosts } from "@/lib/blog/posts";
 import { normalizeBlogTag } from "@/lib/blog/tags";
+import { canonicalUrl } from "@/lib/seo/canonical";
 
 const INITIAL_PAGE_SIZE = 5;
+const NOINDEX_THRESHOLD = 5;
 
 type TagPageProps = {
   params: Promise<{
@@ -16,10 +18,12 @@ type TagPageProps = {
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const normalizedTag = normalizeBlogTag(resolvedParams.tag);
+  const { total } = await getPaginatedBlogPosts({ limit: 1, offset: 0, tag: normalizedTag });
 
   return {
     title: `Blog Tag: ${normalizedTag}`,
-    robots: { index: false, follow: true },
+    alternates: { canonical: canonicalUrl(`/blog/tag/${resolvedParams.tag}`) },
+    ...(total < NOINDEX_THRESHOLD ? { robots: { index: false, follow: true } } : {}),
   };
 }
 
