@@ -40,9 +40,9 @@ export function defaultMetadata(): Metadata {
       },
     },
     icons: {
-      icon: "/img/favicon.png",
-      shortcut: "/img/favicon.png",
-      apple: "/img/favicon.png",
+      icon: "/img/favicon.ico",
+      shortcut: "/img/favicon.ico",
+      apple: "/img/favicon.ico",
     },
   };
 }
