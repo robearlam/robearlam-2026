@@ -8,6 +8,15 @@ tags: ['AI Development', 'Harness Engineering', 'Agentic AI']
 heroImage: "/img/blog-images/2026/agents-and-roles.jpg"
 ---
 
+--- 
+
+This post is part of my series deep diving into **Harness Engineering**. You can find all of the posts in the series so far below:
+- <a href="/blog/an-introduction-to-harness-engineering" target="_blank" rel="nofollow">An Introduction to Harness Engineering</a>
+- <a href="/blog/harness-engineering-agents-and-roles" target="_blank" rel="nofollow">Harness Engineering: Agents and Roles</a>
+- <a href="/blog/harness-engineering-artifacts-inputs-and-context" target="_blank" rel="nofollow">Harness Engineering: Artifacts, Inputs and Context</a>
+
+---
+
 Carrying on from my recent post giving an <a href="/blog/an-introduction-to-harness-engineering" target="_blank" rel="nofollow">Introduction to Harness Engineering</a>, I want to start to dig a level deeper on the topics involved. First up we're going to look at the **Agents** and **Roles** that are defined in a setup like this. They're one of the key elements in Harness Engineering and are what actually control and execute the work you want completed, so they're a good place to get started!
 
 ## Agents and Roles

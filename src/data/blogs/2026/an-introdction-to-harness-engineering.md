@@ -8,6 +8,15 @@ tags: ['AI Development', 'Harness Engineering', 'Agentic AI']
 heroImage: "/img/blog-images/2026/intro-harness-engineering.jpg"
 ---
 
+--- 
+
+This post is part of my series deep diving into **Harness Engineering**. You can find all of the posts in the series so far below:
+- <a href="/blog/an-introduction-to-harness-engineering" target="_blank" rel="nofollow">An Introduction to Harness Engineering</a>
+- <a href="/blog/harness-engineering-agents-and-roles" target="_blank" rel="nofollow">Harness Engineering: Agents and Roles</a>
+- <a href="/blog/harness-engineering-artifacts-inputs-and-context" target="_blank" rel="nofollow">Harness Engineering: Artifacts, Inputs and Context</a>
+
+---
+
 So for a decent amount of time now I've been on the Vibe Coding bandwagon, like a large portion of the development community. When it works it really can seem like magic. Too often though it does seem to go off on a tangent, editing unrelated parts of the codebase, or implementing a something in a way that I just wasn't happy with. I felt that it was making me more productive, but I also felt like I spent a good amount of my time chasing the LLM, going back and forth on the same problem and repeatedly prodding it to get to the outcome that I wanted.
 
 It felt like one of the big problems with this approach was repeatability, now rules files can help here to try and enforce some guidelines for how LLM's interact in certain scenarios, but I was getting sick of constantly having to type prompts like *"You are a senior developer with 10yrs of experience yadda yadda"*. I had played around with some Agents, and they were a step in the right direction, but the whole thing was still feeling very manual, in that I had to hand-hold the AI at each step.
