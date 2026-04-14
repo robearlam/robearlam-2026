@@ -3,7 +3,7 @@ title: "Harness Engineering: Artifacts, Inputs and Context"
 slug: "harness-engineering-artifacts-inputs-and-context"
 publishDate: "2026-04-14"
 disqusId: "885bc0ee-4b75-47a1-ade2-22bd573ba7ce"
-abstract: "Some text in here."
+abstract: "In this post I want to take a look at how the Artifacts from each Agent form the Input for other Agents, and how this form of Bounded Context helps to greatly improve accuracy in what your LLM is doing."
 tags: ['AI Development', 'Harness Engineering', 'Agentic AI']
 heroImage: "/img/blog-images/2026/artifacts-inputs-context.jpg"
 ---
