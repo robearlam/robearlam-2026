@@ -12,8 +12,9 @@ heroImage: "/img/blog-images/2026/agents-and-roles.jpg"
 
 This post is part of my series deep diving into **Harness Engineering**. You can find all of the posts in the series so far below:
 - <a href="/blog/an-introduction-to-harness-engineering" target="_blank" rel="nofollow">An Introduction to Harness Engineering</a>
-- <a href="/blog/harness-engineering-agents-and-roles" target="_blank" rel="nofollow">Harness Engineering: Agents and Roles</a>
+- Harness Engineering: Agents and Roles
 - <a href="/blog/harness-engineering-artifacts-inputs-and-context" target="_blank" rel="nofollow">Harness Engineering: Artifacts, Inputs and Context</a>
+- <a href="/blog/harness-engineering-orchestration-and-execution-tracking" target="_blank" rel="nofollow">Harness Engineering: Orchestration and execution tracking</a>
 
 ---
 
