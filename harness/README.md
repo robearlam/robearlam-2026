@@ -170,7 +170,9 @@ During normal feature execution:
 5. Update run log and progress to next stage if gates pass.
 
 ## Related Docs
-- `AGENTS.md` (Cursor: project rules mirroring `.github/agents/`)
+- `AGENTS.md` — agent mode routing table (maps stages to GitHub Copilot agents and Cursor rules)
+- `.github/agents/` — GitHub Copilot agent definitions (thin wrappers over role files)
+- `.cursor/rules/` — Cursor project rules mirroring the GitHub agent definitions
 - `harness/standards/feature-workflow.md`
 - `harness/standards/task-lifecycle.md`
 - `harness/standards/stage-input-contracts.md`

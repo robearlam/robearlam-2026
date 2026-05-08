@@ -14,14 +14,19 @@ The app uses the App Router, React 19, and local markdown content sources. Most 
 
 ## Main Routes
 
-- `/` homepage with editorial hero and profile content.
+- `/` homepage with editorial hero, profile photo, latest blogs, latest videos, and upcoming speaking events.
 - `/blog` paginated blog feed with sidebar navigation.
-- `/blog/[slug]` individual blog posts.
+- `/blog/[slug]` individual blog posts with hero images and Mermaid diagram support.
 - `/blog/tag/[tag]` tag-filtered blog listings.
 - `/blog/archive/[year]` and `/blog/archive/[year]/[month]` archive views.
 - `/speaking` upcoming and historical speaking engagements.
 - `/videos` featured video plus paginated video archive.
-- `/contact` contact page.
+- `/contact` contact page with social profile links.
+- `/rss` RSS 2.0 feed of all blog posts.
+- `/llms-full.txt` extended LLM-readable content index.
+- `/.well-known/webfinger` ActivityPub/Mastodon identity discovery endpoint.
+- `/api/blog` JSON API for blog post data.
+- `/api/videos` JSON API for video data.
 
 ## Content Model
 
@@ -69,9 +74,21 @@ pnpm test:e2e    # run Playwright end-to-end tests
 
 - The app is built on Next.js 16.1 with the App Router.
 - Global layout and metadata live in `app/layout.tsx`.
+- Dark mode is supported via CSS variables and a theme toggle stored in `localStorage`.
+- Blog posts support hero images (referenced from `public/img/blog-images/`) and embedded Mermaid diagrams.
 - Blog and video listings use server-side pagination helpers in `lib/blog/posts.ts` and `lib/videos/videos.ts`.
 - Speaking data is partitioned into upcoming and past entries in `lib/speaking/engagements.ts`.
 - Styling and UI primitives are composed from the local component library and shared app styles.
+- Analytics (`@vercel/analytics`, `@vercel/speed-insights`, Google Analytics) are no-ops outside a Vercel deployment unless the relevant env vars are set.
+
+## Environment Variables
+
+Create `.env.local` in this directory for local overrides. All variables are optional:
+
+```
+NEXT_PUBLIC_SITE_URL=https://robearlam.com          # canonical URL used in SEO metadata and OG tags
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX          # Google Analytics 4 measurement ID
+```
 
 ## When Updating Content Or Features
 
