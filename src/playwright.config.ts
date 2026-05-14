@@ -70,10 +70,13 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
+  /* Run a production build before starting the tests so E2E exercises the
+     same bundle that ships to users (and avoids dev-mode HMR quirks). On CI
+     the build is performed in a dedicated workflow step, so we just start. */
   webServer: {
-    command: 'pnpm dev',
+    command: process.env.CI ? 'pnpm start' : 'pnpm build && pnpm start',
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
+    timeout: 180_000,
   },
 });
