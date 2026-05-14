@@ -1,6 +1,16 @@
 # robearlam-2026
 
-Personal site for robearlam.com — a software engineering leadership blog with sections for writing, speaking engagements, and curated videos.
+[![Playwright Tests](https://github.com/robearlam/robearlam-2026/actions/workflows/playwright.yml/badge.svg?branch=main)](https://github.com/robearlam/robearlam-2026/actions/workflows/playwright.yml)
+
+Personal site for [robearlam.com](https://robearlam.com) — a software engineering leadership blog with sections for writing, speaking engagements, and curated videos.
+
+## About This Repository
+
+This repository is published as a reference — primarily so blog posts on [robearlam.com](https://robearlam.com) can link to the actual code being discussed.
+
+It is not maintained as a community project and isn't intended to be forked as a site template. External contributions are not actively sought, but feel free to open issues for discussion or fork the parts that are useful to you.
+
+For security-related issues, please see [SECURITY.md](SECURITY.md).
 
 ## License
 
