@@ -137,3 +137,10 @@ Suggested status values:
 ### B019 - Change backlog to run from GitHub issues
 **Status:** Planned 
 **Summary:** Change the backlog functionality to instead be run from GitHub Issues.
+
+---
+
+### B020 - Dependabot vulnerability remediation (Oct 2026)
+**Status:** Done  
+**Task:** T016  
+**Summary:** Resolve the open Dependabot security alerts in one dependency update. On 2026-10-19 there were 126 open alerts (7 critical, 40 high, 64 medium, 15 low) across `src/package.json` and `src/pnpm-lock.yaml`. The most urgent is `next`, pinned at 16.2.6: it has critical RCE advisories (Image Optimization/AVIF, Windows hosting, `next/og` ImageResponse) plus SSRF, cache-poisoning and info-disclosure fixes. All of them are fixed by upgrading to 16.3.8 or later. Most of the rest are transitive packages: `hono`/`@hono/node-server`, `undici`, `dompurify`, `mermaid`, `js-yaml`, `ip-address`, `fast-uri`, `sharp`, `nanoid`, `postcss`, `browserslist`, `vite`/`vitest`, `proxy-addr`, `qs`, `@modelcontextprotocol/sdk` and others. Fix these by bumping direct dependencies first, then using `pnpm.overrides` only where a parent package hasn't picked up the fix. Some advisories have no patched version yet (`sprintf-js`, one `dompurify` advisory). Record these as accepted or dismissed with a reason instead of leaving them open. Done when the open alert count is zero or every remaining alert has a documented reason, and lint, typecheck, unit/integration tests, build and Playwright e2e all pass. Because `dompurify` and `mermaid` are in scope, check rendered markdown/Mermaid blog posts for regressions and keep `rehype-sanitize` in place. No UI changes are expected, so this is a candidate for `Workflow: Lightweight`. Related: B015 (automated security scanning in CI).

@@ -46,7 +46,7 @@ export default async function TagPage({ params }: TagPageProps) {
       <header className="space-y-4">
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Blog posts on #{normalizedTag}</h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Explore all posts I've written, tagged with #{normalizedTag}.
+          Explore all posts I&apos;ve written, tagged with #{normalizedTag}.
         </p>
       </header>
 
