@@ -9,14 +9,14 @@ Task File: harness/tasks/T016-dependabot-vulnerability-remediation.md
 
 ## Execution State
 
-Current Status: Active  
-Current Stage: Build  
-Current Run ID: RUN-2026-10-19-T016-BUILD  
+Current Status: Complete  
+Current Stage: Complete  
+Current Run ID: —  
 Workflow Mode: Lightweight  
 Branch: feature/T016-dependabot-vulnerability-remediation  
 Base Commit: 27c5e5ac754a00db9b3cfbcc0c711f7b9af063aa
 
-Stop Reason: None
+Stop Reason: None — T016 closed 2026-10-19. Awaiting a new task.
 
 ---
 
@@ -24,6 +24,9 @@ Stop Reason: None
 
 - Specification (RUN-2026-10-19-T016-SPEC) — harness/artifacts/specs/T016-feature-spec.md — Feature spec produced: 2026-10-19 alert reference set fixed; stray npm lockfiles out of scope; evidence model for missing pnpm defined
 - Implementation Planning (RUN-2026-10-19-T016-PLAN) — harness/artifacts/plans/T016-implementation-plan.md — Implementation plan produced: 6 slices (baseline, next 16.3.x, in-major bumps, overrides, validation, dispositions); Build blocks rather than hand-editing lockfile if pnpm 10 unobtainable
+- Build (RUN-2026-10-19-T016-BUILD) — harness/runs/T016-run-report.md — Build committed fc1f486: next 16.3.8, mermaid 11.17.2, overrides raised/added; lint/typecheck/test/build pass; e2e chromium 25/25, firefox/webkit unverified
+- QA (RUN-2026-10-19-T016-QA) — harness/artifacts/qa/T016-qa-review.md — QA: Pass With Minor Issues. No blocking issues; 6 non-blocking override-hygiene findings; Firefox/WebKit e2e and real-browser Mermaid unverified
+- Awaiting Approval (2026-10-19) — approved by the human reviewer
 
 ---
 
@@ -46,7 +49,7 @@ Require Approval Before Complete: Yes
 
 ## Notes
 
-T016 is at Build (Active). Next: dispatch the `build` agent for Build (RUN-2026-10-19-T016-BUILD).
+T016 is at Complete (Complete). Next: none — start the next task with /run-task TASKID.
 History: harness/runs/T016-run-report.md
 
 <!--
