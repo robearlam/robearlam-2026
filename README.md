@@ -21,9 +21,30 @@ The **code and harness** in this repository are released under the [MIT License]
 ## Repository Structure
 
 ```
-src/        Next.js application (the actual website)
-harness/    Harness templates, tasks, artifacts, and run state
-.claude/    Harness stage agents, skills, hooks, and governance settings
+├── .claude/
+│   ├── agents/                 # Stage agents (po-spec, feature-design, tech-lead, build, qa)
+│   ├── skills/                 # /new-task, /run-task orchestrator + state script, /approve, coding/testing/UI standards
+│   ├── hooks/                  # Session-start context and stage-artifact verification
+│   └── settings.json           # Governance: permission rules and hook wiring
+├── harness/                    # Workflow records
+│   ├── templates/              # Templates for all stage artifacts
+│   ├── tasks/                  # Durable task definitions
+│   ├── artifacts/              # Stage outputs (specs, designs, plans, QA reviews)
+│   ├── runs/                   # Run reports for each task
+│   ├── backlog/                # Future work items
+│   ├── run-state.md            # Live workflow state (written only by the state script; created by the first run)
+│   ├── decisions.md            # Why the harness looks the way it does
+│   ├── README.md               # How the workflow runs
+│   └── verify-stage.sh         # Deterministic artifact verification
+├── src/                        # Next.js application (the actual website)
+│   ├── app/                    # App Router routes, API routes, and tests
+│   ├── components/             # UI components
+│   ├── lib/                    # Content loaders and domain logic
+│   ├── data/                   # Markdown content: blogs, speaking, videos
+│   └── public/                 # Static assets and images
+├── .github/workflows/          # Playwright end-to-end tests against a production build
+├── CLAUDE.md                   # Entry point for Claude Code across the repo
+└── SECURITY.md                 # Security reporting
 ```
 
 ## The App (`src/`)
@@ -45,6 +66,12 @@ Built with Next.js 16, React 19, and the App Router. Content is sourced from loc
 - `/api/blog` and `/api/videos` — JSON API endpoints
 
 See [src/README.md](src/README.md) for full details on routes, content model, and scripts.
+
+### Prerequisites
+
+- Node.js (current LTS, as used in CI)
+- pnpm 10
+- [Claude Code](https://claude.com/claude-code), to run the harness
 
 ### Quick Start
 
@@ -70,29 +97,55 @@ pnpm dev          # development server
 pnpm build        # production build
 pnpm lint         # ESLint
 pnpm typecheck    # TypeScript check
-pnpm test         # Vitest unit tests
+pnpm test         # Vitest unit + integration tests
 pnpm test:e2e     # Playwright end-to-end tests
 ```
 
 ## The Harness (`harness/` and `.claude/`)
 
-A stage-based workflow for AI-assisted feature delivery, built on Claude Code. Each stage is a subagent with a bounded input contract, every stage writes an artifact that is verified before the run moves on, and a human approves before anything is complete.
+Every feature on this site is delivered through a stage-based workflow for AI-assisted development, built on **Claude Code**. Each stage is a subagent, the orchestrator is a skill backed by a deterministic state script, and governance is enforced by Claude Code settings and hooks rather than by prose.
 
-**Flow:** Specification → Design → Implementation Plan → Build → correctness pass (`/code-review`) → QA → Approval → Complete
+- **Stage-based workflow** — `/new-task` turns a backlog item into a task definition; `/run-task TASKID` takes it through Specification, Design, Implementation Planning, Build, and QA on a `feature/` branch; and a human closes it with `/approve`
+- **Stage agents** — each stage is a Claude Code subagent with its own context, model, tools, and a bounded input contract
+- **Deterministic state** — a script owns run-state, run IDs, stage order, approval gates, and retry limits, so the model only makes judgment calls
+- **Enforced governance** — hooks verify every stage's artifact, and permission rules protect the harness and secrets
+- **Correctness pass and severity bar** — a `/code-review` pass over the task's own changes feeds QA, and only blocking issues send work back to Build
+- **Standards** — coding, testing, and design-system skills preloaded into the agents that need them
+- **Traceability** — every decision and output is recorded in artifacts and run reports
 
-**How to use it:**
-- `/new-task B0XX` — turn a backlog item into a task definition
-- `/run-task T0XX` — run the task through the stages on a `feature/` branch; stops at the approval gate
-- `/approve` — the human gate: approve, request corrections, or amend the spec
+Tasks with no new UI surface run the **Lightweight** workflow, which skips Design.
 
-**Key locations:**
-- `.claude/agents/` — the stage agents (spec, design, tech lead, build, QA)
-- `.claude/skills/` — the orchestrator and approval skills, plus the coding, testing, and UI design-system standards
-- `.claude/settings.json` and `.claude/hooks/` — governance rules and artifact verification
-- `harness/tasks/` — canonical task definitions
-- `harness/artifacts/` — stage outputs (specs, designs, plans, QA reviews)
-- `harness/runs/` — per-task run reports
-- `harness/backlog/` — task intake and backlog
-- `harness/decisions.md` — why the harness looks the way it does
+### Features Built Through the Harness
+
+| Task | Description |
+|------|-------------|
+| T001 | Global site layout |
+| T002 | Contact page |
+| T003 | Blog |
+| T004 | Editorial UI system |
+| T006 | Blog Disqus integration |
+| T007, T007.1 | Blog sidebar panels and refinements |
+| T008 | Speaking engagements page |
+| T009, T009.1 | Videos page and infinite-scroll paging |
+| T010 | Homepage |
+| T011 | SEO, AEO & GEO foundations |
+| T012 | Auxiliary site protocols (RSS, sitemap, robots, WebFinger) |
+| T013 | Blog hero images |
+| T014 | Mermaid diagrams in blog posts |
+| T015 | Dark mode |
+
+T001–T015 were delivered on the earlier, multi-IDE version of the harness; `harness/decisions.md` (D-001) records the move to Claude Code.
+
+### Claude Code Configuration
+
+| What | Where |
+|------|-------|
+| Repo-wide instructions | `CLAUDE.md` |
+| Stage agents | `.claude/agents/` |
+| Task creation, orchestrator, approval gate, and standards | `.claude/skills/` |
+| Hooks and governance rules | `.claude/hooks/`, `.claude/settings.json` |
+| App routes, content model, and scripts | `src/README.md` |
+
+To change how a stage behaves, edit its file in `.claude/agents/` — there is one definition per stage and nothing to keep in sync. Harness files are protected by deny rules in `.claude/settings.json`; see [harness/README.md](harness/README.md#modifying-the-harness-itself) for how harness changes are made.
 
 See [harness/README.md](harness/README.md) for full workflow documentation and [CLAUDE.md](CLAUDE.md) for the operating rules.
