@@ -11,7 +11,10 @@ Task File: {{TASK_FILE}}
 
 Current Status: {{CURRENT_STATUS}}  
 Current Stage: {{CURRENT_STAGE}}  
-Current Run ID: {{CURRENT_RUN_ID}}
+Current Run ID: {{CURRENT_RUN_ID}}  
+Workflow Mode: {{WORKFLOW_MODE}}  
+Branch: {{BRANCH}}  
+Base Commit: {{BASE_COMMIT}}
 
 Stop Reason: {{STOP_REASON}}
 
@@ -43,3 +46,9 @@ Require Approval Before Complete: {{REQUIRE_APPROVAL_BEFORE_COMPLETE}}
 ## Notes
 
 {{NOTES}}
+
+<!--
+Written only by .claude/skills/run-task/scripts/harness-state — never by hand.
+Notes stay a few lines: current position, what happens next, and a pointer to
+the run report. Narrative history belongs in the run report under harness/runs/.
+-->

@@ -22,7 +22,8 @@ The **code and harness** in this repository are released under the [MIT License]
 
 ```
 src/        Next.js application (the actual website)
-harness/    Project operating system for feature delivery
+harness/    Harness templates, tasks, artifacts, and run state
+.claude/    Harness stage agents, skills, hooks, and governance settings
 ```
 
 ## The App (`src/`)
@@ -73,18 +74,25 @@ pnpm test         # Vitest unit tests
 pnpm test:e2e     # Playwright end-to-end tests
 ```
 
-## The Harness (`harness/`)
+## The Harness (`harness/` and `.claude/`)
 
-A stage-based workflow for AI-assisted feature delivery. It provides role definitions, standards, templates, and artifact folders so every feature moves safely from idea to approved implementation.
+A stage-based workflow for AI-assisted feature delivery, built on Claude Code. Each stage is a subagent with a bounded input contract, every stage writes an artifact that is verified before the run moves on, and a human approves before anything is complete.
 
-**Typical flow:** Specification → Design → Implementation Plan → Build → QA → Approval → Complete
+**Flow:** Specification → Design → Implementation Plan → Build → correctness pass (`/code-review`) → QA → Approval → Complete
 
-**Key folders:**
+**How to use it:**
+- `/new-task B0XX` — turn a backlog item into a task definition
+- `/run-task T0XX` — run the task through the stages on a `feature/` branch; stops at the approval gate
+- `/approve` — the human gate: approve, request corrections, or amend the spec
+
+**Key locations:**
+- `.claude/agents/` — the stage agents (spec, design, tech lead, build, QA)
+- `.claude/skills/` — the orchestrator and approval skills, plus the coding, testing, and UI design-system standards
+- `.claude/settings.json` and `.claude/hooks/` — governance rules and artifact verification
 - `harness/tasks/` — canonical task definitions
 - `harness/artifacts/` — stage outputs (specs, designs, plans, QA reviews)
-- `harness/runs/` — run logs and reports
-- `harness/standards/` — coding, testing, and workflow standards
-- `harness/roles/` — agent role definitions
+- `harness/runs/` — per-task run reports
 - `harness/backlog/` — task intake and backlog
+- `harness/decisions.md` — why the harness looks the way it does
 
-See [harness/README.md](harness/README.md) for full workflow documentation.
+See [harness/README.md](harness/README.md) for full workflow documentation and [CLAUDE.md](CLAUDE.md) for the operating rules.

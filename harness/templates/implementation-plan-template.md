@@ -30,7 +30,7 @@ Reference the approved design note artifact.
 
 Task ID: {{TASK_ID}}
 Run State: harness/run-state.md
-Current Stage: Build
+Current Stage: Implementation Planning
 Proceeding Validly: {{VALIDITY}}
 
 Brief note:
@@ -38,9 +38,9 @@ Brief note:
 
 Confirm that:
 
-- the active task pointer exists
-- the active task pointer references this task
-- the task lifecycle stage allows design work to proceed
+- the run-state exists
+- the run-state references this task
+- the task lifecycle stage allows implementation planning to proceed
 
 ---
 
@@ -101,7 +101,8 @@ Examples:
 
 - `src/app/layout.tsx`
 - `src/components/...`
-- `src/app/...`
+- `src/lib/...`
+- `src/data/...`
 
 ---
 
