@@ -1,0 +1,64 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm --dir src lint)",
+      "Bash(pnpm --dir src lint *)",
+      "Bash(pnpm --dir src typecheck)",
+      "Bash(pnpm --dir src test)",
+      "Bash(pnpm --dir src test *)",
+      "Bash(pnpm --dir src build)",
+      "Bash(pnpm --dir src test:e2e)",
+      "Bash(pnpm --dir src test:e2e *)",
+      "Bash(pnpm lint)",
+      "Bash(pnpm typecheck)",
+      "Bash(pnpm test)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm build)",
+      "Bash(pnpm test:e2e)",
+      "Bash(harness/verify-stage.sh *)",
+      "Bash(.claude/skills/run-task/scripts/harness-state *)"
+    ],
+    "deny": [
+      "Edit(harness/templates/**)",
+      "Edit(.claude/agents/**)",
+      "Edit(.claude/skills/**)",
+      "Edit(.claude/hooks/**)",
+      "Edit(harness/run-state.md)",
+      "Edit(harness/verify-stage.sh)",
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Edit(**/.env)",
+      "Edit(**/.env.local)"
+    ],
+    "ask": [
+      "Edit(harness/tasks/**)",
+      "Edit(harness/backlog/**)",
+      "Bash(git push*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-start.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/verify-stage-on-stop.sh",
+            "timeout": 30,
+            "statusMessage": "Verifying stage artifacts…"
+          }
+        ]
+      }
+    ]
+  }
+}

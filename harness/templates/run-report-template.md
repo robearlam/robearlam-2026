@@ -11,10 +11,9 @@ Task File: {{TASK_FILE}}
 ## Run
 
 Run Report ID: {{RUN_REPORT_ID}}  
-Current Stage: {{CURRENT_STAGE}}  
-Current Run ID: {{CURRENT_RUN_ID}}
-
-Overall Status: {{OVERALL_STATUS}}
+Workflow Mode: {{WORKFLOW_MODE}}  
+Branch: {{BRANCH}}  
+Base Commit: {{BASE_COMMIT}}
 
 ---
 
@@ -36,13 +35,6 @@ QA Review: {{QA_REVIEW_PATH}}
 ## Validation Evidence
 
 {{VALIDATION_EVIDENCE}}
-
----
-
-## Stop / Pause State
-
-Stop Reason: {{STOP_REASON}}  
-Next Expected Action: {{NEXT_EXPECTED_ACTION}}
 
 ---
 
