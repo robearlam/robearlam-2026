@@ -16,7 +16,7 @@ This post is part of my series deep diving into **Harness Engineering**. You can
 - <a href="/blog/harness-engineering-artifacts-inputs-and-context" target="_blank" rel="nofollow">Harness Engineering: Artifacts, Inputs and Context</a>
 - <a href="/blog/harness-engineering-orchestration-and-execution-tracking" target="_blank" rel="nofollow">Harness Engineering: Orchestration and execution tracking</a>
 - Harness Engineering: Running the pipeline end-to-end
-
+- <a href="/blog/harness-engineering-anthropics-ai-sdlc" target="_blank" rel="nofollow">Harness Engineering: Anthropic's AI SDLC</a>
 ---
 
 When I finished my last blog post, I said I wanted to write this post detailing how I run the complete pipeline in the harness from end to end, so let's do that.

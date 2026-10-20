@@ -16,7 +16,7 @@ This post is part of my series deep diving into **Harness Engineering**. You can
 - <a href="/blog/harness-engineering-artifacts-inputs-and-context" target="_blank" rel="nofollow">Harness Engineering: Artifacts, Inputs and Context</a>
 - Harness Engineering: Orchestration and execution tracking
 - <a href="/blog/harness-engineering-running-the-pipeline-end-to-end" target="_blank" rel="nofollow">Harness Engineering: Running the pipeline end-to-end</a>
-
+- <a href="/blog/harness-engineering-anthropics-ai-sdlc" target="_blank" rel="nofollow">Harness Engineering: Anthropic's AI SDLC</a>
 ---
 
 This post continues my series on **Harness Engineering**, this time I'm going to focus specifically on the **Orchestrator Agent** and **Role** to talk about how it is the **workflow controller**, ensuring that the **artifacts** the subagents create are generated successfully, then managing the following **handoff** as the execution flow continues.

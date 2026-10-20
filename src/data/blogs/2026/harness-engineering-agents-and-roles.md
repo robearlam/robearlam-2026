@@ -16,7 +16,7 @@ This post is part of my series deep diving into **Harness Engineering**. You can
 - <a href="/blog/harness-engineering-artifacts-inputs-and-context" target="_blank" rel="nofollow">Harness Engineering: Artifacts, Inputs and Context</a>
 - <a href="/blog/harness-engineering-orchestration-and-execution-tracking" target="_blank" rel="nofollow">Harness Engineering: Orchestration and execution tracking</a>
 - <a href="/blog/harness-engineering-running-the-pipeline-end-to-end" target="_blank" rel="nofollow">Harness Engineering: Running the pipeline end-to-end</a>
-
+- <a href="/blog/harness-engineering-anthropics-ai-sdlc" target="_blank" rel="nofollow">Harness Engineering: Anthropic's AI SDLC</a>
 ---
 
 Carrying on from my recent post giving an <a href="/blog/an-introduction-to-harness-engineering" target="_blank" rel="nofollow">Introduction to Harness Engineering</a>, I want to start to dig a level deeper on the topics involved. First up we're going to look at the **Agents** and **Roles** that are defined in a setup like this. They're one of the key elements in Harness Engineering and are what actually control and execute the work you want completed, so they're a good place to get started!

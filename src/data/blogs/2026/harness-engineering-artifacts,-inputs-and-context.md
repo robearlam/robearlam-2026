@@ -16,7 +16,7 @@ This post is part of my series deep diving into **Harness Engineering**. You can
 - Harness Engineering: Artifacts, Inputs and Context
 - <a href="/blog/harness-engineering-orchestration-and-execution-tracking" target="_blank" rel="nofollow">Harness Engineering: Orchestration and execution tracking</a>
 - <a href="/blog/harness-engineering-running-the-pipeline-end-to-end" target="_blank" rel="nofollow">Harness Engineering: Running the pipeline end-to-end</a>
-
+- <a href="/blog/harness-engineering-anthropics-ai-sdlc" target="_blank" rel="nofollow">Harness Engineering: Anthropic's AI SDLC</a>
 ---
 
 We've already covered an overview of Harness Engineering, and also how the Agents and Roles in the system function. In this post I want to take a look at how the **Artifacts** from each **Agent** form the **Input** for other **Agents**, and how this form of **Bounded Context** helps to greatly improve accuracy in what your LLM is doing, leading to far fewer cases of Hallucinations.
