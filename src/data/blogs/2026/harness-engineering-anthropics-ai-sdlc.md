@@ -129,3 +129,6 @@ The shift in human involvement is familiar too. In my May walkthrough, I wasn't 
 ## A shared direction, not an identical system
 
 It's aways nice to see big players like Anthropic, advocating for the same agentic flow that I have been discovering on my own as well. I didn't invent this approach though, my first post mentioned OpenAI's [harness engineering article](https://openai.com/index/harness-engineering/) as the inspiration for rebuilding this site. Anthropic's playbook is another concrete example of major vendors describing development as a managed lifecycle around agents, rather than simply faster code completion.
+
+If you want to see the workflow I'm using to build out this site, then it's all available in my [GitHub Repo
+](https://github.com/robearlam/robearlam-2026/)
